@@ -1,10 +1,6 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:tracking_pregnant/app/routes/routes_name.dart';
 import 'package:tracking_pregnant/core/cores.dart';
-
-
 
 class Routes {
   static Route<dynamic> onGenerateRoute(RouteSettings routeSettings) {
@@ -13,12 +9,13 @@ class Routes {
       case RoutesName.login:
         return MaterialPageRoute(builder: (context) => const LoginPage());
 
-       case RoutesName.main:
+      case RoutesName.main:
         return MaterialPageRoute(builder: (context) => const DashboardPage());
-       case RoutesName.addRecencement:
-        return MaterialPageRoute(builder: (context) => const AddRecencement());
-   
-      
+      case RoutesName.addRecensement:
+        return MaterialPageRoute(builder: (context) => const AddRecensement());
+      case RoutesName.mainRecensement:
+        return MaterialPageRoute(builder: (context) => const MainRecensement());
+
       default:
         return MaterialPageRoute(
           builder: (context) => const Scaffold(

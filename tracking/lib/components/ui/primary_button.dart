@@ -47,7 +47,6 @@ class PrimaryButton extends StatelessWidget {
             style: TextStyle(
               color:textColor?? (isFilledBtn ? Palette.contentPrimary : Palette.primary),
               fontSize: getFontSize(size),
-              fontFamily: 'Inter',
               fontWeight: FontWeight.bold,
             ),
           )),

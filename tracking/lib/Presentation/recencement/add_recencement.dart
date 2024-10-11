@@ -1,22 +1,22 @@
 part of "../../core/cores.dart";
 
-class AddRecencement extends StatefulWidget {
-  const AddRecencement({super.key});
+class AddRecensement extends StatefulWidget {
+  const AddRecensement({super.key});
 
   @override
-  State<AddRecencement> createState() => _AddRecencementState();
+  State<AddRecensement> createState() => _addRecensementState();
 }
 
-class _AddRecencementState extends State<AddRecencement> with RestorationMixin {
+class _addRecensementState extends State<AddRecensement> with RestorationMixin {
   String? restorationId = "main";
-  List<String> list = <String>[
+  List<String> listVillage = <String>[
     'Selectionner un village',
     'Agoe',
   ];
 
   List<String> listQuartier = <String>[
     'Selectionner un quartier',
-    'Agoe',
+    'Mamou',
   ];
 
   String _villageValue = "";
@@ -77,90 +77,86 @@ class _AddRecencementState extends State<AddRecencement> with RestorationMixin {
     }
   }
 
-
-
   Future<void> dialogBuilder(
-  BuildContext context,
-  void Function() onTapPrimary,
-  void Function() onTapSecondary,
-  String title,
-  String subTitle,
-  String primaryBtnText,
-  String secondaryBtnText,
-) {
-  return showDialog<void>(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        backgroundColor: Palette.white,
-        title: Text(
-          title,
-          style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
-          // textAlign: TextAlign.center,
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-          
-            10.verticalSpaceFromWidth,
-             const Text(
-              "Numéro de ménage",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            CustomTextFormInput(
-              labelText: "",
-              hintText: "NME 123466",
-              controller: _numeroMenageController,
-              isPassword: true,
-            ),
-            10.verticalSpaceFromWidth,
-             const Text(
-              "Nom du Chef",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            CustomTextFormInput(
-              labelText: "",
-              hintText: "Entrer le nom du chef",
-              controller: _nomController,
-              isPassword: true,
-            ),
-            10.verticalSpaceFromWidth,
-             const Text(
-              "Prénoms du Chef",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            CustomTextFormInput(
-              labelText: "",
-              hintText: "Entrer le(s) prénoms du chef",
-              controller: _prenomsController,
-              isPassword: true,
-            ),
-            10.verticalSpaceFromWidth,
-            PrimaryButton(
-              btnText: primaryBtnText,
-              width: double.infinity,
-              isFilledBtn: true,
-              onTapFunction: onTapPrimary,
-              btnBgColor: Palette.primary,
-        
-            ),
-            10.verticalSpaceFromWidth,
-            PrimaryButton(
-              btnText: secondaryBtnText,
-              width: double.infinity,
-              isFilledBtn: true,
-              onTapFunction: onTapSecondary,
-              textColor: Palette.primary,
-              btnBgColor: Palette.white,
-              
-            ),
-          ],
-        ),
-      );
-    },
-  );
-}
+    BuildContext context,
+    void Function() onTapPrimary,
+    void Function() onTapSecondary,
+    String title,
+    String subTitle,
+    String primaryBtnText,
+    String secondaryBtnText,
+  ) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Palette.white,
+          title: Text(
+            title,
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            // textAlign: TextAlign.center,
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              10.verticalSpaceFromWidth,
+              const Text(
+                "Numéro de ménage",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              CustomTextFormInput(
+                isReadonly: true,
+                labelText: "",
+                hintText: "NME 123466",
+                controller: _numeroMenageController,
+                isPassword: true,
+              ),
+              10.verticalSpaceFromWidth,
+              const Text(
+                "Nom du Chef",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              CustomTextFormInput(
+                labelText: "",
+                hintText: "Entrer le nom du chef",
+                controller: _nomController,
+                isPassword: true,
+              ),
+              10.verticalSpaceFromWidth,
+              const Text(
+                "Prénoms du Chef",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              CustomTextFormInput(
+                labelText: "",
+                hintText: "Entrer le(s) prénoms du chef",
+                controller: _prenomsController,
+                isPassword: true,
+              ),
+              10.verticalSpaceFromWidth,
+              PrimaryButton(
+                btnText: primaryBtnText,
+                width: double.infinity,
+                isFilledBtn: true,
+                onTapFunction: onTapPrimary,
+                btnBgColor: Palette.primary,
+              ),
+              10.verticalSpaceFromWidth,
+              PrimaryButton(
+                btnText: secondaryBtnText,
+                width: double.infinity,
+                isFilledBtn: true,
+                onTapFunction: onTapSecondary,
+                textColor: Palette.primary,
+                btnBgColor: Palette.white,
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -183,6 +179,7 @@ class _AddRecencementState extends State<AddRecencement> with RestorationMixin {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             CustomTextFormInput(
+              isReadonly: true,
               labelText: "",
               hintText: "CMS AGA",
               controller: _formationSanitaire,
@@ -212,22 +209,19 @@ class _AddRecencementState extends State<AddRecencement> with RestorationMixin {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              // initialSelection: "Agoe",
-              initialSelection: "Selectionner un village",
-              width: getWidth(300),
-
+              initialSelection: "Agoe",
               trailingIcon: Icon(Icons.keyboard_arrow_down_sharp),
               selectedTrailingIcon: Icon(Icons.keyboard_arrow_up_sharp),
-              // initialSelection: list.first,
               onSelected: (String? value) {
-                // This is called when the user selects an item.
                 setState(() {
                   _villageValue = value!;
                   print(_villageValue);
                 });
               },
+              //TODOS: remove static width
+              width: getWidth(333),
               dropdownMenuEntries:
-                  listQuartier.map<DropdownMenuEntry<String>>((String value) {
+                  listVillage.map<DropdownMenuEntry<String>>((String value) {
                 return DropdownMenuEntry<String>(value: value, label: value);
               }).toList(),
             ),
@@ -256,8 +250,8 @@ class _AddRecencementState extends State<AddRecencement> with RestorationMixin {
                 ),
               ),
               // initialSelection: "Agoe",
-              initialSelection: "Selectionner un quartier",
-              width: getWidth(300),
+              initialSelection: "Mamou",
+              width: getWidth(333),
 
               trailingIcon: Icon(Icons.keyboard_arrow_down_sharp),
               selectedTrailingIcon: Icon(Icons.keyboard_arrow_up_sharp),
@@ -270,7 +264,7 @@ class _AddRecencementState extends State<AddRecencement> with RestorationMixin {
                 });
               },
               dropdownMenuEntries:
-                  list.map<DropdownMenuEntry<String>>((String value) {
+                  listQuartier.map<DropdownMenuEntry<String>>((String value) {
                 return DropdownMenuEntry<String>(value: value, label: value);
               }).toList(),
             ),
@@ -322,7 +316,14 @@ class _AddRecencementState extends State<AddRecencement> with RestorationMixin {
                     btnText: "Ajouter un Chef",
                     isFilledBtn: false,
                     onTapFunction: () {
-                      dialogBuilder(context, (){}, (){}, "Ajouter un Chef Ménage", "", "Enregistrer", "Ajouter un membre de la famille");
+                      dialogBuilder(
+                          context,
+                          () {},
+                          () {},
+                          "Ajouter un Chef Ménage",
+                          "",
+                          "Enregistrer",
+                          "Ajouter un membre de la famille");
                     },
                   ),
                 )

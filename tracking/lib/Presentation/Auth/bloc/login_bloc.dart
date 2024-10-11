@@ -20,12 +20,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
          
 
-          // await Future.delayed(const Duration(seconds: 10));
+          await Future.delayed(const Duration(seconds: 2));
         //   SecretInfo _secret = SecretInfo();
           
-          data = await loginRepo.logUser(event.pwd, event.email);
+          // data = await loginRepo.logUser(event.pwd, event.email);
 
-          print(data);
+          // print(data);
         // //  print(data);
         //  _secret.storeToken(data);
         // //  _secret.decodeToken();

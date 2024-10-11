@@ -5,8 +5,13 @@ class Items extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  
-    
+   const  List<TrackingCard> items =  [
+      TrackingCard(),
+      TrackingCard(),
+      TrackingCard(),
+     
+    ];
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -20,31 +25,34 @@ class Items extends StatelessWidget {
           10.verticalSpace,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            
             children: [
-              const Expanded(
+              Expanded(
                   child: CardWidget(
                 icon: Icons.recent_actors,
-                title: "Récencements",
+                title: "Recen-\nsements",
+                onTap: () {
+                  Navigator.pushNamed(context, RoutesName.mainRecensement);
+                },
               )),
               15.horizontalSpace,
-              const Expanded(
+              Expanded(
                   child: CardWidget(
                 icon: Icons.local_activity_outlined,
-                title: "Activité ASC/AC",
+                title: "Activité \nASC/AC",
+                onTap: () {},
               )),
               15.horizontalSpace,
-              const Expanded(
+              Expanded(
                   child: CardWidget(
                 icon: Icons.people_sharp,
                 title: "Activité Préventives",
+                onTap: () {},
               )),
             ],
           ),
           10.verticalSpace,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            
             children: [
               const Expanded(
                   child: CardWidget(
@@ -71,8 +79,9 @@ class Items extends StatelessWidget {
             style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
           ),
           10.verticalSpace,
-
-          const RecentTrackingWidget(),
+          const RecentTrackingWidget(
+            cards: items,
+          ),
         ],
       ),
     );

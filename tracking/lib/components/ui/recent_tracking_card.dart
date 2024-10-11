@@ -6,18 +6,32 @@ class TrackingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 5),
+      padding: const EdgeInsets.only(bottom: 15),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Palette.white,
-          border: Border.all(color: Palette.primary),
-          borderRadius: BorderRadius.circular(10),
-          // boxShadow: [BoxShadow(color: Palette.dark2,blurRadius: 2,offset: Offset(0,5))]
-        ),
-        padding: const EdgeInsets.only(left: 10, right: 10),
+            color: Palette.white,
+            border: Border.all(color: Palette.cardBorderColor, width: 2),
+            borderRadius: BorderRadius.circular(10),
+            // boxShadow: const [
+            //   BoxShadow(
+            //     color: Palette.dark2,
+            //     blurRadius: 3,
+            //     offset:  Offset(0, 2),
+            //   ),
+            // ]
+            ),
+        padding: const EdgeInsets.only(left: 10, right: 10,top: 2,bottom: 3),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const CircleAvatar(
+              radius: 25,
+               backgroundColor: Palette.primary,
+               child: Text("FJ",style: TextStyle(color: Palette.white),),
+            ),
+            7.horizontalSpace,
+
             const Expanded(
                 flex: 2,
                 child: Column(
@@ -25,35 +39,45 @@ class TrackingCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "12 Sept, 2022",
+                      "Far Jeep",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    Text(
+                      "Age : 12 ans",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
                           color: Palette.foreign),
                     ),
                     Text(
-                      "Far Jeep",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                      "Date de naissance : 12/12/2022",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                          color: Palette.foreign),
                     ),
+                    Text(
+                      "Sexe : Feminin",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                          color: Palette.foreign),
+                    ),
+                    
                   ],
                 )),
-            Expanded(
-                child: Container(
-                    height: getHeight(100),
-                    width: getWidth(100),
-                    child: Image.asset("assets/jpg/map.jpg"))),
-            Expanded(
-              child: Column(
-                children: [
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.edit_outlined,
-                        color: Palette.primary,
-                      )),
-                ],
-              ),
+
+            Column(
+              children: [
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.arrow_forward_ios_outlined,
+                      color: Palette.contentPrimary,
+                      size: 15,
+                    )),
+              ],
             )
           ],
         ),

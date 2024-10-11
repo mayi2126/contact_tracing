@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tracking_pregnant/app/routes/router.dart';
 import 'package:tracking_pregnant/app/routes/routes_name.dart';
 import 'package:tracking_pregnant/design_system/pallete.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
           initialRoute: RoutesName.login,
           onGenerateRoute: Routes.onGenerateRoute,
           theme: ThemeData(
+              textTheme: GoogleFonts.poppinsTextTheme(  // Remplace 'lato' par la police souhaitée
+          Theme.of(context).textTheme.apply(bodyColor: Colors.black, displayColor: Colors.black),
+        ),
             highlightColor: Palette.primary,
             hintColor: Palette.white ,
             primaryColor:
@@ -55,6 +59,7 @@ class MyApp extends StatelessWidget {
             //   displaySmall: TextStyle(color: Palette.white),
             //   // Autres styles de texte (#FFFF87)
             // ),
+            focusColor: Palette.white,
             appBarTheme: const AppBarTheme(
               backgroundColor:
                   Palette.contentPrimary, // Couleur de fond (#EC8000)

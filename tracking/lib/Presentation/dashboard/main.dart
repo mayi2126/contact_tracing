@@ -81,21 +81,7 @@ class _DashboardPageState extends State<DashboardPage> {
               ],
             ),
       body: _widgetOptions.elementAt(_selectedIndex),
-      floatingActionButton: _selectedIndex == 0
-          ? FloatingActionButton(
-              backgroundColor: Palette.primary,
-              shape: const CircleBorder(),
-              child: const Icon(
-                Icons.add,
-                color: Palette.white,
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, RoutesName.addRecencement);
-              },
-            )
-          : null,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomNavigationBar(
+       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Palette.white,
         elevation: 10,
         unselectedItemColor: Palette.contentPrimary,

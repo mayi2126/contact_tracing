@@ -15,10 +15,10 @@ class Palette {
   static const Color textSuccess = Color(0xFF198155);
   static const Color bgSuccess = Color(0xFFECFCE5);
   static const Color bgGrey = Color.fromARGB(113, 230, 230, 230);
-    static const Color layout = Color.fromARGB(112, 14, 12, 12);
-        static const Color hintColor = Color.fromARGB(111, 70, 70, 70);
-
+  static const Color layout = Color.fromARGB(112, 14, 12, 12);
+  static const Color hintColor = Color.fromARGB(111, 70, 70, 70);
+  static const Color cardBorderColor = Color.fromARGB(92, 87, 87, 87);
 
   static const Color foreign = Color.fromARGB(202, 82, 82, 82);
-   static const Color containerBackground = Color.fromARGB(41, 197, 10, 10);
+  static const Color containerBackground = Color.fromARGB(41, 197, 10, 10);
 }

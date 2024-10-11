@@ -30,6 +30,7 @@ part '../components/ui/card.dart';
 part '../components/ui/recent_tracking_card.dart';
 part '../components/ui/form_recencement.dart';
 
-
+/* ------------------------------- RECENSEMENT ------------------------------ */
 part '../Presentation/recencement/add_recencement.dart';
+part '../Presentation/recencement/page_recensement.dart';
 
