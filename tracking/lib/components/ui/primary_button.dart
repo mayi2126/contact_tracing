@@ -1,12 +1,12 @@
 part of '../../core/cores.dart';
 
 // ignore: must_be_immutable
-class PrimarytButton extends StatelessWidget {
-  PrimarytButton(
+class PrimaryButton extends StatelessWidget {
+  PrimaryButton(
       {Key? key,
       required this.btnText,
       required this.isFilledBtn,
-      required this.onTapFuncton,
+      required this.onTapFunction,
       this.size = 16,
       this.height = 45,
       this.width = 100,
@@ -16,7 +16,7 @@ class PrimarytButton extends StatelessWidget {
       : super(key: key);
   final bool isFilledBtn;
   final String btnText;
-  final VoidCallback onTapFuncton;
+  final VoidCallback onTapFunction;
   Color? btnBgColor;
   Color? textColor;
   Color? borderColor;
@@ -31,6 +31,7 @@ class PrimarytButton extends StatelessWidget {
       height: getHeight(height),
       width: isInfinity ? double.infinity : getWidth(width),
       child: FilledButton(
+        
           style: ButtonStyle(
               backgroundColor: WidgetStatePropertyAll(btnBgColor ??
                   (!isFilledBtn ? Palette.contentPrimary : Palette.primary)),
@@ -39,7 +40,7 @@ class PrimarytButton extends StatelessWidget {
                   side: BorderSide(
                       color:borderColor?? btnBgColor ?? Palette.primary,
                       width: 1)))),
-          onPressed: onTapFuncton,
+          onPressed: onTapFunction,
           child: Text(
             btnText,
             textAlign: TextAlign.center,

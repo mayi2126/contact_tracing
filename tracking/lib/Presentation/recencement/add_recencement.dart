@@ -137,20 +137,20 @@ class _AddRecencementState extends State<AddRecencement> with RestorationMixin {
               isPassword: true,
             ),
             10.verticalSpaceFromWidth,
-            PrimarytButton(
+            PrimaryButton(
               btnText: primaryBtnText,
               width: double.infinity,
               isFilledBtn: true,
-              onTapFuncton: onTapPrimary,
+              onTapFunction: onTapPrimary,
               btnBgColor: Palette.primary,
         
             ),
             10.verticalSpaceFromWidth,
-            PrimarytButton(
+            PrimaryButton(
               btnText: secondaryBtnText,
               width: double.infinity,
               isFilledBtn: true,
-              onTapFuncton: onTapSecondary,
+              onTapFunction: onTapSecondary,
               textColor: Palette.primary,
               btnBgColor: Palette.white,
               
@@ -306,22 +306,22 @@ class _AddRecencementState extends State<AddRecencement> with RestorationMixin {
             Row(
               children: [
                 Expanded(
-                  child: PrimarytButton(
+                  child: PrimaryButton(
                     btnBgColor: Palette.primary,
                     textColor: Palette.contentPrimary,
                     btnText: "Enregistrer",
                     isFilledBtn: false,
-                    onTapFuncton: () {},
+                    onTapFunction: () {},
                   ),
                 ),
                 5.horizontalSpace,
                 Expanded(
-                  child: PrimarytButton(
+                  child: PrimaryButton(
                     btnBgColor: Palette.primary,
                     textColor: Palette.contentPrimary,
                     btnText: "Ajouter un Chef",
                     isFilledBtn: false,
-                    onTapFuncton: () {
+                    onTapFunction: () {
                       dialogBuilder(context, (){}, (){}, "Ajouter un Chef Ménage", "", "Enregistrer", "Ajouter un membre de la famille");
                     },
                   ),

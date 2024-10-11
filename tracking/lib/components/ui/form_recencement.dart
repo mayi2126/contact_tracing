@@ -27,19 +27,19 @@ Future<void> dialogBuilder(
               textAlign: TextAlign.center,
             ),
             20.verticalSpaceFromWidth,
-            PrimarytButton(
+            PrimaryButton(
               btnText: primaryBtnText,
               width: double.infinity,
               isFilledBtn: true,
-              onTapFuncton: onTapPrimary,
+              onTapFunction: onTapPrimary,
               btnBgColor: Palette.primary,
             ),
             20.verticalSpaceFromWidth,
-            PrimarytButton(
+            PrimaryButton(
               btnText: secondaryBtnText,
               width: double.infinity,
               isFilledBtn: true,
-              onTapFuncton: onTapSecondary,
+              onTapFunction: onTapSecondary,
               textColor: Palette.primary,
               btnBgColor: Palette.white,
             ),
