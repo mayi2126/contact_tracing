@@ -24,12 +24,7 @@ class _DashboardPageState extends State<DashboardPage> {
         // style: optionStyle,
       ),
     ),
-    Center(
-      child: Text(
-        'Index 2: Profile',
-        // style: optionStyle,
-      ),
-    ),
+    ProfilePage()
   ];
 
   @override
