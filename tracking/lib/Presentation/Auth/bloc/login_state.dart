@@ -10,7 +10,7 @@ sealed class LoginState extends Equatable {
 final class LoginInitial extends LoginState {}
 
 final class LoginLoading extends LoginState {
-  final String msg = "Traitement en cours...";
+  final String msg = "Connexion en cours...";
   @override
   List<Object> get props => [msg];
 }

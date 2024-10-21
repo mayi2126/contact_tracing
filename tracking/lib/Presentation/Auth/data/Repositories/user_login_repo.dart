@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:tracking_pregnant/API/constants_urls.dart';
+import 'package:tracking_pregnant/Presentation/Auth/data/Models/user_token.dart';
+import 'package:tracking_pregnant/Presentation/Auth/data/Repositories/auth_user.dart';
 import 'package:tracking_pregnant/app/storage/local_storage.dart';
 
 abstract class UserLoginRepository {
@@ -16,9 +18,16 @@ class UserLoginRepo extends UserLoginRepository {
     if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
       final token = jsonResponse['authorisation']['token'];
-      
+      final userRepository = UserRepository();
+
       await storeToken(token);
-      
+      // Assuming you got the JSON response from the server:
+      Map<String, dynamic> userJson = jsonDecode(response.body)['user'];
+      User user = User.fromJson(userJson);
+
+// Save user data
+      await userRepository.saveUser(user);
+
       return token;
     } else {
       print("ERROR IN API CALL ${response.statusCode}");

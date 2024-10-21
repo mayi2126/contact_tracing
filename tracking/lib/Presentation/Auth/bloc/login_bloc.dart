@@ -21,8 +21,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(LoginLoading());
    
     final token = await authRepository.logUser(event.email, event.pwd);
-    print(token);
+   
     if (token != null) {
+
+      
       emit(LoginLoaded(token));
     } else {
       emit(Unauthenticated());

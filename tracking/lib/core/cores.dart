@@ -1,8 +1,13 @@
 library core;
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tracking_pregnant/Presentation/Auth/bloc/login_bloc.dart';
+import 'package:tracking_pregnant/Presentation/Auth/data/Models/user_token.dart';
+import 'package:tracking_pregnant/Presentation/Auth/data/Repositories/auth_user.dart';
 import 'package:tracking_pregnant/Presentation/Auth/data/Repositories/user_login_repo.dart';
 import 'package:tracking_pregnant/app/config/app_config.dart';
 import 'package:tracking_pregnant/app/routes/routes_name.dart';
