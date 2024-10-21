@@ -3,39 +3,44 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tracking_pregnant/Presentation/Auth/data/Repositories/user_login_repo.dart';
+import 'package:tracking_pregnant/app/storage/local_storage.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final UserLoginRepo loginRepo ;
-  late String data;
-  
+  final UserLoginRepo authRepository;
 
-  LoginBloc(this.loginRepo) : super(LoginInitial()) {
-    on<LoginEvent>((event, emit) async {
-      if (event is LoginDataSending)  {
-        emit(LoginLoading());  
-        try {
+  LoginBloc({required this.authRepository}) : super(LoginInitial()) {
+    on<LoginDataSending>(_onLogin);
+    on<AuthLogout>(_onLogout);
+    on<AuthCheckStatus>(_onCheckStatus);
+  }
 
-         
+  Future<void> _onLogin(LoginDataSending event, Emitter<LoginState> emit) async {
+    emit(LoginLoading());
+   
+    final token = await authRepository.logUser(event.email, event.pwd);
+    print(token);
+    if (token != null) {
+      emit(LoginLoaded(token));
+    } else {
+      emit(Unauthenticated());
+    }
+  }
 
-          await Future.delayed(const Duration(seconds: 2));
-        //   SecretInfo _secret = SecretInfo();
-          
-          // data = await loginRepo.logUser(event.pwd, event.email);
+  Future<void> _onLogout(AuthLogout event, Emitter<LoginState> emit) async {
+    await logout();
+    emit(Unauthenticated());
+  }
 
-          // print(data);
-        // //  print(data);
-        //  _secret.storeToken(data);
-        // //  _secret.decodeToken();
-        //  _secret.refreshToken();
-          emit(LoginLoaded());
-         
-        } catch (e) {
-          emit(LoginError());
-        }
-      }
-    });
+  Future<void> _onCheckStatus(AuthCheckStatus event, Emitter<LoginState> emit) async {
+    final token = await getToken();
+    if (token != null) {
+      emit(LoginLoaded(token));
+    } else {
+      emit(Unauthenticated());
+    }
   }
 }
+

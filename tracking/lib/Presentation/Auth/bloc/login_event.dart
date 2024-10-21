@@ -14,3 +14,9 @@ class LoginDataSending extends LoginEvent {
   const LoginDataSending(this.pwd, this.email);
   
 }
+
+
+
+class AuthLogout extends LoginEvent {}
+
+class AuthCheckStatus extends LoginEvent {}

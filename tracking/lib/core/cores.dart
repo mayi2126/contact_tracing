@@ -19,6 +19,7 @@ part '../components/ui/primary_button.dart';
 
 
 part '../Presentation/Auth/login/page.dart';
+part '../Presentation/splash/splash.dart';
 
 part '../Presentation/dashboard/main.dart';
 

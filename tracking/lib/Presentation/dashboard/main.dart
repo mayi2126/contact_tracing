@@ -20,7 +20,13 @@ class _DashboardPageState extends State<DashboardPage> {
     Items(),
     Center(
       child: Text(
-        'Index 1: Profile',
+        'Index 1: Autres',
+        // style: optionStyle,
+      ),
+    ),
+    Center(
+      child: Text(
+        'Index 2: Profile',
         // style: optionStyle,
       ),
     ),

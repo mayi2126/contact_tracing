@@ -5,11 +5,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LoginBloc(
-          UserLoginRepo()), // Assurez-vous de remplacer LoginBloc par votre bloc réel
-      child: const _LoginPageBody(),
-    );
+    return const _LoginPageBody();
   }
 }
 
@@ -21,8 +17,8 @@ class _LoginPageBody extends StatefulWidget {
 }
 
 class _LoginPageBodyState extends State<_LoginPageBody> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _emailController = TextEditingController(text: 'ascagbandi@gmail.com');
+  final _passwordController = TextEditingController(text: '12345678');
   final _formKey = GlobalKey<FormState>();
   var desabledButton = false;
 
@@ -44,7 +40,7 @@ class _LoginPageBodyState extends State<_LoginPageBody> {
             Navigator.pushReplacementNamed(context, RoutesName.main);
           }
 
-          if( state is LoginLoading){
+          if (state is LoginLoading) {
             desabledButton = true;
           }
         },
@@ -99,14 +95,22 @@ class _LoginPageBodyState extends State<_LoginPageBody> {
                               onTapFunction: state is LoginLoading
                                   ? () {}
                                   : () {
-                                    //TODOS: Validation des champs
+                                      //TODOS: Validation des champs
                                       if (true) {
-                                        BlocProvider.of<LoginBloc>(context).add(
-                                          LoginDataSending(
-                                            _emailController.text,
-                                            _passwordController.text,
-                                          ),
-                                        );
+                                        // BlocProvider.of<LoginBloc>(context).add(
+                                        //   LoginDataSending(
+                                        //     _emailController.text,
+                                        //     _passwordController.text,
+                                        //   ),
+                                        // );
+
+                                        context.read<LoginBloc>().add(
+                                              LoginDataSending(
+                                                _emailController.text,
+                                                _passwordController.text,
+                                              ),
+                                            );
+
                                         // Optionnel : gérer la navigation après une connexion réussie
                                       }
                                     },
