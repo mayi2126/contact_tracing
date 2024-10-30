@@ -66,10 +66,13 @@ class Items extends StatelessWidget {
                 title: "Dialogues",
               )),
               15.horizontalSpace,
-              const Expanded(
+               Expanded(
                   child: CardWidget(
                 icon: Icons.handshake,
                 title: "Causeries Éducatives",
+                onTap: (){
+                    Navigator.pushNamed(context, RoutesName.causerie);
+                },
               )),
             ],
           ),

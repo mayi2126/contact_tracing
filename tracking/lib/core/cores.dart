@@ -45,3 +45,6 @@ part '../Presentation/recencement/page_recensement.dart';
 
 /* --------------------------------- PROFILE -------------------------------- */
 part '../Presentation/profiles/profile_page.dart';
+
+part '../Presentation/Causeries/main.dart';
+part '../Presentation/Causeries/add_causerie.dart';

@@ -17,7 +17,11 @@ class Routes {
         return MaterialPageRoute(builder: (context) => const MainRecensement());
       case RoutesName.splash:
         return MaterialPageRoute(builder: (context) => const SplashPage());
-
+        case RoutesName.causerie:
+        return MaterialPageRoute(builder: (context) => const CauseriePage());
+      
+   case RoutesName.addCauserie:
+        return MaterialPageRoute(builder: (context) => const AddCauserie());
       default:
         return MaterialPageRoute(
           builder: (context) => const Scaffold(
