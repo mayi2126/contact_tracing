@@ -54,10 +54,13 @@ class Items extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Expanded(
+               Expanded(
                   child: CardWidget(
                 icon: Icons.health_and_safety_outlined,
                 title: "Visite A Domicile",
+                onTap: () {
+                  Navigator.pushNamed(context, RoutesName.visite);
+                },
               )),
               15.horizontalSpace,
               const Expanded(

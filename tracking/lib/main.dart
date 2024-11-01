@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tracking_pregnant/Presentation/Auth/bloc/login_bloc.dart';
 import 'package:tracking_pregnant/Presentation/Auth/data/Repositories/user_login_repo.dart';
+import 'package:tracking_pregnant/Presentation/visite/bloc/visite_bloc.dart';
+import 'package:tracking_pregnant/Presentation/visite/data/Repository/visite_repo.dart';
 import 'package:tracking_pregnant/app/config/app_config.dart';
 import 'package:tracking_pregnant/app/routes/router.dart';
 import 'package:tracking_pregnant/app/routes/routes_name.dart';
@@ -19,6 +21,7 @@ void main() {
 class MyApp extends StatelessWidget {
  
   final UserLoginRepo _authRepository = UserLoginRepo();
+  final VisiteRepositoryImpl _visiteRepository = VisiteRepositoryImpl();
 
   MyApp({super.key});
 
@@ -30,9 +33,17 @@ class MyApp extends StatelessWidget {
       statusBarColor: Palette.primary,        // Set the status bar color
       statusBarIconBrightness: Brightness.light, // Set text/icon color to light
     ));
-    return BlocProvider(
-       create: (context) => LoginBloc(authRepository:  _authRepository)
-       ..add(AuthCheckStatus()) ,
+    return MultiBlocProvider(
+      providers: [
+       BlocProvider(
+          create: (context) => LoginBloc(authRepository: _authRepository)
+            ..add(AuthCheckStatus()),
+        ),
+         BlocProvider(
+          create: (context) => VisiteBloc( visiteRepository: _visiteRepository), // Remplace par l'initialisation de ton UserBloc
+        ),
+      ],
+      
       child: ScreenUtilInit(
         designSize: const Size(392.72727272727275, 759.2727272727273),
         minTextAdapt: true,

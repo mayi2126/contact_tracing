@@ -23,6 +23,7 @@ class UserLoginRepo extends UserLoginRepository {
       await storeToken(token);
       // Assuming you got the JSON response from the server:
       Map<String, dynamic> userJson = jsonDecode(response.body)['user'];
+      print(userJson);
       User user = User.fromJson(userJson);
 
 // Save user data

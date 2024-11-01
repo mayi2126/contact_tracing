@@ -138,6 +138,7 @@ class _addRecensementState extends State<AddRecensement> with RestorationMixin {
               PrimaryButton(
                 btnText: primaryBtnText,
                 width: double.infinity,
+                textColor: Palette.white,
                 isFilledBtn: true,
                 onTapFunction: onTapPrimary,
                 btnBgColor: Palette.primary,
@@ -150,6 +151,7 @@ class _addRecensementState extends State<AddRecensement> with RestorationMixin {
                 onTapFunction: onTapSecondary,
                 textColor: Palette.primary,
                 btnBgColor: Palette.white,
+                
               ),
             ],
           ),
@@ -157,6 +159,10 @@ class _addRecensementState extends State<AddRecensement> with RestorationMixin {
       },
     );
   }
+
+
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -302,7 +308,7 @@ class _addRecensementState extends State<AddRecensement> with RestorationMixin {
                 Expanded(
                   child: PrimaryButton(
                     btnBgColor: Palette.primary,
-                    textColor: Palette.contentPrimary,
+                    textColor: Palette.white,
                     btnText: "Enregistrer",
                     isFilledBtn: false,
                     onTapFunction: () {},
@@ -312,14 +318,16 @@ class _addRecensementState extends State<AddRecensement> with RestorationMixin {
                 Expanded(
                   child: PrimaryButton(
                     btnBgColor: Palette.primary,
-                    textColor: Palette.contentPrimary,
+                    textColor: Palette.white,
                     btnText: "Ajouter un Chef",
                     isFilledBtn: false,
                     onTapFunction: () {
                       dialogBuilder(
                           context,
                           () {},
-                          () {},
+                          () {
+                            Navigator.pushNamed(context, RoutesName.addMember);
+                          },
                           "Ajouter un Chef Ménage",
                           "",
                           "Enregistrer",

@@ -17,11 +17,20 @@ class Routes {
         return MaterialPageRoute(builder: (context) => const MainRecensement());
       case RoutesName.splash:
         return MaterialPageRoute(builder: (context) => const SplashPage());
-        case RoutesName.causerie:
+      case RoutesName.causerie:
         return MaterialPageRoute(builder: (context) => const CauseriePage());
-      
-   case RoutesName.addCauserie:
+
+      case RoutesName.addCauserie:
         return MaterialPageRoute(builder: (context) => const AddCauserie());
+
+      case RoutesName.addVisite:
+        return MaterialPageRoute(builder: (context) => const AddVisitePage());
+
+      case RoutesName.visite:
+        return MaterialPageRoute(builder: (context) => const VisitePage());
+
+        case RoutesName.addMember:
+        return MaterialPageRoute(builder: (context) => const AddMemberPage());
       default:
         return MaterialPageRoute(
           builder: (context) => const Scaffold(

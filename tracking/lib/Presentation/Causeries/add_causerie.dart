@@ -297,7 +297,7 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
                       PrimaryButton(
                         width: 2,
                         btnBgColor: Palette.primary,
-                        textColor: Palette.contentPrimary,
+                        textColor: Palette.white,
                         btnText: "Suivant",
                         isFilledBtn: false,
                         onTapFunction: () {
@@ -390,7 +390,7 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
                             Expanded(
                               child: PrimaryButton(
                                 btnBgColor: Palette.primary,
-                                textColor: Palette.contentPrimary,
+                                textColor: Palette.white,
                                 btnText: "Précédent",
                                 isFilledBtn: false,
                                 onTapFunction: () {
@@ -405,7 +405,7 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
                               child: PrimaryButton(
                                 width: 2,
                                 btnBgColor: Palette.primary,
-                                textColor: Palette.contentPrimary,
+                                textColor: Palette.white,
                                 btnText: "Enregistrer",
                                 isFilledBtn: false,
                                 onTapFunction: () {},
