@@ -6,6 +6,21 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
+      20.verticalSpace,
+     
+          CircleAvatar(
+            radius: 60,
+            backgroundImage: Image.asset("assets/jpg/pp.jpg").image,
+          ),
+
+          15.verticalSpace,
+     Text(
+                                "ASC AGBANDI",
+                                style: TextStyle(
+                                    color: Palette.primary,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18),
+                              ),
       Spacer(),
       ListTile(
         leading: Icon(Icons.logout_outlined),
@@ -35,11 +50,9 @@ class ProfilePage extends StatelessWidget {
           );
 
           Future.delayed(const Duration(seconds: 3), () {
-             context.read<LoginBloc>().add(AuthLogout());
+            context.read<LoginBloc>().add(AuthLogout());
             Navigator.of(context).pushReplacementNamed(RoutesName.splash);
           });
-
-         
         },
       )
     ]);

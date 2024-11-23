@@ -6,54 +6,64 @@ class CardWidget extends StatefulWidget {
     required this.icon,
     required this.title,
     this.onTap,
+    required this.image,
   });
   final IconData icon;
   final String title;
   final Function()? onTap;
+  final String image;
 
   @override
   State<CardWidget> createState() => _CardWidgetState();
 }
 
 class _CardWidgetState extends State<CardWidget> {
-   Color _containerColor = Palette.card;
+  Color _containerColor = Palette.card;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTapDown: (_) {
-        setState(() {
-          _containerColor = Palette.primary; // Change la couleur sur le clic
-        });
-      },
-      onTapUp: (_) {
-        setState(() {
-          _containerColor = Palette.card; // Rétablit la couleur d'origine
-        });
-      },
+     
       onTap: widget.onTap,
       child: Container(
         height: getHeight(120),
-        width: getWidth(50),
+        width: double
+            .infinity, // Assurez-vous que la largeur est bien "double.infinity" dans Expanded
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: _containerColor,
+          color: Palette.white,
+          boxShadow:  [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: const Offset(3, 8),
+          )]
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            10.verticalSpace,
-            CircleAvatar(
-              radius: 10,
-              backgroundColor: Colors.transparent,
-              child: Icon(
-                widget.icon,
+            Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: Image.asset(
+                  widget.image, // Remplacez par l'URL de votre image
+                  width: getWidth(70),
+                  height: getHeight(70),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-            10.verticalSpace,
-            Text(
-              widget.title,
-              textAlign: TextAlign.center,
+            5.verticalSpace,
+            Padding(
+              padding: const EdgeInsets.only(left: 2),
+              child: Text(
+                widget.title,
+                textAlign: TextAlign.left,
+                style: const TextStyle(
+                    fontSize: 10, fontWeight: FontWeight.bold),
+              ),
             )
           ],
         ),

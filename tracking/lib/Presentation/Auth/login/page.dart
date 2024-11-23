@@ -47,17 +47,17 @@ class _LoginPageBodyState extends State<_LoginPageBody> {
         child: BlocBuilder<LoginBloc, LoginState>(
           builder: (context, state) {
             return Padding(
-              padding: const EdgeInsets.all(25.0),
+              padding: const EdgeInsets.fromLTRB(25, 5, 25, 25),
               child: Center(
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const CircleAvatar(
-                        radius: 50,
-                        backgroundColor: Palette.primary,
-                        child: Icon(Icons.person),
+                      SizedBox(
+                        height: 200,
+                        width: 200,
+                        child: SvgPicture.asset("assets/svg/access1.svg",fit: BoxFit.fill,),
                       ),
                       const SizedBox(height: 35),
                       const Text(
@@ -88,6 +88,7 @@ class _LoginPageBodyState extends State<_LoginPageBody> {
                             ),
                             25.verticalSpace,
                             PrimaryButton(
+                              textColor: Palette.white,
                               btnText: state is LoginLoading
                                   ? state.msg
                                   : "Se connecter",
