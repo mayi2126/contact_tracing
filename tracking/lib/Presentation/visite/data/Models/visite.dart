@@ -2,14 +2,12 @@ import 'package:meta/meta.dart';
 import 'dart:convert';
 
 class Visite {
-    int idregion;
+
     int idFsAp;
     int idquartier;
-    int iddistrict;
     int idAscAp;
     int idvillage;
-    int idcommune;
-    DateTime dateAp;
+    String dateAp;
     String lieuAp;
     int idelementDonnee;
     int nbrepersonnetoucheeFnq;
@@ -21,13 +19,10 @@ class Visite {
     int userEnreg;
 
     Visite({
-        required this.idregion,
         required this.idFsAp,
         required this.idquartier,
-        required this.iddistrict,
         required this.idAscAp,
         required this.idvillage,
-        required this.idcommune,
         required this.dateAp,
         required this.lieuAp,
         required this.idelementDonnee,
@@ -41,14 +36,11 @@ class Visite {
     });
 
     Visite copyWith({
-        int? idregion,
         int? idFsAp,
         int? idquartier,
-        int? iddistrict,
         int? idAscAp,
         int? idvillage,
-        int? idcommune,
-        DateTime? dateAp,
+        String? dateAp,
         String? lieuAp,
         int? idelementDonnee,
         int? nbrepersonnetoucheeFnq,
@@ -60,13 +52,10 @@ class Visite {
         int? userEnreg,
     }) => 
         Visite(
-            idregion: idregion ?? this.idregion,
             idFsAp: idFsAp ?? this.idFsAp,
             idquartier: idquartier ?? this.idquartier,
-            iddistrict: iddistrict ?? this.iddistrict,
             idAscAp: idAscAp ?? this.idAscAp,
             idvillage: idvillage ?? this.idvillage,
-            idcommune: idcommune ?? this.idcommune,
             dateAp: dateAp ?? this.dateAp,
             lieuAp: lieuAp ?? this.lieuAp,
             idelementDonnee: idelementDonnee ?? this.idelementDonnee,
@@ -84,14 +73,11 @@ class Visite {
     String toJson() => json.encode(toMap());
 
     factory Visite.fromMap(Map<String, dynamic> json) => Visite(
-        idregion: json["Idregion"],
         idFsAp: json["idFsAp"],
         idquartier: json["Idquartier"],
-        iddistrict: json["Iddistrict"],
         idAscAp: json["idAscAp"],
         idvillage: json["Idvillage"],
-        idcommune: json["Idcommune"],
-        dateAp: DateTime.parse(json["dateAp"]),
+        dateAp: json["dateAp"],
         lieuAp: json["lieuAp"],
         idelementDonnee: json["IdelementDonnee"],
         nbrepersonnetoucheeFnq: json["nbrepersonnetoucheeFnq"],
@@ -104,14 +90,11 @@ class Visite {
     );
 
     Map<String, dynamic> toMap() => {
-        "Idregion": idregion,
         "idFsAp": idFsAp,
         "Idquartier": idquartier,
-        "Iddistrict": iddistrict,
         "idAscAp": idAscAp,
         "Idvillage": idvillage,
-        "Idcommune": idcommune,
-        "dateAp": "${dateAp.year.toString().padLeft(4, '0')}-${dateAp.month.toString().padLeft(2, '0')}-${dateAp.day.toString().padLeft(2, '0')}",
+        "dateAp": dateAp,
         "lieuAp": lieuAp,
         "IdelementDonnee": idelementDonnee,
         "nbrepersonnetoucheeFnq": nbrepersonnetoucheeFnq,

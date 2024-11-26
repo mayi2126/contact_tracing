@@ -28,7 +28,8 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
   String _villageValue = "";
   String _quartierValue = "";
   String _themeValue = "";
-  final TextEditingController _formationSanitaire = TextEditingController();
+  final TextEditingController _formationSanitaire =
+      TextEditingController(text: "10");
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _localisationController = TextEditingController();
   final TextEditingController _nbrePersonnesTController =
@@ -74,9 +75,9 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
         return DatePickerDialog(
           restorationId: 'date_picker_dialog',
           initialEntryMode: DatePickerEntryMode.calendarOnly,
-          initialDate: DateTime.fromMillisecondsSinceEpoch(arguments! as int),
-          firstDate: DateTime(2021),
-          lastDate: DateTime(DateTime.now().year),
+          initialDate: DateTime.fromMillisecondsSinceEpoch(arguments as int),
+          firstDate: DateTime(1900, 1, 1), // Première date : 1er janvier 1900
+          lastDate: DateTime.now(), // Dernière date : aujourd'hui
         );
       },
     );
@@ -94,7 +95,7 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
       setState(() {
         _selectedDate.value = newSelectedDate;
         _dateController.text =
-            '${_selectedDate.value.day}/${_selectedDate.value.month}/${_selectedDate.value.year}';
+            '${_selectedDate.value.year}/${_selectedDate.value.month}/${_selectedDate.value.day}';
       });
     }
   }
@@ -103,48 +104,48 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
     if (_formKey2.currentState!.validate()) {
       // _formKey.currentState!.save();
 
-      Visite visite = Visite(
-        idFsAp: 1, // ID de la formation sanitaire
-        dateAp: DateTime.parse("2024-11-01"), // Date au format ISO
-        lieuAp: "Centre de santé de la ville", // Lieu de la visite
-        nbrepersonnetoucheeFnq: 50, // Nombre total de personnes touchées
-        nbrepersonnetoucheeFa: 10, // Nombre de personnes allaitantes touchées
-        nbreenfantzvtouche: 20, // Nombre d'enfants touchés
-        nbrepersonnetoucheeH: 15, // Nombre d'hommes touchés
-        nbrepersonnetoucheeFe: 5, // Nombre de femmes enceintes touchées
-        nbreautrestouche: 3, // Autres personnes touchées
-        idvillage: 1, // ID fictif du village
-        idquartier: 1, // ID fictif du quartier
-        idelementDonnee: 2, // Valeur du thème
-        idAscAp: 1, // ID fictif de l'ASC
-        idcommune: 1, // ID fictif de la commune
-        iddistrict: 1, // ID fictif du district
-        idregion: 1, // ID fictif de la région
-        userEnreg: 123, // ID fictif de l'utilisateur
+      // Visite visite = Visite(
+      //   idFsAp: 10, // ID de la formation sanitaire
+      //   dateAp: "2024-10-23", // Date au format ISO
+      //   lieuAp: "Quartier ABC", // Lieu de la visite
+      //   nbrepersonnetoucheeFnq: 50, // Nombre total de personnes touchées
+      //   nbrepersonnetoucheeFa: 10, // Nombre de personnes allaitantes touchées
+      //   nbreenfantzvtouche: 20, // Nombre d'enfants touchés
+      //   nbrepersonnetoucheeH: 15, // Nombre d'hommes touchés
+      //   nbrepersonnetoucheeFe: 5, // Nombre de femmes enceintes touchées
+      //   nbreautrestouche: 3, // Autres personnes touchées
+      //   idvillage: 5, // ID fictif du village
+      //   idquartier: 6, // ID fictif du quartier
+      //   idelementDonnee: 7, // Valeur du thème
+      //   idAscAp: 10, // ID fictif de l'ASC
+      //   userEnreg: 10, // ID fictif de l'utilisateur
+      // );()
+
+      print(_villageValue);
+      print(_quartierValue);
+
+      Visite _visite = Visite(
+        idFsAp: int.parse(_formationSanitaire.text),
+        dateAp: _dateController.text,
+        lieuAp: _localisationController.text,
+        nbrepersonnetoucheeFnq: int.parse(_nbrePersonnesTController.text),
+        nbrepersonnetoucheeFa:
+            int.parse(__nbrePersonnesTAllaitantesController.text),
+        nbreenfantzvtouche: int.parse(__nbrePersonnesTEnfantsController.text),
+        nbrepersonnetoucheeH: int.parse(__nbrePersonnesTHommesController.text),
+        nbrepersonnetoucheeFe:
+            int.parse(__nbrePersonnesTEnceintesController.text),
+        nbreautrestouche: int.parse(__autresController.text),
+        idvillage: int.parse(_villageValue),
+        idquartier: int.parse(_quartierValue),
+        idelementDonnee: int.parse(_themeValue),
+        idAscAp: 0,
+        userEnreg: int.parse(_formationSanitaire.text),
       );
 
-      // Visite viste = Visite(
-      //   idFsAp: int.parse(_formationSanitaire.text),
-      //   dateAp: DateTime.parse(_dateController.text),
-      //   lieuAp: _localisationController.text,
-      //   nbrepersonnetoucheeFnq: int.parse(_nbrePersonnesTController.text),
-      //   nbrepersonnetoucheeFa:
-      //       int.parse(__nbrePersonnesTAllaitantesController.text),
-      //   nbreenfantzvtouche: int.parse(__nbrePersonnesTEnfantsController.text),
-      //   nbrepersonnetoucheeH: int.parse(__nbrePersonnesTHommesController.text),
-      //   nbrepersonnetoucheeFe:
-      //       int.parse(__nbrePersonnesTEnceintesController.text),
-      //   nbreautrestouche: int.parse(__autresController.text),
-      //   idvillage: 0,
-      //   idquartier: 0,
-      //   idelementDonnee: int.parse(_themeValue),
-      //   idAscAp: 0,
-      //   idcommune: 0,
-      //   iddistrict: 0,
-      //   idregion: 0,
-      //   userEnreg: 0,
-      // );
-      context.read<VisiteBloc>().add(AddVisiteDomicile(visite));
+      print(_visite.toJson());
+
+      context.read<VisiteBloc>().add(AddVisiteDomicile(_visite));
     }
   }
 
@@ -165,8 +166,12 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
             showDialogCustom(context, "En cours de sauvegarde ...");
           }
 
-          if (state is VisiteAdded){
+          if (state is VisiteAdded) {
+            Navigator.pushReplacementNamed(context, RoutesName.visite);
+          }
+          if (state is VisiteError) {
             Navigator.pop(context);
+            showDialogCustom(context, state.message);
           }
         },
         child: BlocBuilder<VisiteBloc, VisiteState>(
@@ -203,100 +208,40 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                               CustomTextFormInput(
                                 isReadonly: true,
                                 labelText: "",
-                                hintText: "CMS AGA",
+                                hintText: "10",
                                 controller: _formationSanitaire,
-                                isPassword: true,
+                                isPassword: false,
                               ),
-                              // 10.verticalSpace,
-                              // const Text(
-                              //   "Village",
-                              //   style: TextStyle(fontWeight: FontWeight.bold),
-                              // ),
-                              // DropdownMenu<String>(
-                              //   inputDecorationTheme: InputDecorationTheme(
-                              //     filled: true,
-                              //     fillColor: Palette.bgGrey,
-                              //     focusedBorder: const OutlineInputBorder(
-                              //       borderRadius: BorderRadius.all(Radius.circular(10)),
-                              //       borderSide: BorderSide(
-                              //         color: Palette.primary,
-                              //         width: 2,
-                              //       ),
-                              //     ),
-                              //     enabledBorder: OutlineInputBorder(
-                              //       borderSide: const BorderSide(
-                              //         color: Palette.stroke,
-                              //         width: 2,
-                              //       ),
-                              //       borderRadius: BorderRadius.circular(10),
-                              //     ),
-                              //   ),
-                              //   initialSelection: "Agoe",
-                              //   trailingIcon: Icon(Icons.keyboard_arrow_down_sharp),
-                              //   selectedTrailingIcon:
-                              //       Icon(Icons.keyboard_arrow_up_sharp),
-                              //   onSelected: (String? value) {
-                              //     setState(() {
-                              //       _villageValue = value!;
-                              //       print(_villageValue);
-                              //     });
-                              //   },
-                              //   //TODOS: remove static width
-                              //   width: getWidth(333),
-                              //   dropdownMenuEntries: listVillage
-                              //       .map<DropdownMenuEntry<String>>((String value) {
-                              //     return DropdownMenuEntry<String>(
-                              //         value: value, label: value);
-                              //   }).toList(),
-                              // ),
+                              10.verticalSpace,
+                              const Text(
+                                "Village",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+
+                              DropMenuVillage(
+                                onSelected: (String? value) {
+                                  setState(() {
+                                    _villageValue = value!;
+                                    print(_villageValue);
+                                  });
+                                },
+                              ),
+
                               10.verticalSpace,
                               const Text(
                                 "Quartier",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              DropdownMenu<String>(
-                                inputDecorationTheme: InputDecorationTheme(
-                                  filled: true,
-                                  fillColor: Palette.bgGrey,
-                                  focusedBorder: const OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                    borderSide: BorderSide(
-                                      color: Palette.primary,
-                                      width: 2,
-                                    ),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Palette.stroke,
-                                      width: 2,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                                // initialSelection: "Agoe",
-                                initialSelection: "Mamou",
-                                width: getWidth(333),
-
-                                trailingIcon:
-                                    Icon(Icons.keyboard_arrow_down_sharp),
-                                selectedTrailingIcon:
-                                    Icon(Icons.keyboard_arrow_up_sharp),
-                                // initialSelection: list.first,
+                              DropMenuQuartier(
                                 onSelected: (String? value) {
-                                  // This is called when the user selects an item.
                                   setState(() {
                                     _quartierValue = value!;
-                                    print(_quartierValue);
+                                    print(
+                                        "Quartier sélectionné: $_quartierValue");
                                   });
                                 },
-                                dropdownMenuEntries: listQuartier
-                                    .map<DropdownMenuEntry<String>>(
-                                        (String value) {
-                                  return DropdownMenuEntry<String>(
-                                      value: value, label: value);
-                                }).toList(),
                               ),
+
                               10.verticalSpace,
                               const Text(
                                 "Date",
@@ -329,45 +274,55 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                 "Thème",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              DropdownMenu<String>(
-                                inputDecorationTheme: InputDecorationTheme(
-                                  filled: true,
-                                  fillColor: Palette.bgGrey,
-                                  focusedBorder: const OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                    borderSide: BorderSide(
-                                      color: Palette.primary,
-                                      width: 2,
-                                    ),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Palette.stroke,
-                                      width: 2,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                                initialSelection: "famille",
-                                trailingIcon:
-                                    Icon(Icons.keyboard_arrow_down_sharp),
-                                selectedTrailingIcon:
-                                    Icon(Icons.keyboard_arrow_up_sharp),
+                              // DropdownMenu<String>(
+                              //   inputDecorationTheme: InputDecorationTheme(
+                              //     filled: true,
+                              //     fillColor: Palette.bgGrey,
+                              //     focusedBorder: const OutlineInputBorder(
+                              //       borderRadius:
+                              //           BorderRadius.all(Radius.circular(10)),
+                              //       borderSide: BorderSide(
+                              //         color: Palette.primary,
+                              //         width: 2,
+                              //       ),
+                              //     ),
+                              //     enabledBorder: OutlineInputBorder(
+                              //       borderSide: const BorderSide(
+                              //         color: Palette.stroke,
+                              //         width: 2,
+                              //       ),
+                              //       borderRadius: BorderRadius.circular(10),
+                              //     ),
+                              //   ),
+                              //   initialSelection: "famille",
+                              //   trailingIcon:
+                              //       Icon(Icons.keyboard_arrow_down_sharp),
+                              //   selectedTrailingIcon:
+                              //       Icon(Icons.keyboard_arrow_up_sharp),
+                              //   onSelected: (String? value) {
+                              //     setState(() {
+                              //       _themeValue = value!;
+                              //     });
+                              //   },
+                              //   //TODOS: remove static width
+                              //   width: getWidth(333),
+                              //   dropdownMenuEntries: listTheme
+                              //       .map<DropdownMenuEntry<String>>(
+                              //           (String value) {
+                              //     return DropdownMenuEntry<String>(
+                              //         value: value, label: value);
+                              //   }).toList(),
+                              // ),
+
+                              DropMenuTheme(
                                 onSelected: (String? value) {
                                   setState(() {
                                     _themeValue = value!;
+                                    print(_themeValue);
                                   });
                                 },
-                                //TODOS: remove static width
-                                width: getWidth(333),
-                                dropdownMenuEntries: listTheme
-                                    .map<DropdownMenuEntry<String>>(
-                                        (String value) {
-                                  return DropdownMenuEntry<String>(
-                                      value: value, label: value);
-                                }).toList(),
                               ),
+
                               20.verticalSpace,
                               Center(
                                 child: CircleAvatar(

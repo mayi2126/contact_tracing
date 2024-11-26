@@ -18,6 +18,7 @@ class UserLoginRepo extends UserLoginRepository {
     if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
       final token = jsonResponse['authorisation']['token'];
+      print(token);
       final userRepository = UserRepository();
 
       await storeToken(token);

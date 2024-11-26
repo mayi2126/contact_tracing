@@ -17,8 +17,13 @@ class VisiteBloc extends Bloc<VisiteEvent, VisiteState> {
 
   Future<void> _onAddVisiteDomicile ( AddVisiteDomicile event, Emitter<VisiteState> emit) async {
     emit(VisiteLoading());
-   await Future.delayed(const Duration(seconds: 3));
-    // await visiteRepository.addVisiteDomicile(event.visite);
-    emit(VisiteAdded());
+    final bool result =   await visiteRepository.addVisiteDomicile(event.visite);
+    if(result) {
+      emit(VisiteAdded());
+    }
+    else {
+      emit(VisiteError("Erreur lors de l'ajout de la visite"));
+    }
+   
   }
 }

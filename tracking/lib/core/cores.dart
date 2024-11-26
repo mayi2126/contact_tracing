@@ -13,6 +13,10 @@ import 'package:tracking_pregnant/Presentation/Auth/data/Repositories/auth_user.
 import 'package:tracking_pregnant/Presentation/Auth/data/Repositories/user_login_repo.dart';
 import 'package:tracking_pregnant/Presentation/visite/bloc/visite_bloc.dart';
 import 'package:tracking_pregnant/Presentation/visite/data/Models/visite.dart';
+import 'package:tracking_pregnant/Presentation/visite/externe-data/bloc/data_bloc.dart';
+import 'package:tracking_pregnant/Presentation/visite/externe-data/repo/quartier_repo.dart';
+import 'package:tracking_pregnant/Presentation/visite/externe-data/repo/theme_repo.dart';
+import 'package:tracking_pregnant/Presentation/visite/externe-data/repo/village_repo.dart';
 import 'package:tracking_pregnant/app/config/app_config.dart';
 import 'package:tracking_pregnant/app/routes/routes_name.dart';
 import 'package:tracking_pregnant/app/storage/local_storage.dart';
@@ -57,3 +61,9 @@ part '../Presentation/Causeries/add_causerie.dart';
 
 part '../Presentation/visite/main.dart';
 part '../Presentation/visite/add_visite.dart';
+
+
+// EXTERNE DATA
+part '../components/utils/drop_menu_quartier.dart';
+part '../components/utils/drop_menu_village.dart';
+part '../components/utils/drop_menu_theme.dart';
