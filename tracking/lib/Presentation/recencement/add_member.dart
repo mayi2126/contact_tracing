@@ -243,46 +243,15 @@ class _AddMemberPageState extends State<AddMemberPage> with RestorationMixin {
                                   "Profession",
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
-                                DropdownMenu<String>(
-                                  inputDecorationTheme: InputDecorationTheme(
-                                    filled: true,
-                                    fillColor: Palette.bgGrey,
-                                    focusedBorder: const OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
-                                      borderSide: BorderSide(
-                                        color: Palette.primary,
-                                        width: 2,
-                                      ),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Palette.stroke,
-                                        width: 2,
-                                      ),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                  ),
-                                  initialSelection: "Commerçante",
-                                  trailingIcon:
-                                      Icon(Icons.keyboard_arrow_down_sharp),
-                                  selectedTrailingIcon:
-                                      Icon(Icons.keyboard_arrow_up_sharp),
-                                  onSelected: (String? value) {
-                                    setState(() {
-                                      _professionValue = value!;
-                                      print(_professionValue);
-                                    });
-                                  },
-                                  //TODOS: remove static width
-                                  width: getWidth(333),
-                                  dropdownMenuEntries: listPrefession
-                                      .map<DropdownMenuEntry<String>>(
-                                          (String value) {
-                                    return DropdownMenuEntry<String>(
-                                        value: value, label: value);
-                                  }).toList(),
-                                ),
+                                DropMenuProfession(
+                                onSelected: (String? value) {
+                                  setState(() {
+                                    _professionValue = value!;
+                                    print(
+                                        "profession sélectionnée: $_professionValue");
+                                  });
+                                },
+                              ),
                                 10.verticalSpaceFromWidth,
                                 const Text(
                                   "Contact",

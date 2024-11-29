@@ -34,7 +34,7 @@ class VillageError extends DataState {
   VillageError(this.message);
 }
 
-
+/* --------------------------------- Themes --------------------------------- */
 final class ThemeInitial extends DataState {}
 
 
@@ -48,5 +48,24 @@ class ThemeLoaded extends DataState {
 class ThemeError extends DataState {
   final String message;
   ThemeError(this.message);
+}
+
+
+/* ------------------------------- Professions ------------------------------ */
+
+
+final class ProfessionInitial extends DataState {}
+
+
+class ProfessionLoading extends DataState {}
+
+class ProfessionLoaded extends DataState {
+  final List<Map<String, dynamic>> professions;
+  ProfessionLoaded(this.professions);
+}
+
+class ProfessionError extends DataState {
+  final String message;
+  ProfessionError(this.message);
 }
 

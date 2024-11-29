@@ -2,28 +2,59 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:tracking_pregnant/Presentation/visite/data/Models/visite.dart';
+import 'package:tracking_pregnant/Presentation/visite/data/Models/visite_model.dart';
+import 'package:tracking_pregnant/Presentation/visite/data/Repository/retrieve_vististe.dart';
 import 'package:tracking_pregnant/Presentation/visite/data/Repository/visite_repo.dart';
 
 part 'visite_event.dart';
 part 'visite_state.dart';
 
 class VisiteBloc extends Bloc<VisiteEvent, VisiteState> {
- 
-  final  VisiteRepositoryImpl visiteRepository ;
-
-  VisiteBloc({required this.visiteRepository}) : super(VisiteInitial()) {
+  VisiteBloc() : super(VisiteInitial()) {
     on<AddVisiteDomicile>(_onAddVisiteDomicile);
+    on<GetVisites>(_onGetVisites);
   }
 
-  Future<void> _onAddVisiteDomicile ( AddVisiteDomicile event, Emitter<VisiteState> emit) async {
+  Future<void> _onAddVisiteDomicile(
+      AddVisiteDomicile event, Emitter<VisiteState> emit) async {
     emit(VisiteLoading());
-    final bool result =   await visiteRepository.addVisiteDomicile(event.visite);
-    if(result) {
+    final VisiteRepositoryImpl visiteRepository = VisiteRepositoryImpl();
+    final bool result = await visiteRepository.addVisiteDomicile(event.visite);
+    if (result) {
       emit(VisiteAdded());
-    }
-    else {
+    } else {
       emit(VisiteError("Erreur lors de l'ajout de la visite"));
     }
-   
+  }
+
+  Future<void> _onGetVisites(
+      GetVisites event, Emitter<VisiteState> emit) async {
+    emit(VisiteGetLoading());
+
+    final RetrieveVisiteRepositoryImpl retrieveVisiteRepository =
+        RetrieveVisiteRepositoryImpl();
+
+    try {
+      final List<VisiteModel> result = await retrieveVisiteRepository
+          .fetchVisitesById(event.dateMin, event.dateMax);
+        
+
+      if (result.isNotEmpty)
+       {
+
+        
+        emit(VisiteGetLoaded(result));
+      }
+      else {
+        
+      emit(VisiteIsEmpty());
+      }
+
+    } catch (e) {
+      print(e.toString());
+    emit(VisiteGetError("Erreur lors de la récupération des visites"));
+
+    }
+
   }
 }

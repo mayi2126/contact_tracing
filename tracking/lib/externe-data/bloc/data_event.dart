@@ -13,4 +13,12 @@ class VillageEvent extends DataEvent {}
 
 
 
-class ThemesEvent extends DataEvent {}
+class ThemesEvent extends DataEvent {
+  final String type;
+  ThemesEvent(this.type);
+}
+
+
+class ProfessionsEvent extends DataEvent {
+
+}

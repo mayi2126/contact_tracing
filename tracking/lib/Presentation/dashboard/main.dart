@@ -9,7 +9,6 @@ class DashboardPage extends StatefulWidget {
 
 class _DashboardPageState extends State<DashboardPage> {
   int _selectedIndex = 0;
-  final UserRepository userRepository = UserRepository();
   User? user; // Variable pour stocker les infos utilisateur
 
 

@@ -5,6 +5,13 @@ const String baseUrl = "https://ugptogo.org/contacttracing/contacttracing/api";
 
 /* ---------------------------------- LOGIN --------------------------------- */
 const String login = "/login";
+/* ------------------------------ CREATE OR ADD ----------------------------- */
 const String createVisite = "/visiteadomicileApi";
+const String createCauserie = "/causeries";
+/* ----------------------------- GET RESSOURCES ----------------------------- */
 const String getVillageQuarter = "/villagesquartiers";
 const String getThemes = "/themes";
+const String getProfessions = "/professions";
+const String getVisites = "/visiteadomicilelist";
+const String getCauseries = "/causeries";
+

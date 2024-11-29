@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tracking_pregnant/Presentation/Auth/bloc/login_bloc.dart';
 import 'package:tracking_pregnant/Presentation/Auth/data/Repositories/user_login_repo.dart';
 import 'package:tracking_pregnant/Presentation/visite/bloc/visite_bloc.dart';
-import 'package:tracking_pregnant/Presentation/visite/data/Repository/visite_repo.dart';
 import 'package:tracking_pregnant/app/config/app_config.dart';
 import 'package:tracking_pregnant/app/routes/router.dart';
 import 'package:tracking_pregnant/app/routes/routes_name.dart';
@@ -21,7 +20,6 @@ void main() {
 class MyApp extends StatelessWidget {
  
   final UserLoginRepo _authRepository = UserLoginRepo();
-  final VisiteRepositoryImpl _visiteRepository = VisiteRepositoryImpl();
 
   MyApp({super.key});
 
@@ -40,7 +38,7 @@ class MyApp extends StatelessWidget {
             ..add(AuthCheckStatus()),
         ),
          BlocProvider(
-          create: (context) => VisiteBloc( visiteRepository: _visiteRepository), // Remplace par l'initialisation de ton UserBloc
+          create: (context) => VisiteBloc(), // Remplace par l'initialisation de ton UserBloc
         ),
       ],
       

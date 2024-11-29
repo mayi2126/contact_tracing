@@ -10,26 +10,10 @@ class AddVisitePage extends StatefulWidget {
 class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
   String? restorationId = "causerie";
 
-  List<String> listVillage = <String>[
-    'Selectionner un village',
-    'Agoe',
-  ];
-
-  List<String> listQuartier = <String>[
-    'Selectionner un quartier',
-    'Mamou',
-  ];
-
-  List<String> listTheme = <String>[
-    'Selectionner un theme',
-    'famille',
-    'autre'
-  ];
   String _villageValue = "";
   String _quartierValue = "";
   String _themeValue = "";
-  final TextEditingController _formationSanitaire =
-      TextEditingController(text: "10");
+  final TextEditingController _formationSanitaire = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _localisationController = TextEditingController();
   final TextEditingController _nbrePersonnesTController =
@@ -44,12 +28,13 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
   final TextEditingController __nbrePersonnesTEnceintesController =
       TextEditingController();
 
-  final TextEditingController __autresController = TextEditingController();
+  final TextEditingController __autresController = TextEditingController(text:'0');
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
 
   int _index = 0;
+
 
   final RestorableDateTime _selectedDate =
       RestorableDateTime(DateTime(2021, 7, 25));
@@ -76,7 +61,7 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
           restorationId: 'date_picker_dialog',
           initialEntryMode: DatePickerEntryMode.calendarOnly,
           initialDate: DateTime.fromMillisecondsSinceEpoch(arguments as int),
-          firstDate: DateTime(1900, 1, 1), // Première date : 1er janvier 1900
+          firstDate: DateTime(2021, 1, 1), // Première date : 1er janvier 1900
           lastDate: DateTime.now(), // Dernière date : aujourd'hui
         );
       },
@@ -95,7 +80,7 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
       setState(() {
         _selectedDate.value = newSelectedDate;
         _dateController.text =
-            '${_selectedDate.value.year}/${_selectedDate.value.month}/${_selectedDate.value.day}';
+            '${_selectedDate.value.year}-${_selectedDate.value.month}-${_selectedDate.value.day}';
       });
     }
   }
@@ -125,7 +110,7 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
       print(_quartierValue);
 
       Visite _visite = Visite(
-        idFsAp: int.parse(_formationSanitaire.text),
+        idFsAp: 0,
         dateAp: _dateController.text,
         lieuAp: _localisationController.text,
         nbrepersonnetoucheeFnq: int.parse(_nbrePersonnesTController.text),
@@ -140,17 +125,19 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
         idquartier: int.parse(_quartierValue),
         idelementDonnee: int.parse(_themeValue),
         idAscAp: 0,
-        userEnreg: int.parse(_formationSanitaire.text),
+        userEnreg: 0,
       );
-
-      print(_visite.toJson());
 
       context.read<VisiteBloc>().add(AddVisiteDomicile(_visite));
     }
   }
 
+
+ 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Palette.primary,
@@ -208,7 +195,7 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                               CustomTextFormInput(
                                 isReadonly: true,
                                 labelText: "",
-                                hintText: "10",
+                                hintText: "FS-19",
                                 controller: _formationSanitaire,
                                 isPassword: false,
                               ),
@@ -321,6 +308,7 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                     print(_themeValue);
                                   });
                                 },
+                                type: 'ACTIVITÉS PRÉVENTIVES ',
                               ),
 
                               20.verticalSpace,

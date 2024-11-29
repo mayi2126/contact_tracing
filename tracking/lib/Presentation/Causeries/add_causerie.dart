@@ -10,37 +10,29 @@ class AddCauserie extends StatefulWidget {
 class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
   String? restorationId = "causerie";
 
-  List<String> listVillage = <String>[
-    'Selectionner un village',
-    'Agoe',
-  ];
-
-  List<String> listQuartier = <String>[
-    'Selectionner un quartier',
-    'Mamou',
-  ];
-
-  List<String> listTheme = <String>[
-    'Selectionner un theme',
-    'famille',
-    'autre'
-  ];
+ 
   String _villageValue = "";
   String _quartierValue = "";
   String _themeValue = "";
   final TextEditingController _formationSanitaire = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _localisationController = TextEditingController();
-  final TextEditingController _nbrePersonnesTController = TextEditingController();
-  final TextEditingController __nbrePersonnesTAllaitantesController = TextEditingController();
-  final TextEditingController __nbrePersonnesTEnfantsController = TextEditingController();
+  final TextEditingController _nbrePersonnesTController =
+      TextEditingController();
+  final TextEditingController __nbrePersonnesTAllaitantesController =
+      TextEditingController();
+  final TextEditingController __nbrePersonnesTEnfantsController =
+      TextEditingController();
 
-  final TextEditingController __nbrePersonnesTHommesController = TextEditingController();
-  final TextEditingController __nbrePersonnesTEnceintesController = TextEditingController();
+  final TextEditingController __nbrePersonnesTHommesController =
+      TextEditingController();
+  final TextEditingController __nbrePersonnesTEnceintesController =
+      TextEditingController();
 
   final TextEditingController __autresController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
 
   int _index = 0;
 
@@ -70,7 +62,7 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
           initialEntryMode: DatePickerEntryMode.calendarOnly,
           initialDate: DateTime.fromMillisecondsSinceEpoch(arguments! as int),
           firstDate: DateTime(2021),
-          lastDate: DateTime(DateTime.now().year),
+          lastDate: DateTime.now(),
         );
       },
     );
@@ -88,334 +80,339 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
       setState(() {
         _selectedDate.value = newSelectedDate;
         _dateController.text =
-            '${_selectedDate.value.day}/${_selectedDate.value.month}/${_selectedDate.value.year}';
+            '${_selectedDate.value.year}-${_selectedDate.value.month}-${_selectedDate.value.day}';
       });
     }
   }
+  _onSubmit(BuildContext context) {
+    if (_formKey2.currentState!.validate()) {
+      // _formKey.currentState!.save();
+
+      // Visite visite = Visite(
+      //   idFsAp: 10, // ID de la formation sanitaire
+      //   dateAp: "2024-10-23", // Date au format ISO
+      //   lieuAp: "Quartier ABC", // Lieu de la visite
+      //   nbrepersonnetoucheeFnq: 50, // Nombre total de personnes touchées
+      //   nbrepersonnetoucheeFa: 10, // Nombre de personnes allaitantes touchées
+      //   nbreenfantzvtouche: 20, // Nombre d'enfants touchés
+      //   nbrepersonnetoucheeH: 15, // Nombre d'hommes touchés
+      //   nbrepersonnetoucheeFe: 5, // Nombre de femmes enceintes touchées
+      //   nbreautrestouche: 3, // Autres personnes touchées
+      //   idvillage: 5, // ID fictif du village
+      //   idquartier: 6, // ID fictif du quartier
+      //   idelementDonnee: 7, // Valeur du thème
+      //   idAscAp: 10, // ID fictif de l'ASC
+      //   userEnreg: 10, // ID fictif de l'utilisateur
+      // );()
+
+      print(_villageValue);
+      print(_quartierValue);
+
+      Causerie _causerie = Causerie(
+        idFsAp: int.parse(_formationSanitaire.text),
+        dateAp: _dateController.text,
+        lieuAp: _localisationController.text,
+        nbrepersonnetoucheeFnq: int.parse(_nbrePersonnesTController.text),
+        nbrepersonnetoucheeFa:
+            int.parse(__nbrePersonnesTAllaitantesController.text),
+        nbreenfantzvtouche: int.parse(__nbrePersonnesTEnfantsController.text),
+        nbrepersonnetoucheeH: int.parse(__nbrePersonnesTHommesController.text),
+        nbrepersonnetoucheeFe:
+            int.parse(__nbrePersonnesTEnceintesController.text),
+        nbreautrestouche: int.parse(__autresController.text),
+        idvillage: int.parse(_villageValue),
+        idquartier: int.parse(_quartierValue),
+        idelementDonnee: int.parse(_themeValue),
+        idAscAp: 0,
+        userEnreg: int.parse(_formationSanitaire.text),
+      );
+
+      print(_causerie.toJson());
+
+      context.read<CauserieBloc>().add(CreateCauserie(_causerie));
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Palette.primary,
-        iconTheme: const IconThemeData(color: Palette.white),
-        title: const Text(
-          "Ajouter une causerie",
-          style: TextStyle(color: Palette.white, fontSize: 17),
+    return BlocProvider(
+      create: (context) => CauserieBloc(
+          causerieRepository:
+              CauserieRepositoryImpl()), // ..add(GetCauserieEvent
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Palette.primary,
+          iconTheme: const IconThemeData(color: Palette.white),
+          title: const Text(
+            "Ajouter une causerie",
+            style: TextStyle(color: Palette.white, fontSize: 17),
+          ),
         ),
-      ),
-      body: Container(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(children: [
-              Expanded(
-                  child: Container(
-                height: 5,
-                color: _index == 0 ? Palette.primary : Palette.bgGrey,
-              )),
-              5.horizontalSpace,
-              Expanded(
-                  child: Container(
-                height: 5,
-                color: _index == 1 ? Palette.primary : Palette.bgGrey,
-              ))
-            ]),
-            10.verticalSpace,
-            _index == 0
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Formation Sanitaire",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      CustomTextFormInput(
-                        isReadonly: true,
-                        labelText: "",
-                        hintText: "CMS AGA",
-                        controller: _formationSanitaire,
-                        isPassword: true,
-                      ),
-                      10.verticalSpace,
-                      const Text(
-                        "Village",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      DropdownMenu<String>(
-                        inputDecorationTheme: InputDecorationTheme(
-                          filled: true,
-                          fillColor: Palette.bgGrey,
-                          focusedBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide: BorderSide(
-                              color: Palette.primary,
-                              width: 2,
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Palette.stroke,
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        initialSelection: "Agoe",
-                        trailingIcon: Icon(Icons.keyboard_arrow_down_sharp),
-                        selectedTrailingIcon:
-                            Icon(Icons.keyboard_arrow_up_sharp),
-                        onSelected: (String? value) {
-                          setState(() {
-                            _villageValue = value!;
-                            print(_villageValue);
-                          });
-                        },
-                        //TODOS: remove static width
-                        width: getWidth(333),
-                        dropdownMenuEntries: listVillage
-                            .map<DropdownMenuEntry<String>>((String value) {
-                          return DropdownMenuEntry<String>(
-                              value: value, label: value);
-                        }).toList(),
-                      ),
-                      10.verticalSpace,
-                      const Text(
-                        "Quartier",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      DropdownMenu<String>(
-                        inputDecorationTheme: InputDecorationTheme(
-                          filled: true,
-                          fillColor: Palette.bgGrey,
-                          focusedBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide: BorderSide(
-                              color: Palette.primary,
-                              width: 2,
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Palette.stroke,
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        // initialSelection: "Agoe",
-                        initialSelection: "Mamou",
-                        width: getWidth(333),
-
-                        trailingIcon: Icon(Icons.keyboard_arrow_down_sharp),
-                        selectedTrailingIcon:
-                            Icon(Icons.keyboard_arrow_up_sharp),
-                        // initialSelection: list.first,
-                        onSelected: (String? value) {
-                          // This is called when the user selects an item.
-                          setState(() {
-                            _quartierValue = value!;
-                            print(_quartierValue);
-                          });
-                        },
-                        dropdownMenuEntries: listQuartier
-                            .map<DropdownMenuEntry<String>>((String value) {
-                          return DropdownMenuEntry<String>(
-                              value: value, label: value);
-                        }).toList(),
-                      ),
-                      10.verticalSpace,
-                      const Text(
-                        "Date",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      CustomTextFormInput(
-                        labelText: "",
-                        hintText: "mm/jj/aaaa",
-                        controller: _dateController,
-                        keybordType: TextInputType.number,
-                        icon: Icons.date_range,
-                        onTap: () {
-                          _restorableDatePickerRouteFuture.present();
-                        },
-                      ),
-                      10.verticalSpace,
-                      const Text(
-                        "Lieu",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      CustomTextFormInput(
-                        labelText: "",
-                        hintText: "",
-                        controller: _localisationController,
-                        keybordType: TextInputType.text,
-                        onTap: () {},
-                      ),
-                      10.verticalSpace,
-                      const Text(
-                        "Thème",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      DropdownMenu<String>(
-                        inputDecorationTheme: InputDecorationTheme(
-                          filled: true,
-                          fillColor: Palette.bgGrey,
-                          focusedBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide: BorderSide(
-                              color: Palette.primary,
-                              width: 2,
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Palette.stroke,
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        initialSelection: "famille",
-                        trailingIcon: Icon(Icons.keyboard_arrow_down_sharp),
-                        selectedTrailingIcon:
-                            Icon(Icons.keyboard_arrow_up_sharp),
-                        onSelected: (String? value) {
-                          setState(() {
-                            _themeValue = value!;
-                          });
-                        },
-                        //TODOS: remove static width
-                        width: getWidth(333),
-                        dropdownMenuEntries: listTheme
-                            .map<DropdownMenuEntry<String>>((String value) {
-                          return DropdownMenuEntry<String>(
-                              value: value, label: value);
-                        }).toList(),
-                      ),
-                      10.verticalSpace,
-                      PrimaryButton(
-                        width: 2,
-                        btnBgColor: Palette.primary,
-                        textColor: Palette.white,
-                        btnText: "Suivant",
-                        isFilledBtn: false,
-                        onTapFunction: () {
-                          setState(() {
-                            _index++;
-                          });
-                        },
-                      ),
-                    ],
-                  )
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                        // 10.verticalSpace,
-                        const Text(
-                          "Nombre de personnes touchées (9 - 49 ans)",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        CustomTextFormInput(
-                          labelText: "",
-                          hintText: "0",
-                          controller: _nbrePersonnesTController,
-                          keybordType: TextInputType.number,
-                          onTap: () {},
-                        ),
-                        10.verticalSpace,
-                        const Text(
-                          "Nombre de personnes touchées (Femmes enceintes",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        CustomTextFormInput(
-                          labelText: "",
-                          hintText: "0",
-                          controller: __nbrePersonnesTEnceintesController,
-                          keybordType: TextInputType.number,
-                          onTap: () {},
-                        ),
-                        10.verticalSpace,
-                        const Text(
-                          "Nombre de personnes touchées (Femmes allaitantes)",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        CustomTextFormInput(
-                          labelText: "",
-                          hintText: "0",
-                          controller: __nbrePersonnesTAllaitantesController,
-                          keybordType: TextInputType.number,
-                          onTap: () {},
-                        ),
-                        10.verticalSpace,
-                        const Text(
-                          "Nombre de personnes touchées (Hommes)",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        CustomTextFormInput(
-                          labelText: "",
-                          hintText: "0",
-                          controller: __nbrePersonnesTHommesController,
-                          keybordType: TextInputType.number,
-                          onTap: () {},
-                        ),
-                        10.verticalSpace,
-                        const Text(
-                          "Nombre d'enfants de 0 a 24 mois visité",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        CustomTextFormInput(
-                          labelText: "",
-                          hintText: "0",
-                          controller: __nbrePersonnesTEnfantsController,
-                          keybordType: TextInputType.number,
-                          onTap: () {},
-                        ),
-                        10.verticalSpace,
-                        const Text(
-                          "Autres",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        CustomTextFormInput(
-                          labelText: "",
-                          hintText: "0",
-                          controller: __autresController,
-                          keybordType: TextInputType.number,
-                          onTap: () {},
-                        ),
-                        10.verticalSpace,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+        body: BlocListener<CauserieBloc, CauserieState>(
+          listener: (context, state) {
+            // TODO: implement listener
+            if (state is CauserieAdded) {
+              Navigator.pushReplacementNamed(context, RoutesName.causerie);
+            }
+            if (state is CauserieError) {
+              Navigator.pop(context);
+              showDialogCustom(context, state.message);
+            } else if (state is CauserieLoading) {
+              showDialogCustom(context, "En cours de sauvegarde ...");
+            }
+          },
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(children: [
+                  Expanded(
+                      child: Container(
+                    height: 5,
+                    color: _index == 0 ? Palette.primary : Palette.bgGrey,
+                  )),
+                  5.horizontalSpace,
+                  Expanded(
+                      child: Container(
+                    height: 5,
+                    color: _index == 1 ? Palette.primary : Palette.bgGrey,
+                  ))
+                ]),
+                10.verticalSpace,
+                _index == 0
+                    ? Form(
+                      key: _formKey,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Expanded(
-                              child: PrimaryButton(
-                                btnBgColor: Palette.primary,
-                                textColor: Palette.white,
-                                btnText: "Précédent",
-                                isFilledBtn: false,
-                                onTapFunction: () {
+                            const Text(
+                              "Formation Sanitaire",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            CustomTextFormInput(
+                              isReadonly: true,
+                              labelText: "",
+                              hintText: "CMS AGA",
+                              controller: _formationSanitaire,
+                              isPassword: true,
+                            ),
+                            10.verticalSpace,
+                            const Text(
+                              "Village",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            DropMenuVillage(
+                                onSelected: (String? value) {
                                   setState(() {
-                                    _index--;
+                                    _villageValue = value!;
+                                    print(_villageValue);
                                   });
                                 },
                               ),
+                            10.verticalSpace,
+                            const Text(
+                              "Quartier",
+                              style: TextStyle(fontWeight: FontWeight.bold),
                             ),
-                            5.horizontalSpace,
-                            Expanded(
-                              child: PrimaryButton(
-                                width: 2,
-                                btnBgColor: Palette.primary,
-                                textColor: Palette.white,
-                                btnText: "Enregistrer",
-                                isFilledBtn: false,
-                                onTapFunction: () {},
+                            DropMenuQuartier(
+                                onSelected: (String? value) {
+                                  setState(() {
+                                    _quartierValue = value!;
+                                    print(
+                                        "Quartier sélectionné: $_quartierValue");
+                                  });
+                                },
                               ),
-                            )
+                            10.verticalSpace,
+                            const Text(
+                              "Date",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            CustomTextFormInput(
+                              labelText: "",
+                              hintText: "mm/jj/aaaa",
+                              controller: _dateController,
+                              keybordType: TextInputType.number,
+                              icon: Icons.date_range,
+                              onTap: () {
+                                _restorableDatePickerRouteFuture.present();
+                              },
+                            ),
+                            10.verticalSpace,
+                            const Text(
+                              "Lieu",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            CustomTextFormInput(
+                              labelText: "",
+                              hintText: "",
+                              controller: _localisationController,
+                              keybordType: TextInputType.text,
+                              onTap: () {},
+                            ),
+                            10.verticalSpace,
+                            const Text(
+                              "Thème",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            DropMenuTheme(
+                                onSelected: (String? value) {
+                                  setState(() {
+                                    _themeValue = value!;
+                                    print(_themeValue);
+                                  });
+                                },
+                                type: 'CAUSERIE EDUCATIVE',
+                              ),
+                            10.verticalSpace,
+                           Center(
+                                child: CircleAvatar(
+                                  backgroundColor: Palette.primary,
+                                  radius: 25,
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.arrow_forward,
+                                      color: Palette.white,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        _index++;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
                           ],
                         ),
-                      ]),
-            10.verticalSpace,
-          ],
+                    )
+                    : Form(
+                      key: _formKey2,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                              // 10.verticalSpace,
+                              const Text(
+                                "Nombre de personnes touchées (9 - 49 ans)",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              CustomTextFormInput(
+                                labelText: "",
+                                hintText: "0",
+                                controller: _nbrePersonnesTController,
+                                keybordType: TextInputType.number,
+                                onTap: () {},
+                              ),
+                              10.verticalSpace,
+                              const Text(
+                                "Nombre de personnes touchées (Femmes enceintes",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              CustomTextFormInput(
+                                labelText: "",
+                                hintText: "0",
+                                controller: __nbrePersonnesTEnceintesController,
+                                keybordType: TextInputType.number,
+                                onTap: () {},
+                              ),
+                              10.verticalSpace,
+                              const Text(
+                                "Nombre de personnes touchées (Femmes allaitantes)",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              CustomTextFormInput(
+                                labelText: "",
+                                hintText: "0",
+                                controller: __nbrePersonnesTAllaitantesController,
+                                keybordType: TextInputType.number,
+                                onTap: () {},
+                              ),
+                              10.verticalSpace,
+                              const Text(
+                                "Nombre de personnes touchées (Hommes)",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              CustomTextFormInput(
+                                labelText: "",
+                                hintText: "0",
+                                controller: __nbrePersonnesTHommesController,
+                                keybordType: TextInputType.number,
+                                onTap: () {},
+                              ),
+                              10.verticalSpace,
+                              const Text(
+                                "Nombre d'enfants de 0 a 24 mois visité",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              CustomTextFormInput(
+                                labelText: "",
+                                hintText: "0",
+                                controller: __nbrePersonnesTEnfantsController,
+                                keybordType: TextInputType.number,
+                                onTap: () {},
+                              ),
+                              10.verticalSpace,
+                              const Text(
+                                "Autres",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              CustomTextFormInput(
+                                labelText: "",
+                                hintText: "0",
+                                controller: __autresController,
+                                keybordType: TextInputType.number,
+                                onTap: () {},
+                              ),
+                              10.verticalSpace,
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Expanded(
+                                      child: CircleAvatar(
+                                        backgroundColor: Palette.primary,
+                                        radius: 25,
+                                        child: IconButton(
+                                          icon: Icon(
+                                            Icons.arrow_back,
+                                            color: Palette.white,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              _index--;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                    5.horizontalSpace,
+                                    Expanded(
+                                      flex: 2,
+                                      child: PrimaryButton(
+                                        width: 2,
+                                        btnBgColor: Palette.primary,
+                                        textColor: Palette.white,
+                                        btnText: "Enregistrer",
+                                        isFilledBtn: false,
+                                        onTapFunction: () {
+                                          // Future.delayed(
+                                          //     const Duration(seconds: 1), () {
+
+                                          // });
+
+                                          // Navigator.pop(context);
+                                          _onSubmit(context);
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
+                            ]),
+                    ),
+                10.verticalSpace,
+              ],
+            ),
+          ),
         ),
       ),
     );
