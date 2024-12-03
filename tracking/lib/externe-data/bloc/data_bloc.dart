@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:tracking_pregnant/externe-data/repo/professions_repo.dart';
-import 'package:tracking_pregnant/externe-data/repo/quartier_repo.dart';
-import 'package:tracking_pregnant/externe-data/repo/theme_repo.dart';
-import 'package:tracking_pregnant/externe-data/repo/village_repo.dart';
+import 'package:tracking/externe-data/repo/professions_repo.dart';
+import 'package:tracking/externe-data/repo/quartier_repo.dart';
+import 'package:tracking/externe-data/repo/theme_repo.dart';
+import 'package:tracking/externe-data/repo/village_repo.dart';
 
 part 'data_event.dart';
 part 'data_state.dart';

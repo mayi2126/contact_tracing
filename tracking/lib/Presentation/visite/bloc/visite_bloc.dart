@@ -1,11 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:tracking_pregnant/Presentation/visite/data/Models/visite.dart';
-import 'package:tracking_pregnant/Presentation/visite/data/Models/visite_model.dart';
-import 'package:tracking_pregnant/Presentation/visite/data/Repository/retrieve_vististe.dart';
-import 'package:tracking_pregnant/Presentation/visite/data/Repository/visite_repo.dart';
-import 'package:tracking_pregnant/components/utils/date_filter.dart';
+import 'package:tracking/Presentation/visite/data/Models/visite.dart';
+import 'package:tracking/Presentation/visite/data/Models/visite_model.dart';
+import 'package:tracking/Presentation/visite/data/Repository/retrieve_vististe.dart';
+import 'package:tracking/Presentation/visite/data/Repository/visite_repo.dart';
+import 'package:tracking/components/utils/date_filter.dart';
 
 part 'visite_event.dart';
 part 'visite_state.dart';

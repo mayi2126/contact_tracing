@@ -1,4 +1,4 @@
-package com.example.tracking_pregnant
+package com.example.tracking
 
 import io.flutter.embedding.android.FlutterActivity
 

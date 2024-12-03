@@ -280,30 +280,31 @@ class _ShowPageState extends State<ShowPage> {
                         )),
 
                     const SizedBox(height: 20),
-                     AnimatedButton(
-                          text: 'Warning Dialog',
-                          color: Colors.orange,
-                          pressEvent: () {
-                            AwesomeDialog(
-                              context: context,
-                              dialogType: DialogType.warning,
-                              headerAnimationLoop: false,
-                              animType: AnimType.topSlide,
-                              showCloseIcon: true,
-                              closeIcon:
-                                  const Icon(Icons.close_fullscreen_outlined),
-                              title: 'Warning',
-                              desc:
-                                  'Dialog description here..................................................',
-                              btnCancelOnPress: () {},
-                              onDismissCallback: (type) {
-                                debugPrint(
-                                    'Dialog Dismiss from callback $type');
-                              },
-                              btnOkOnPress: () {},
-                            ).show();
-                          },
-                        ),
+                    //  AnimatedButton(
+                    //       text: 'Warning Dialog',
+                    //       color: Colors.orange,
+                    //       pressEvent: () {
+                    //         AwesomeDialog(
+                    //           context: context,
+                    //           dialogType: DialogType.warning,
+                    //           headerAnimationLoop: false,
+                    //           animType: AnimType.topSlide,
+                    //           showCloseIcon: true,
+                    //           closeIcon:
+                    //               const Icon(Icons.close_fullscreen_outlined),
+                    //           title: 'Warning',
+                    //           desc:
+                    //               'Dialog description here..................................................',
+                    //           btnCancelOnPress: () {},
+                    //           onDismissCallback: (type) {
+                    //             debugPrint(
+                    //                 'Dialog Dismiss from callback $type');
+                    //           },
+                    //           btnOkOnPress: () {},
+                    //         ).show();
+                    //   
+                       // },
+                      //  ),
                       
                   ],
                 ),

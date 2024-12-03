@@ -1,11 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:tracking_pregnant/Presentation/Causeries/data/Models/causerie.dart';
-import 'package:tracking_pregnant/Presentation/Causeries/data/Repository/causerie_repository.dart';
-import 'package:tracking_pregnant/Presentation/Causeries/data/Repository/retrieve_repository.dart';
-import 'package:tracking_pregnant/Presentation/visite/data/Models/visite_model.dart';
-import 'package:tracking_pregnant/components/utils/date_filter.dart';
+import 'package:tracking/Presentation/Causeries/data/Models/causerie.dart';
+import 'package:tracking/Presentation/Causeries/data/Repository/causerie_repository.dart';
+import 'package:tracking/Presentation/Causeries/data/Repository/retrieve_repository.dart';
+import 'package:tracking/Presentation/visite/data/Models/visite_model.dart';
+import 'package:tracking/components/utils/date_filter.dart';
 
 part 'causerie_event.dart';
 part 'causerie_state.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tracking_pregnant/Presentation/visite/data/Models/visite_model.dart';
-import 'package:tracking_pregnant/app/routes/routes_name.dart';
-import 'package:tracking_pregnant/core/cores.dart';
+import 'package:tracking/Presentation/visite/data/Models/visite_model.dart';
+import 'package:tracking/app/routes/routes_name.dart';
+import 'package:tracking/core/cores.dart';
 
 class Routes {
   static Route<dynamic> onGenerateRoute(RouteSettings routeSettings) {

@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:tracking_pregnant/API/constants_urls.dart';
+import 'package:tracking/API/constants_urls.dart';
 
 class QuartierRepository {
   

@@ -3,14 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tracking_pregnant/Presentation/Auth/bloc/login_bloc.dart';
-import 'package:tracking_pregnant/Presentation/Auth/data/Repositories/user_login_repo.dart';
-import 'package:tracking_pregnant/Presentation/Causeries/bloc/causerie_bloc.dart';
-import 'package:tracking_pregnant/Presentation/visite/bloc/visite_bloc.dart';
-import 'package:tracking_pregnant/app/config/app_config.dart';
-import 'package:tracking_pregnant/app/routes/router.dart';
-import 'package:tracking_pregnant/app/routes/routes_name.dart';
-import 'package:tracking_pregnant/design_system/pallete.dart';
+import 'package:tracking/Presentation/Auth/bloc/login_bloc.dart';
+import 'package:tracking/Presentation/Auth/data/Repositories/user_login_repo.dart';
+import 'package:tracking/Presentation/Causeries/bloc/causerie_bloc.dart';
+import 'package:tracking/Presentation/visite/bloc/visite_bloc.dart';
+import 'package:tracking/app/config/app_config.dart';
+import 'package:tracking/app/routes/router.dart';
+import 'package:tracking/app/routes/routes_name.dart';
+import 'package:tracking/design_system/pallete.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
@@ -42,11 +42,11 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) =>
-              VisiteBloc(), // Remplace par l'initialisation de ton UserBloc
+              VisiteBloc(), 
         ),
         BlocProvider(
           create: (context) =>
-              CauserieBloc(), // Remplace par l'initialisation de ton UserBloc
+              CauserieBloc(), 
         ),
       ],
       child: ScreenUtilInit(
