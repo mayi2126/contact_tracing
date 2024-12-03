@@ -27,17 +27,17 @@ class CauserieRepositoryImpl extends CauserieRepository {
         "Idvillage": causerie.idvillage,
         "IdelementDonnee": causerie.idelementDonnee,
         "lieuAp": causerie.lieuAp,
-        "dateAp": "2023-02-02",
+        "dateAp": causerie.dateAp,
         "nbrepersonnetoucheeFnq": causerie.nbrepersonnetoucheeFnq,
         "nbrepersonnetoucheeFE": causerie.nbrepersonnetoucheeFe,
         "nbrepersonnetoucheeFA": causerie.nbrepersonnetoucheeFa,
         "nbrepersonnetoucheeH":  causerie.nbrepersonnetoucheeH,
         "nbreenfantzvtouche": causerie.nbreenfantzvtouche,
         "nbreautrestouche": causerie.nbreautrestouche,
-        "dateEnreg":DateTime.now().toString(),
+        // "dateEnreg":DateTime.now().toString(),
         "userEnreg": user.id,
-        "idAscAp": causerie.idAscAp,
-      }),
+        "idAscAp": user.idFsUser,
+      })
     );
 
     if (response.statusCode == 201) {

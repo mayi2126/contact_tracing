@@ -8,63 +8,71 @@ class CardVC extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    String firstLetter = visite.libelementdedonnee.substring(0, 1);
+    DateTime dateTime = DateTime.parse(visite.dateEnreg);
 
-// Find the index of the space and extract the first letter of the second word (Partenaire)
-int spaceIndex = visite.libelementdedonnee.indexOf(' ');
-String secondLetter = visite.libelementdedonnee.substring(spaceIndex + 1, spaceIndex + 2);
+    // Formater la date sans l'heure en utilisant 'd MMMM yyyy'
+    String formattedDate = DateFormat('d MMMM yyyy','fr').format(dateTime);
 
-// Combine the letters to form "TP"
-String result = firstLetter + secondLetter;
 
-    return  Padding(
+    return Padding(
       padding: const EdgeInsets.only(left: 10),
       child: Container(
-            padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-            height: getHeight(130),
-            width: getWidth(200),
-            decoration: BoxDecoration(
-                border: Border.all(color: Palette.primary),
-                borderRadius: BorderRadius.circular(30)),
-            child: Column(
+        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        height: getHeight(130),
+        width: getWidth(200),
+        decoration: BoxDecoration(
+            border: Border.all(color: Palette.primary),
+            borderRadius: BorderRadius.circular(30)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Palette.primary),
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Text(result,
-                          style: TextStyle(color: Palette.primary)),
-                    ),
-                    const Spacer(),
-                    Icon(Icons.arrow_forward_ios_outlined,
-                        size: 15, color: Palette.primary)
-                  ],
+                Container(
+                  width: getWidth(120),
+                  padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Palette.primary),
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Text(
+                    visite.libelementdedonnee,
+                    style: TextStyle(color: Palette.primary),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
                 ),
-                20.verticalSpace,
-                Text(
-                  visite.lieuAp,
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Palette.primary),
-                ),
-                Spacer(),
-                Text(
-                  visite.dateEnreg.toString(),
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Palette.foreign,
-                      fontSize: 12),
-                ),
+                const Spacer(),
+                GestureDetector(
+                  onTap: () {
+                   Navigator.pushNamed(context, RoutesName.showVisiteAndCauserie, arguments: visite);
+                  },
+                  child: Icon(Icons.arrow_forward_ios_outlined,
+                      size: 15, color: Palette.primary),
+                )
               ],
             ),
-          ),
-    )
-        ;
+            20.verticalSpace,
+            Text(
+              visite.lieuAp,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Palette.primary),
+            ),
+            Spacer(),
+            Text(
+              formattedDate,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Palette.foreign,
+                  fontSize: 12),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

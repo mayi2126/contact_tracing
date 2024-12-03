@@ -30,7 +30,8 @@ final class VisiteGet extends VisiteState {}
 
 final class VisiteGetLoaded extends VisiteState {
   final List<VisiteModel> visites;
-  VisiteGetLoaded(this.visites);
+  final List<VisiteModel> todaysVisites;
+  VisiteGetLoaded(this.visites,this.todaysVisites);
 }
 
 final class VisiteGetError extends VisiteState {
@@ -41,7 +42,7 @@ final class VisiteGetError extends VisiteState {
 final class VisiteGetLoading extends VisiteState {}
 
 
-final class VisiteGetSearch extends VisiteState {
+final class VisiteGetYesterday extends VisiteState {
   
 }
 

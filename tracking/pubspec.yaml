@@ -25,6 +25,10 @@ dependencies:
   google_fonts: ^6.2.1
   shared_preferences: ^2.0.0 
   calendar_slider: ^0.0.4
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+  awesome_dialog: ^3.2.1
   
   
 

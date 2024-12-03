@@ -1,8 +1,9 @@
 part of '../../core/cores.dart';
 
 class DropMenuVillage extends StatelessWidget {
-  const DropMenuVillage({super.key, required this.onSelected});
+  const DropMenuVillage({super.key, required this.onSelected, this.nom});
   final Function(String?) onSelected;
+  final String? nom;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -35,7 +36,11 @@ class DropMenuVillage extends StatelessWidget {
               ),
             ),
             // initialSelection: "Agoe",
-            initialSelection: villages.isNotEmpty ? villages.first['id'].toString() : null,
+            initialSelection: villages.isNotEmpty
+                  ? (villages.firstWhere((village) => village['nomvillage'] == nom,
+                          orElse: () => villages.first))['id']
+                      .toString()
+                  : null,
             width: getWidth(333),
 
             trailingIcon: Icon(Icons.keyboard_arrow_down_sharp),

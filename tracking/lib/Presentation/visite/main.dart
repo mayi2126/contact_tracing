@@ -97,7 +97,7 @@ class _VisitePageState extends State<VisitePage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          VisiteBloc()..add(const GetVisites("2023-01-01", "2024-12-31")),
+          VisiteBloc()..add( GetVisites("2023-01-01", DateFormat('yyyy-MM-dd').format(DateTime.now()))),
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Palette.primary,
@@ -169,10 +169,10 @@ class VisiteList extends StatelessWidget {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(state.message)));
         }
-        if (state is VisiteGetSearch) {
+        if (state is VisiteGetYesterday) {
           context
               .read<VisiteBloc>()
-              .add(const GetVisites("2023-01-01", "2023-12-31"));
+              .add( GetVisites(DateFormat('yyyy-MM-dd').format(DateTime.now()), DateFormat('yyyy-MM-dd').format(DateTime.now())));
         }
       },
       child: BlocBuilder<VisiteBloc, VisiteState>(
@@ -185,7 +185,7 @@ class VisiteList extends StatelessWidget {
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                     const Text(
                         "Visites",
                         style: TextStyle(
                             fontSize: 20,
@@ -193,14 +193,14 @@ class VisiteList extends StatelessWidget {
                             color: Palette.foreign),
                       ),
                       state is VisiteIsEmpty
-                          ? SizedBox(height: 0, width: 0)
+                          ? const SizedBox(height: 0, width: 0)
                           : TextButton.icon(
                               onPressed: () {},
-                              label: Text(
+                              label: const Text(
                                 "Voir tous",
                                 style: TextStyle(color: Palette.foreign),
                               ),
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.arrow_forward_ios_outlined,
                                 size: 15,
                                 color: Palette.foreign,
@@ -230,14 +230,14 @@ class VisiteList extends StatelessWidget {
                           ),
                         )
                       : state is VisiteGetLoading
-                          ? Center(
-                              child: const CircularProgressIndicator.adaptive(
+                          ? const Center(
+                              child: CircularProgressIndicator.adaptive(
                               semanticsLabel: "...",
                               backgroundColor: Palette.primary,
                             ))
-                          : SizedBox(),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                          : const SizedBox(),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
                 child: Text(
                   "Visites d'Aujourd'hui",
                   style: TextStyle(
@@ -249,199 +249,19 @@ class VisiteList extends StatelessWidget {
               Expanded(
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(25, 0, 25, 10),
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Palette.primary),
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          child: Row(
-                            children: [
-                              Text("Van le de",
-                                  style: TextStyle(
-                                      color: Palette.primary,
-                                      fontWeight: FontWeight.bold)),
-                              const Spacer(),
-                              Container(
-                                padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Palette.primary),
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: Text("culture",
-                                    style: TextStyle(color: Palette.primary)),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(25, 0, 25, 10),
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Palette.primary),
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          child: Row(
-                            children: [
-                              Text("Van le de",
-                                  style: TextStyle(
-                                      color: Palette.primary,
-                                      fontWeight: FontWeight.bold)),
-                              const Spacer(),
-                              Container(
-                                padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Palette.primary),
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: Text("culture",
-                                    style: TextStyle(color: Palette.primary)),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(25, 0, 25, 10),
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Palette.primary),
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          child: Row(
-                            children: [
-                              Text("Van le de",
-                                  style: TextStyle(
-                                      color: Palette.primary,
-                                      fontWeight: FontWeight.bold)),
-                              const Spacer(),
-                              Container(
-                                padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Palette.primary),
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: Text("culture",
-                                    style: TextStyle(color: Palette.primary)),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(25, 0, 25, 10),
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Palette.primary),
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          child: Row(
-                            children: [
-                              Text("Van le de",
-                                  style: TextStyle(
-                                      color: Palette.primary,
-                                      fontWeight: FontWeight.bold)),
-                              const Spacer(),
-                              Container(
-                                padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Palette.primary),
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: Text("culture",
-                                    style: TextStyle(color: Palette.primary)),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(25, 0, 25, 10),
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Palette.primary),
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          child: Row(
-                            children: [
-                              Text("Van le de",
-                                  style: TextStyle(
-                                      color: Palette.primary,
-                                      fontWeight: FontWeight.bold)),
-                              const Spacer(),
-                              Container(
-                                padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Palette.primary),
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: Text("culture",
-                                    style: TextStyle(color: Palette.primary)),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(25, 0, 25, 10),
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Palette.primary),
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          child: Row(
-                            children: [
-                              Text("Van le de",
-                                  style: TextStyle(
-                                      color: Palette.primary,
-                                      fontWeight: FontWeight.bold)),
-                              const Spacer(),
-                              Container(
-                                padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Palette.primary),
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: Text("culture",
-                                    style: TextStyle(color: Palette.primary)),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(25, 0, 25, 10),
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Palette.primary),
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          child: Row(
-                            children: [
-                              Text("Van le de",
-                                  style: TextStyle(
-                                      color: Palette.primary,
-                                      fontWeight: FontWeight.bold)),
-                              const Spacer(),
-                              Container(
-                                padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Palette.primary),
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: Text("culture",
-                                    style: TextStyle(color: Palette.primary)),
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+                  child: state  is VisiteGetLoaded && state.todaysVisites.isNotEmpty ?
+                      CardToday( state.todaysVisites) : const Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 100),
+                        child: CircleAvatar(
+                        radius: 20,
+                        // backgroundColor: Palette.foreign,
+                        // backgroundImage: AssetImage("assets/png/empty.png"),
+                        child: Icon(Icons.folder_open_rounded,
+                            color: Palette.primary),
+                                            ),
+                      )),
+                  
                 ),
               )
             ],

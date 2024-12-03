@@ -2,6 +2,7 @@ library core;
 
 import 'dart:convert';
 import 'dart:ui';
+import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -9,11 +10,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tracking_pregnant/Presentation/Auth/bloc/login_bloc.dart';
 import 'package:tracking_pregnant/Presentation/Auth/data/Models/user_token.dart';
-import 'package:tracking_pregnant/Presentation/Auth/data/Repositories/auth_user.dart';
-import 'package:tracking_pregnant/Presentation/Auth/data/Repositories/user_login_repo.dart';
 import 'package:tracking_pregnant/Presentation/Causeries/bloc/causerie_bloc.dart';
 import 'package:tracking_pregnant/Presentation/Causeries/data/Models/causerie.dart';
-import 'package:tracking_pregnant/Presentation/Causeries/data/Repository/causerie_repository.dart';
 import 'package:tracking_pregnant/Presentation/visite/bloc/visite_bloc.dart';
 import 'package:tracking_pregnant/Presentation/visite/data/Models/visite.dart';
 import 'package:tracking_pregnant/Presentation/visite/data/Models/visite_model.dart';
@@ -25,7 +23,6 @@ import 'package:tracking_pregnant/externe-data/repo/theme_repo.dart';
 import 'package:tracking_pregnant/externe-data/repo/village_repo.dart';
 import 'package:tracking_pregnant/app/config/app_config.dart';
 import 'package:tracking_pregnant/app/routes/routes_name.dart';
-import 'package:tracking_pregnant/app/storage/local_storage.dart';
 import 'package:tracking_pregnant/design_system/pallete.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:calendar_slider/calendar_slider.dart';
@@ -55,6 +52,8 @@ part '../components/ui/recent_tracking_card.dart';
 part '../components/ui/form_recencement.dart';
 part '../components/ui/dialog.dart';
 part '../components/ui/card_visite.dart';
+part '../components/utils/card_today.dart';
+part '../components/utils/visite_causerie/show_page.dart';
 
 /* ------------------------------- RECENSEMENT ------------------------------ */
 part '../Presentation/recencement/add_recencement.dart';

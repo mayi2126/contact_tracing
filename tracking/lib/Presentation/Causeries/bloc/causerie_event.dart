@@ -17,19 +17,11 @@ class CreateCauserie extends CauserieEvent {
   
 }
 
-class GetCauserie extends CauserieEvent {
-  final String id;
-
-  const GetCauserie(this.id);
-
-  @override
-  List<Object> get props => [id];
-}
-
 class GetCauseries extends CauserieEvent {
-  const GetCauseries();
-
-
+  final String dateMin;
+  final String dateMax;
+  const GetCauseries( this.dateMin, this.dateMax);
   @override
-  List<Object> get props => [];
+  List<Object> get props => [dateMin, dateMax];
 }
+

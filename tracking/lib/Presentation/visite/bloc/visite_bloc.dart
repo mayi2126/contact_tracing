@@ -5,6 +5,7 @@ import 'package:tracking_pregnant/Presentation/visite/data/Models/visite.dart';
 import 'package:tracking_pregnant/Presentation/visite/data/Models/visite_model.dart';
 import 'package:tracking_pregnant/Presentation/visite/data/Repository/retrieve_vististe.dart';
 import 'package:tracking_pregnant/Presentation/visite/data/Repository/visite_repo.dart';
+import 'package:tracking_pregnant/components/utils/date_filter.dart';
 
 part 'visite_event.dart';
 part 'visite_state.dart';
@@ -41,9 +42,10 @@ class VisiteBloc extends Bloc<VisiteEvent, VisiteState> {
 
       if (result.isNotEmpty)
        {
+                final List<VisiteModel> todayVisites = filterResultsByToday(result);
 
         
-        emit(VisiteGetLoaded(result));
+        emit(VisiteGetLoaded(result,todayVisites));
       }
       else {
         

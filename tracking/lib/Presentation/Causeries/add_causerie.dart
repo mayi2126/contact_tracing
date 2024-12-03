@@ -18,18 +18,18 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _localisationController = TextEditingController();
   final TextEditingController _nbrePersonnesTController =
-      TextEditingController();
+      TextEditingController(text: '0');
   final TextEditingController __nbrePersonnesTAllaitantesController =
-      TextEditingController();
+      TextEditingController(text: '0');
   final TextEditingController __nbrePersonnesTEnfantsController =
-      TextEditingController();
+      TextEditingController(text: '0');
 
   final TextEditingController __nbrePersonnesTHommesController =
-      TextEditingController();
+      TextEditingController(text: '0');
   final TextEditingController __nbrePersonnesTEnceintesController =
-      TextEditingController();
+      TextEditingController(text: '0');
 
-  final TextEditingController __autresController = TextEditingController();
+  final TextEditingController __autresController = TextEditingController(text:'0');
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
@@ -109,7 +109,7 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
       print(_quartierValue);
 
       Causerie _causerie = Causerie(
-        idFsAp: int.parse(_formationSanitaire.text),
+        idFsAp: 0,
         dateAp: _dateController.text,
         lieuAp: _localisationController.text,
         nbrepersonnetoucheeFnq: int.parse(_nbrePersonnesTController.text),
@@ -124,7 +124,7 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
         idquartier: int.parse(_quartierValue),
         idelementDonnee: int.parse(_themeValue),
         idAscAp: 0,
-        userEnreg: int.parse(_formationSanitaire.text),
+        userEnreg: 0,
       );
 
       print(_causerie.toJson());
@@ -136,11 +136,7 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CauserieBloc(
-          causerieRepository:
-              CauserieRepositoryImpl()), // ..add(GetCauserieEvent
-      child: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           backgroundColor: Palette.primary,
           iconTheme: const IconThemeData(color: Palette.white),
@@ -182,239 +178,247 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
                 ]),
                 10.verticalSpace,
                 _index == 0
-                    ? Form(
-                      key: _formKey,
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Formation Sanitaire",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            CustomTextFormInput(
-                              isReadonly: true,
-                              labelText: "",
-                              hintText: "CMS AGA",
-                              controller: _formationSanitaire,
-                              isPassword: true,
-                            ),
-                            10.verticalSpace,
-                            const Text(
-                              "Village",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            DropMenuVillage(
-                                onSelected: (String? value) {
-                                  setState(() {
-                                    _villageValue = value!;
-                                    print(_villageValue);
-                                  });
-                                },
-                              ),
-                            10.verticalSpace,
-                            const Text(
-                              "Quartier",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            DropMenuQuartier(
-                                onSelected: (String? value) {
-                                  setState(() {
-                                    _quartierValue = value!;
-                                    print(
-                                        "Quartier sélectionné: $_quartierValue");
-                                  });
-                                },
-                              ),
-                            10.verticalSpace,
-                            const Text(
-                              "Date",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            CustomTextFormInput(
-                              labelText: "",
-                              hintText: "mm/jj/aaaa",
-                              controller: _dateController,
-                              keybordType: TextInputType.number,
-                              icon: Icons.date_range,
-                              onTap: () {
-                                _restorableDatePickerRouteFuture.present();
-                              },
-                            ),
-                            10.verticalSpace,
-                            const Text(
-                              "Lieu",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            CustomTextFormInput(
-                              labelText: "",
-                              hintText: "",
-                              controller: _localisationController,
-                              keybordType: TextInputType.text,
-                              onTap: () {},
-                            ),
-                            10.verticalSpace,
-                            const Text(
-                              "Thème",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            DropMenuTheme(
-                                onSelected: (String? value) {
-                                  setState(() {
-                                    _themeValue = value!;
-                                    print(_themeValue);
-                                  });
-                                },
-                                type: 'CAUSERIE EDUCATIVE',
-                              ),
-                            10.verticalSpace,
-                           Center(
-                                child: CircleAvatar(
-                                  backgroundColor: Palette.primary,
-                                  radius: 25,
-                                  child: IconButton(
-                                    icon: Icon(
-                                      Icons.arrow_forward,
-                                      color: Palette.white,
-                                    ),
-                                    onPressed: () {
+                    ? Expanded(
+                      child: Form(
+                        key: _formKey,
+                        child: SingleChildScrollView(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Formation Sanitaire",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                CustomTextFormInput(
+                                  isReadonly: true,
+                                  labelText: "",
+                                  hintText: "CMS AGA",
+                                  controller: _formationSanitaire,
+                                  isPassword: true,
+                                ),
+                                10.verticalSpace,
+                                const Text(
+                                  "Village",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                DropMenuVillage(
+                                    onSelected: (String? value) {
                                       setState(() {
-                                        _index++;
+                                        _villageValue = value!;
+                                        print(_villageValue);
                                       });
                                     },
                                   ),
+                                10.verticalSpace,
+                                const Text(
+                                  "Quartier",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
-                              ),
-                          ],
-                        ),
-                    )
-                    : Form(
-                      key: _formKey2,
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                              // 10.verticalSpace,
-                              const Text(
-                                "Nombre de personnes touchées (9 - 49 ans)",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              CustomTextFormInput(
-                                labelText: "",
-                                hintText: "0",
-                                controller: _nbrePersonnesTController,
-                                keybordType: TextInputType.number,
-                                onTap: () {},
-                              ),
-                              10.verticalSpace,
-                              const Text(
-                                "Nombre de personnes touchées (Femmes enceintes",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              CustomTextFormInput(
-                                labelText: "",
-                                hintText: "0",
-                                controller: __nbrePersonnesTEnceintesController,
-                                keybordType: TextInputType.number,
-                                onTap: () {},
-                              ),
-                              10.verticalSpace,
-                              const Text(
-                                "Nombre de personnes touchées (Femmes allaitantes)",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              CustomTextFormInput(
-                                labelText: "",
-                                hintText: "0",
-                                controller: __nbrePersonnesTAllaitantesController,
-                                keybordType: TextInputType.number,
-                                onTap: () {},
-                              ),
-                              10.verticalSpace,
-                              const Text(
-                                "Nombre de personnes touchées (Hommes)",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              CustomTextFormInput(
-                                labelText: "",
-                                hintText: "0",
-                                controller: __nbrePersonnesTHommesController,
-                                keybordType: TextInputType.number,
-                                onTap: () {},
-                              ),
-                              10.verticalSpace,
-                              const Text(
-                                "Nombre d'enfants de 0 a 24 mois visité",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              CustomTextFormInput(
-                                labelText: "",
-                                hintText: "0",
-                                controller: __nbrePersonnesTEnfantsController,
-                                keybordType: TextInputType.number,
-                                onTap: () {},
-                              ),
-                              10.verticalSpace,
-                              const Text(
-                                "Autres",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              CustomTextFormInput(
-                                labelText: "",
-                                hintText: "0",
-                                controller: __autresController,
-                                keybordType: TextInputType.number,
-                                onTap: () {},
-                              ),
-                              10.verticalSpace,
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Expanded(
-                                      child: CircleAvatar(
-                                        backgroundColor: Palette.primary,
-                                        radius: 25,
-                                        child: IconButton(
-                                          icon: Icon(
-                                            Icons.arrow_back,
-                                            color: Palette.white,
-                                          ),
-                                          onPressed: () {
-                                            setState(() {
-                                              _index--;
-                                            });
-                                          },
+                                DropMenuQuartier(
+                                    onSelected: (String? value) {
+                                      setState(() {
+                                        _quartierValue = value!;
+                                        print(
+                                            "Quartier sélectionné: $_quartierValue");
+                                      });
+                                    },
+                                  ),
+                                10.verticalSpace,
+                                const Text(
+                                  "Date",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                CustomTextFormInput(
+                                  labelText: "",
+                                  hintText: "mm/jj/aaaa",
+                                  controller: _dateController,
+                                  keybordType: TextInputType.number,
+                                  icon: Icons.date_range,
+                                  onTap: () {
+                                    _restorableDatePickerRouteFuture.present();
+                                  },
+                                ),
+                                10.verticalSpace,
+                                const Text(
+                                  "Lieu",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                CustomTextFormInput(
+                                  labelText: "",
+                                  hintText: "",
+                                  controller: _localisationController,
+                                  keybordType: TextInputType.text,
+                                  onTap: () {},
+                                ),
+                                10.verticalSpace,
+                                const Text(
+                                  "Thème",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                DropMenuTheme(
+                                    onSelected: (String? value) {
+                                      setState(() {
+                                        _themeValue = value!;
+                                        print(_themeValue);
+                                      });
+                                    },
+                                    type: 'CAUSERIE EDUCATIVE',
+                                  ),
+                                10.verticalSpace,
+                               Center(
+                                    child: CircleAvatar(
+                                      backgroundColor: Palette.primary,
+                                      radius: 25,
+                                      child: IconButton(
+                                        icon: Icon(
+                                          Icons.arrow_forward,
+                                          color: Palette.white,
                                         ),
-                                      ),
-                                    ),
-                                    5.horizontalSpace,
-                                    Expanded(
-                                      flex: 2,
-                                      child: PrimaryButton(
-                                        width: 2,
-                                        btnBgColor: Palette.primary,
-                                        textColor: Palette.white,
-                                        btnText: "Enregistrer",
-                                        isFilledBtn: false,
-                                        onTapFunction: () {
-                                          // Future.delayed(
-                                          //     const Duration(seconds: 1), () {
-
-                                          // });
-
-                                          // Navigator.pop(context);
-                                          _onSubmit(context);
+                                        onPressed: () {
+                                          setState(() {
+                                            _index++;
+                                          });
                                         },
                                       ),
-                                    )
-                                  ],
-                                ),
-                            ]),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                        ),
+                      ),
+                    )
+                    : Expanded(
+                      child: Form(
+                        key: _formKey2,
+                        child: SingleChildScrollView(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                  // 10.verticalSpace,
+                                  const Text(
+                                    "Nombre de personnes touchées (9 - 49 ans)",
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  CustomTextFormInput(
+                                    labelText: "",
+                                    hintText: "0",
+                                    controller: _nbrePersonnesTController,
+                                    keybordType: TextInputType.number,
+                                    onTap: () {},
+                                  ),
+                                  10.verticalSpace,
+                                  const Text(
+                                    "Nombre de personnes touchées (Femmes enceintes",
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  CustomTextFormInput(
+                                    labelText: "",
+                                    hintText: "0",
+                                    controller: __nbrePersonnesTEnceintesController,
+                                    keybordType: TextInputType.number,
+                                    onTap: () {},
+                                  ),
+                                  10.verticalSpace,
+                                  const Text(
+                                    "Nombre de personnes touchées (Femmes allaitantes)",
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  CustomTextFormInput(
+                                    labelText: "",
+                                    hintText: "0",
+                                    controller: __nbrePersonnesTAllaitantesController,
+                                    keybordType: TextInputType.number,
+                                    onTap: () {},
+                                  ),
+                                  10.verticalSpace,
+                                  const Text(
+                                    "Nombre de personnes touchées (Hommes)",
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  CustomTextFormInput(
+                                    labelText: "",
+                                    hintText: "0",
+                                    controller: __nbrePersonnesTHommesController,
+                                    keybordType: TextInputType.number,
+                                    onTap: () {},
+                                  ),
+                                  10.verticalSpace,
+                                  const Text(
+                                    "Nombre d'enfants de 0 a 24 mois visité",
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  CustomTextFormInput(
+                                    labelText: "",
+                                    hintText: "0",
+                                    controller: __nbrePersonnesTEnfantsController,
+                                    keybordType: TextInputType.number,
+                                    onTap: () {},
+                                  ),
+                                  10.verticalSpace,
+                                  const Text(
+                                    "Autres",
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  CustomTextFormInput(
+                                    labelText: "",
+                                    hintText: "0",
+                                    controller: __autresController,
+                                    keybordType: TextInputType.number,
+                                    onTap: () {},
+                                  ),
+                                  10.verticalSpace,
+                                  Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Expanded(
+                                          child: CircleAvatar(
+                                            backgroundColor: Palette.primary,
+                                            radius: 25,
+                                            child: IconButton(
+                                              icon: Icon(
+                                                Icons.arrow_back,
+                                                color: Palette.white,
+                                              ),
+                                              onPressed: () {
+                                                setState(() {
+                                                  _index--;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        5.horizontalSpace,
+                                        Expanded(
+                                          flex: 2,
+                                          child: PrimaryButton(
+                                            width: 2,
+                                            btnBgColor: Palette.primary,
+                                            textColor: Palette.white,
+                                            btnText: "Enregistrer",
+                                            isFilledBtn: false,
+                                            onTapFunction: () {
+                                              // Future.delayed(
+                                              //     const Duration(seconds: 1), () {
+                                                
+                                              // });
+                                                
+                                              // Navigator.pop(context);
+                                              _onSubmit(context);
+                                            },
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                ]),
+                        ),
+                      ),
                     ),
                 10.verticalSpace,
               ],
             ),
           ),
         ),
-      ),
+      
     );
   }
 }

@@ -12,6 +12,7 @@ class RoutesName{
   static const String addCauserie = "addCauserie";
   static const String visite = "visite";
   static const String addVisite = "addVisite";
+  static const String showVisiteAndCauserie = "showVisiteAndCauserie";
 
 
 }

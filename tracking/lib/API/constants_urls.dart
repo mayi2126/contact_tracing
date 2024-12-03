@@ -7,11 +7,11 @@ const String baseUrl = "https://ugptogo.org/contacttracing/contacttracing/api";
 const String login = "/login";
 /* ------------------------------ CREATE OR ADD ----------------------------- */
 const String createVisite = "/visiteadomicileApi";
-const String createCauserie = "/causeries";
+const String createCauserie = "/causerieeducativeApi";
 /* ----------------------------- GET RESSOURCES ----------------------------- */
 const String getVillageQuarter = "/villagesquartiers";
 const String getThemes = "/themes";
 const String getProfessions = "/professions";
 const String getVisites = "/visiteadomicilelist";
-const String getCauseries = "/causeries";
+const String getCauseries = "/causerieeducativelist";
 
