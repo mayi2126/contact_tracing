@@ -8,6 +8,7 @@ class AddCauserie extends StatefulWidget {
 }
 
 class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
+  @override
   String? restorationId = "causerie";
 
  
@@ -108,7 +109,7 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
       print(_villageValue);
       print(_quartierValue);
 
-      Causerie _causerie = Causerie(
+      Causerie causerie = Causerie(
         idFsAp: 0,
         dateAp: _dateController.text,
         lieuAp: _localisationController.text,
@@ -127,9 +128,9 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
         userEnreg: 0,
       );
 
-      print(_causerie.toJson());
+      print(causerie.toJson());
 
-      context.read<CauserieBloc>().add(CreateCauserie(_causerie));
+      context.read<CauserieBloc>().add(CreateCauserie(causerie));
     }
   }
 
@@ -270,7 +271,7 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
                                       backgroundColor: Palette.primary,
                                       radius: 25,
                                       child: IconButton(
-                                        icon: Icon(
+                                        icon: const Icon(
                                           Icons.arrow_forward,
                                           color: Palette.white,
                                         ),
@@ -375,7 +376,7 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
                                             backgroundColor: Palette.primary,
                                             radius: 25,
                                             child: IconButton(
-                                              icon: Icon(
+                                              icon: const Icon(
                                                 Icons.arrow_back,
                                                 color: Palette.white,
                                               ),

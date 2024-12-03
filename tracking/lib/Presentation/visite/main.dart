@@ -72,15 +72,15 @@ class _VisitePageState extends State<VisitePage> {
                       'Personnalisé',
                       style: TextStyle(fontSize: 18, color: Palette.foreign),
                     ),
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.calendar_month,
                       color: Palette.dark2,
                     )),
                 CalendarSlider(
                   fullCalendarScroll: FullCalendarScroll.horizontal,
                   initialDate: DateTime.now(),
-                  firstDate: DateTime.now().subtract(Duration(days: 140)),
-                  lastDate: DateTime.now().add(Duration(days: 4)),
+                  firstDate: DateTime.now().subtract(const Duration(days: 140)),
+                  lastDate: DateTime.now().add(const Duration(days: 4)),
                   onDateSelected: (date) {
                     print(date);
                   },
@@ -147,11 +147,11 @@ class _VisitePageState extends State<VisitePage> {
             Navigator.pushNamed(context, RoutesName.addVisite);
           },
           backgroundColor: Palette.primary,
+          shape: const CircleBorder(),
           child: const Icon(
             Icons.add,
             color: Palette.white,
           ),
-          shape: CircleBorder(),
         ),
       ),
     );

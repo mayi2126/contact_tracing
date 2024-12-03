@@ -13,7 +13,7 @@ class DropMenuQuartier extends StatelessWidget {
         builder: (context, state) {
 
           if (state is VillageQuartierLoading) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }  else if (state is VillageQuartierLoaded) {
                         final List<Map<String, dynamic>> quartiers = state.villagesquartiers;
           return DropdownMenu<String>(
@@ -43,8 +43,8 @@ class DropMenuQuartier extends StatelessWidget {
                   : null,
             width: getWidth(333),
 
-            trailingIcon: Icon(Icons.keyboard_arrow_down_sharp),
-            selectedTrailingIcon: Icon(Icons.keyboard_arrow_up_sharp),
+            trailingIcon: const Icon(Icons.keyboard_arrow_down_sharp),
+            selectedTrailingIcon: const Icon(Icons.keyboard_arrow_up_sharp),
             // initialSelection: list.first,
             onSelected: onSelected,
             // Appel du callback avec l'id sélectionné
@@ -57,7 +57,7 @@ class DropMenuQuartier extends StatelessWidget {
               }).toList(),
           );
           } else {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
         },
       ),

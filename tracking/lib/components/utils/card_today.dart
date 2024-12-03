@@ -11,9 +11,9 @@ class CardToday extends StatelessWidget {
       children: causeries
           .map(
             (causerie) => Padding(
-              padding: EdgeInsets.fromLTRB(25, 0, 25, 10),
+              padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
               child: Container(
-                padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                 decoration: BoxDecoration(
                   border: Border.all(color: Palette.primary),
                   borderRadius: BorderRadius.circular(25),
@@ -21,7 +21,7 @@ class CardToday extends StatelessWidget {
                 child: Row(
                   children: [
                      Text(causerie.lieuAp,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Palette.primary,
                             fontWeight: FontWeight.bold)),
                     const Spacer(),
@@ -32,7 +32,7 @@ class CardToday extends StatelessWidget {
                           border: Border.all(color: Palette.primary),
                           borderRadius: BorderRadius.circular(20)),
                       child:  Text(causerie.libelementdedonnee,
-                          style: TextStyle(color: Palette.primary),
+                          style: const TextStyle(color: Palette.primary),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1),
                     ),

@@ -1,7 +1,7 @@
 part of '../../../core/cores.dart';
 
 class ShowPage extends StatefulWidget {
-  const ShowPage({Key? key, required this.arguments}) : super(key: key);
+  const ShowPage({super.key, required this.arguments});
   final VisiteModel arguments;
 
   @override
@@ -77,7 +77,7 @@ class _ShowPageState extends State<ShowPage> {
         lastDate: DateTime
             .now(), // Date la plus récente que l'utilisateur peut choisir
       ))!;
-      if (picked != null && picked != selectedDate) {
+      if (picked != selectedDate) {
         setState(() {
           selectedDate = picked;
         });
@@ -221,7 +221,7 @@ class _ShowPageState extends State<ShowPage> {
                         labelText: 'Nombre de personnes touchées H',
                       ),
                     ),
-                    Text("Thème de la causerie"),
+                    const Text("Thème de la causerie"),
                     DropMenuTheme(
                       onSelected: (String? value) {
                         setState(() {
@@ -272,11 +272,11 @@ class _ShowPageState extends State<ShowPage> {
                     TextField(
                         readOnly: true,
                         decoration: InputDecoration(
-                          labelText: '$formattedDate',
+                          labelText: formattedDate,
                           border: InputBorder.none,
                           suffixIcon: IconButton(
                               onPressed: () => _selectDate(context),
-                              icon: Icon(Icons.calendar_month)),
+                              icon: const Icon(Icons.calendar_month)),
                         )),
 
                     const SizedBox(height: 20),

@@ -8,6 +8,7 @@ class AddMemberPage extends StatefulWidget {
 }
 
 class _AddMemberPageState extends State<AddMemberPage> with RestorationMixin {
+  @override
   String? restorationId = "member";
   int _index = 0;
 
@@ -174,7 +175,7 @@ class _AddMemberPageState extends State<AddMemberPage> with RestorationMixin {
                             backgroundColor: Palette.primary,
                             radius: 25,
                             child: IconButton(
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.arrow_forward,
                                 color: Palette.white,
                               ),
@@ -220,9 +221,9 @@ class _AddMemberPageState extends State<AddMemberPage> with RestorationMixin {
                                   ),
                                   initialSelection: "Homme",
                                   trailingIcon:
-                                      Icon(Icons.keyboard_arrow_down_sharp),
+                                      const Icon(Icons.keyboard_arrow_down_sharp),
                                   selectedTrailingIcon:
-                                      Icon(Icons.keyboard_arrow_up_sharp),
+                                      const Icon(Icons.keyboard_arrow_up_sharp),
                                   onSelected: (String? value) {
                                     setState(() {
                                       _sexeValue = value!;
@@ -286,7 +287,7 @@ class _AddMemberPageState extends State<AddMemberPage> with RestorationMixin {
                                   backgroundColor: Palette.primary,
                                   radius: 25,
                                   child: IconButton(
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.arrow_back,
                                       color: Palette.white,
                                     ),

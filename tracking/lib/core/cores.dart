@@ -1,11 +1,9 @@
 library core;
 
 import 'dart:convert';
-import 'dart:ui';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tracking_pregnant/Presentation/Auth/bloc/login_bloc.dart';

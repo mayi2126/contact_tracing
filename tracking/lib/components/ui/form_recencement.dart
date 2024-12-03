@@ -16,7 +16,7 @@ Future<void> dialogBuilder(
         backgroundColor: Palette.white,
         title: Text(
           title,
-          style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),
         content: Column(

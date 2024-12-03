@@ -3,7 +3,7 @@ part of '../../core/cores.dart';
 // ignore: must_be_immutable
 class PrimaryButton extends StatelessWidget {
   PrimaryButton(
-      {Key? key,
+      {super.key,
       required this.btnText,
       required this.isFilledBtn,
       required this.onTapFunction,
@@ -12,8 +12,7 @@ class PrimaryButton extends StatelessWidget {
       this.width = 100,
         this.textColor,
         this.borderColor,
-      this.btnBgColor})
-      : super(key: key);
+      this.btnBgColor});
   final bool isFilledBtn;
   final String btnText;
   final VoidCallback onTapFunction;

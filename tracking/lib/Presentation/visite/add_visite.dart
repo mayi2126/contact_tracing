@@ -8,6 +8,7 @@ class AddVisitePage extends StatefulWidget {
 }
 
 class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
+  @override
   String? restorationId = "causerie";
 
   String _villageValue = "";
@@ -109,7 +110,7 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
       print(_villageValue);
       print(_quartierValue);
 
-      Visite _visite = Visite(
+      Visite visite = Visite(
         idFsAp: 0,
         dateAp: _dateController.text,
         lieuAp: _localisationController.text,
@@ -128,7 +129,7 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
         userEnreg: 0,
       );
 
-      context.read<VisiteBloc>().add(AddVisiteDomicile(_visite));
+      context.read<VisiteBloc>().add(AddVisiteDomicile(visite));
     }
   }
 
@@ -319,7 +320,7 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                       backgroundColor: Palette.primary,
                                       radius: 25,
                                       child: IconButton(
-                                        icon: Icon(
+                                        icon: const Icon(
                                           Icons.arrow_forward,
                                           color: Palette.white,
                                         ),
@@ -426,7 +427,7 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                             backgroundColor: Palette.primary,
                                             radius: 25,
                                             child: IconButton(
-                                              icon: Icon(
+                                              icon: const Icon(
                                                 Icons.arrow_back,
                                                 color: Palette.white,
                                               ),

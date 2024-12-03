@@ -80,7 +80,7 @@ class _DashboardPageState extends State<DashboardPage> {
                             children: [
                               Text(
                                 user!.name,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Palette.white,
                                     fontWeight: FontWeight.w600,
                                     fontSize: 18),

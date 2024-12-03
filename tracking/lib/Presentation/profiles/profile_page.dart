@@ -12,15 +12,15 @@ class ProfilePage extends StatelessWidget {
         backgroundImage: Image.asset("assets/jpg/pp.jpg").image,
       ),
       15.verticalSpace,
-      Text(
+      const Text(
         "ASC AGBANDI",
         style: TextStyle(
             color: Palette.primary, fontWeight: FontWeight.w600, fontSize: 18),
       ),
-      Spacer(),
+      const Spacer(),
       ListTile(
-        leading: Icon(Icons.logout_outlined),
-        title: Text("Se deconnecter"),
+        leading: const Icon(Icons.logout_outlined),
+        title: const Text("Se deconnecter"),
         onTap: () {
           showDialog(
             context: context,

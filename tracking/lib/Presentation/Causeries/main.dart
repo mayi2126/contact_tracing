@@ -62,11 +62,11 @@ class _CauseriePageState extends State<CauseriePage> {
             Navigator.pushNamed(context, RoutesName.addCauserie);
           },
           backgroundColor: Palette.primary,
+          shape: const CircleBorder(),
           child: const Icon(
             Icons.add,
             color: Palette.white,
           ),
-          shape: CircleBorder(),
         ),
       ),
     );
@@ -100,7 +100,7 @@ class CauserieList extends StatelessWidget {
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         "Causeries",
                         style: TextStyle(
                             fontSize: 20,
@@ -111,11 +111,11 @@ class CauserieList extends StatelessWidget {
                           ? const SizedBox(height: 0, width: 0)
                           : TextButton.icon(
                               onPressed: () {},
-                              label: Text(
+                              label: const Text(
                                 "Voir tous",
                                 style: TextStyle(color: Palette.foreign),
                               ),
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.arrow_forward_ios_outlined,
                                 size: 15,
                                 color: Palette.foreign,

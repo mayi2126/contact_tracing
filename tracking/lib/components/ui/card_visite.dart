@@ -17,7 +17,7 @@ class CardVC extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 10),
       child: Container(
-        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         height: getHeight(130),
         width: getWidth(200),
         decoration: BoxDecoration(
@@ -31,13 +31,13 @@ class CardVC extends StatelessWidget {
               children: [
                 Container(
                   width: getWidth(120),
-                  padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
+                  padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
                   decoration: BoxDecoration(
                       border: Border.all(color: Palette.primary),
                       borderRadius: BorderRadius.circular(20)),
                   child: Text(
                     visite.libelementdedonnee,
-                    style: TextStyle(color: Palette.primary),
+                    style: const TextStyle(color: Palette.primary),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   ),
@@ -47,7 +47,7 @@ class CardVC extends StatelessWidget {
                   onTap: () {
                    Navigator.pushNamed(context, RoutesName.showVisiteAndCauserie, arguments: visite);
                   },
-                  child: Icon(Icons.arrow_forward_ios_outlined,
+                  child: const Icon(Icons.arrow_forward_ios_outlined,
                       size: 15, color: Palette.primary),
                 )
               ],
@@ -57,15 +57,15 @@ class CardVC extends StatelessWidget {
               visite.lieuAp,
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Palette.primary),
             ),
-            Spacer(),
+            const Spacer(),
             Text(
               formattedDate,
-              style: TextStyle(
+              style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Palette.foreign,
                   fontSize: 12),

@@ -55,13 +55,13 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (context, child) {
           return MaterialApp(
-            localizationsDelegates: [
+            localizationsDelegates: const [
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            supportedLocales: [
-              Locale('fr'), // Spanish
+            supportedLocales: const [
+              Locale('fr'), // French
             ],
             debugShowCheckedModeBanner: false,
             initialRoute: RoutesName.splash,

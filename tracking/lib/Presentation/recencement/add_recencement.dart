@@ -8,6 +8,7 @@ class AddRecensement extends StatefulWidget {
 }
 
 class _addRecensementState extends State<AddRecensement> with RestorationMixin {
+  @override
   String? restorationId = "main";
   List<String> listVillage = <String>[
     'Selectionner un village',
@@ -93,7 +94,7 @@ class _addRecensementState extends State<AddRecensement> with RestorationMixin {
           backgroundColor: Palette.white,
           title: Text(
             title,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             // textAlign: TextAlign.center,
           ),
           content: Column(
@@ -216,8 +217,8 @@ class _addRecensementState extends State<AddRecensement> with RestorationMixin {
                 ),
               ),
               initialSelection: "Agoe",
-              trailingIcon: Icon(Icons.keyboard_arrow_down_sharp),
-              selectedTrailingIcon: Icon(Icons.keyboard_arrow_up_sharp),
+              trailingIcon: const Icon(Icons.keyboard_arrow_down_sharp),
+              selectedTrailingIcon: const Icon(Icons.keyboard_arrow_up_sharp),
               onSelected: (String? value) {
                 setState(() {
                   _villageValue = value!;
@@ -259,8 +260,8 @@ class _addRecensementState extends State<AddRecensement> with RestorationMixin {
               initialSelection: "Mamou",
               width: getWidth(333),
 
-              trailingIcon: Icon(Icons.keyboard_arrow_down_sharp),
-              selectedTrailingIcon: Icon(Icons.keyboard_arrow_up_sharp),
+              trailingIcon: const Icon(Icons.keyboard_arrow_down_sharp),
+              selectedTrailingIcon: const Icon(Icons.keyboard_arrow_up_sharp),
               // initialSelection: list.first,
               onSelected: (String? value) {
                 // This is called when the user selects an item.

@@ -18,7 +18,7 @@ class CardWidget extends StatefulWidget {
 }
 
 class _CardWidgetState extends State<CardWidget> {
-  Color _containerColor = Palette.card;
+  final Color _containerColor = Palette.card;
 
   @override
   Widget build(BuildContext context) {

@@ -22,14 +22,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
    
     final token = await authRepository.logUser(event.email, event.pwd);
    
-    if (token != null) {
-
-      
-      emit(LoginLoaded(token));
-    } else {
-      emit(Unauthenticated());
+    
+    emit(LoginLoaded(token));
     }
-  }
 
   Future<void> _onLogout(AuthLogout event, Emitter<LoginState> emit) async {
     await logout();
