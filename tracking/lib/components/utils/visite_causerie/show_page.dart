@@ -82,9 +82,7 @@ class _ShowPageState extends State<ShowPage> {
           selectedDate = picked;
         });
       }
-    } catch (e) {
-     
-    }
+    } catch (e) {}
     // Utilisation de "!" pour forcer un non-null (si l'utilisateur ne ferme pas sans choisir)
 
     // Si une date a été choisie, la mettre à jour
@@ -164,9 +162,8 @@ class _ShowPageState extends State<ShowPage> {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: ListView(
-                  physics: const BouncingScrollPhysics(),  
+                  physics: const BouncingScrollPhysics(),
                   children: <Widget>[
-                    
                     TextField(
                       controller: _lieuApController,
                       keyboardType: TextInputType.number,
@@ -283,21 +280,31 @@ class _ShowPageState extends State<ShowPage> {
                         )),
 
                     const SizedBox(height: 20),
-                    PrimaryButton(
-                      width: 2,
-                      btnBgColor: Palette.primary,
-                      textColor: Palette.white,
-                      btnText: "Enregistrer les modifications",
-                      isFilledBtn: false,
-                      onTapFunction: () {
-                        // Future.delayed(
-                        //     const Duration(seconds: 1), () {
-
-                        // });
-
-                        // Navigator.pop(context);
-                      },
-                    )
+                     AnimatedButton(
+                          text: 'Warning Dialog',
+                          color: Colors.orange,
+                          pressEvent: () {
+                            AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.warning,
+                              headerAnimationLoop: false,
+                              animType: AnimType.topSlide,
+                              showCloseIcon: true,
+                              closeIcon:
+                                  const Icon(Icons.close_fullscreen_outlined),
+                              title: 'Warning',
+                              desc:
+                                  'Dialog description here..................................................',
+                              btnCancelOnPress: () {},
+                              onDismissCallback: (type) {
+                                debugPrint(
+                                    'Dialog Dismiss from callback $type');
+                              },
+                              btnOkOnPress: () {},
+                            ).show();
+                          },
+                        ),
+                      
                   ],
                 ),
               ),
