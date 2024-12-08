@@ -2,7 +2,7 @@ import 'dart:ui';
 
 class Palette {
   static const Color card = Color.fromARGB(151, 84, 189, 230);
-  static const Color primary = Color.fromARGB(255, 3, 80, 223);
+  static const Color primary = Color.fromARGB(255, 33, 150, 243);
   static const Color stroke = Color(0xFFE3E5E5);
   static const Color contentSecondary = Color(0xFF6D6D6D);
   static const Color dark2 = Color.fromARGB(85, 27, 27, 27);

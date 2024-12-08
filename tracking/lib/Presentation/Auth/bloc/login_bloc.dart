@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tracking_pregnant/Presentation/Auth/data/Repositories/user_login_repo.dart';
-import 'package:tracking_pregnant/app/storage/local_storage.dart';
+import 'package:tracking/Presentation/Auth/data/Repositories/user_login_repo.dart';
+import 'package:tracking/app/storage/local_storage.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -22,14 +22,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
    
     final token = await authRepository.logUser(event.email, event.pwd);
    
-    if (token != null) {
-
-      
-      emit(LoginLoaded(token));
-    } else {
-      emit(Unauthenticated());
+    
+    emit(LoginLoaded(token));
     }
-  }
 
   Future<void> _onLogout(AuthLogout event, Emitter<LoginState> emit) async {
     await logout();

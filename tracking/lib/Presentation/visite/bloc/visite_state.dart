@@ -19,3 +19,39 @@ final class VisiteLoading extends VisiteState {}
 
 final class VisiteAdded extends VisiteState {
 }
+/* -------------------------------------------------------------------------- */
+/*                                 Get visites                                */
+/* -------------------------------------------------------------------------- */
+
+
+final class VisiteGetInitial extends VisiteState {}
+
+final class VisiteGet extends VisiteState {}
+
+final class VisiteGetLoaded extends VisiteState {
+  final List<VisiteModel> visites;
+  final List<VisiteModel> todaysVisites;
+  VisiteGetLoaded(this.visites,this.todaysVisites);
+}
+
+final class VisiteGetError extends VisiteState {
+  final String message;
+  VisiteGetError(this.message);
+}
+
+final class VisiteGetLoading extends VisiteState {}
+
+
+final class VisiteGetYesterday extends VisiteState {
+  
+}
+
+final class VisiteIsEmpty extends VisiteState {
+  
+}
+
+
+
+/* -------------------------------------------------------------------------- */
+/*                                 Get visite                                */
+/* -------------------------------------------------------------------------- */

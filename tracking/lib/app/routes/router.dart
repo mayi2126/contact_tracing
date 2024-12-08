@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tracking_pregnant/app/routes/routes_name.dart';
-import 'package:tracking_pregnant/core/cores.dart';
+import 'package:tracking/Presentation/visite/data/Models/visite_model.dart';
+import 'package:tracking/app/routes/routes_name.dart';
+import 'package:tracking/core/cores.dart';
 
 class Routes {
   static Route<dynamic> onGenerateRoute(RouteSettings routeSettings) {
@@ -29,8 +30,12 @@ class Routes {
       case RoutesName.visite:
         return MaterialPageRoute(builder: (context) => const VisitePage());
 
-        case RoutesName.addMember:
+      case RoutesName.addMember:
         return MaterialPageRoute(builder: (context) => const AddMemberPage());
+
+      case RoutesName.showVisiteAndCauserie:
+      final VisiteModel visiteModel=arguments as VisiteModel;
+        return MaterialPageRoute(builder: (context) =>  ShowPage( arguments:arguments));
       default:
         return MaterialPageRoute(
           builder: (context) => const Scaffold(

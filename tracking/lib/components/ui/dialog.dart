@@ -7,7 +7,7 @@ void showDialogCustom(BuildContext context, String title) {
                 title: Text(
                   title,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16),
+                  style: const TextStyle(fontSize: 16),
                 ),
                 content: const SizedBox(
                   height: 100, // Adjust the height here

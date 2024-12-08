@@ -1,7 +1,7 @@
 part of '../../../core/cores.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +10,7 @@ class LoginPage extends StatelessWidget {
 }
 
 class _LoginPageBody extends StatefulWidget {
-  const _LoginPageBody({Key? key}) : super(key: key);
+  const _LoginPageBody({super.key});
 
   @override
   State<_LoginPageBody> createState() => _LoginPageBodyState();

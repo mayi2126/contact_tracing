@@ -13,3 +13,12 @@ class AddVisiteDomicile extends VisiteEvent {
   @override
   List<Object?> get props => [visite];
 }
+
+
+class GetVisites extends VisiteEvent {
+  final String dateMin;
+  final String dateMax;
+  const GetVisites( this.dateMin, this.dateMax);
+  @override
+  List<Object?> get props => [dateMin, dateMax];
+}

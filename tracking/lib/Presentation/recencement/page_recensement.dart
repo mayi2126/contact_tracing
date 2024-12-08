@@ -66,7 +66,7 @@ class _MainRecensementState extends State<MainRecensement> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("La liste des recensements ...",style: TextStyle(fontSize: 16),),
+            const Text("La liste des recensements ...",style: TextStyle(fontSize: 16),),
             15.verticalSpace,
             RecentTrackingWidget(cards: items,),
           ],
@@ -77,11 +77,11 @@ class _MainRecensementState extends State<MainRecensement> {
           Navigator.pushNamed(context, RoutesName.addRecensement);
         },
         backgroundColor: Palette.primary,
+        shape: const CircleBorder(),
         child: const Icon(
           Icons.add,
           color: Palette.white,
         ),
-        shape: CircleBorder(),
       ),
     );
   }

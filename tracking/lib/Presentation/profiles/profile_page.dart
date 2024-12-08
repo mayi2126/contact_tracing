@@ -7,24 +7,20 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: [
       20.verticalSpace,
-     
-          CircleAvatar(
-            radius: 60,
-            backgroundImage: Image.asset("assets/jpg/pp.jpg").image,
-          ),
-
-          15.verticalSpace,
-     Text(
-                                "ASC AGBANDI",
-                                style: TextStyle(
-                                    color: Palette.primary,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 18),
-                              ),
-      Spacer(),
+      CircleAvatar(
+        radius: 60,
+        backgroundImage: Image.asset("assets/jpg/pp.jpg").image,
+      ),
+      15.verticalSpace,
+      const Text(
+        "ASC AGBANDI",
+        style: TextStyle(
+            color: Palette.primary, fontWeight: FontWeight.w600, fontSize: 18),
+      ),
+      const Spacer(),
       ListTile(
-        leading: Icon(Icons.logout_outlined),
-        title: Text("Se deconnecter"),
+        leading: const Icon(Icons.logout_outlined),
+        title: const Text("Se deconnecter"),
         onTap: () {
           showDialog(
             context: context,
