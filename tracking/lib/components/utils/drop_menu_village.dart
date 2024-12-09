@@ -1,9 +1,10 @@
 part of '../../core/cores.dart';
 
 class DropMenuVillage extends StatelessWidget {
-  const DropMenuVillage({super.key, required this.onSelected, this.nom});
+  const DropMenuVillage({super.key, required this.onSelected, this.nom, this.id});
   final Function(String?) onSelected;
   final String? nom;
+  final int? id;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -35,12 +36,14 @@ class DropMenuVillage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            // initialSelection: "Agoe",
-            initialSelection: villages.isNotEmpty
-                  ? (villages.firstWhere((village) => village['nomvillage'] == nom,
-                          orElse: () => villages.first))['id']
+           initialSelection: id != null && villages.isNotEmpty
+                  ? (villages.firstWhere(
+                          (village) => village['nomvillage'] == nom,
+                          orElse: () => villages.first))['nomvillage']
                       .toString()
                   : null,
+            // initialSelection: "choisir un village",
+            hintText: nom ?? "Choisir un village",
             width: getWidth(333),
 
             trailingIcon: const Icon(Icons.keyboard_arrow_down_sharp),
@@ -49,10 +52,10 @@ class DropMenuVillage extends StatelessWidget {
             onSelected: onSelected,
             // Appel du callback avec l'id sélectionné
               dropdownMenuEntries: villages
-                  .map<DropdownMenuEntry<String>>((Map<String, dynamic> quartier) {
+                  .map<DropdownMenuEntry<String>>((Map<String, dynamic> village) {
                 return DropdownMenuEntry<String>(
-                  value: quartier['id'].toString(), // Utilisez l'id comme valeur
-                  label: quartier['nomvillage'].isNotEmpty ? quartier['nomvillage'] : ' Nom inconnu', // Affichez le name comme label
+                  value: village['id'].toString(), // Utilisez l'id comme valeur
+                  label: village['nomvillage'].isNotEmpty ? village['nomvillage'] : ' Nom inconnu', // Affichez le name comme label
                 );
               }).toList(),
           );

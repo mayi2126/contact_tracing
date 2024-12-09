@@ -10,14 +10,18 @@ part 'data_state.dart';
 
 /* -------------------------------- Quartier -------------------------------- */
 class DataBloc extends Bloc<DataEvent, DataState> {
-  final QuartierRepository quartierRepository;
+  
 
-  DataBloc(this.quartierRepository) : super(DataInitial()) {
+  DataBloc() : super(DataInitial()) {
+    on<QuartierReset>((event, emit) async {emit(DataInitial());});
+    
     on<FetchVillageQuartier>((event, emit) async {
+      
       emit(VillageQuartierLoading());
       try {
+        final QuartierRepository quartierRepository = QuartierRepository();
         final villagesQuartiers =
-            await quartierRepository.fetchVillageQuartier();
+            await quartierRepository.fetchVillageQuartier(event.id);
         emit(VillageQuartierLoaded(villagesQuartiers));
       } catch (e) {
         emit(VillageQuartierError(e.toString()));

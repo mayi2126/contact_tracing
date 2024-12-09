@@ -139,6 +139,14 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            context.read<DataBloc>().add(QuartierReset());
+            Navigator.pop(context);
+
+          }
+        ),
           backgroundColor: Palette.primary,
           iconTheme: const IconThemeData(color: Palette.white),
           title: const Text(
@@ -208,13 +216,15 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
                                         _villageValue = value!;
                                         print(_villageValue);
                                       });
+                                            context.read<DataBloc>().add(FetchVillageQuartier(int.parse(_villageValue)));
+
                                     },
                                   ),
                                 10.verticalSpace,
-                                const Text(
+                                _villageValue != "" ? const Text(
                                   "Quartier",
                                   style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
+                                ):const SizedBox.shrink(),
                                 DropMenuQuartier(
                                     onSelected: (String? value) {
                                       setState(() {

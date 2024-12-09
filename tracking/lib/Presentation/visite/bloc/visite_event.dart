@@ -22,3 +22,12 @@ class GetVisites extends VisiteEvent {
   @override
   List<Object?> get props => [dateMin, dateMax];
 }
+
+
+class UpdateVisite extends VisiteEvent {
+  final Visite visite;
+  final int id;
+  const UpdateVisite(this.visite, this.id);
+  @override
+  List<Object?> get props => [visite];
+}

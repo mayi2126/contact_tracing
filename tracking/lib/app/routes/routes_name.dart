@@ -13,6 +13,7 @@ class RoutesName{
   static const String visite = "visite";
   static const String addVisite = "addVisite";
   static const String showVisiteAndCauserie = "showVisiteAndCauserie";
+  static const String showCauserie = "showCauserie";
 
 
 }

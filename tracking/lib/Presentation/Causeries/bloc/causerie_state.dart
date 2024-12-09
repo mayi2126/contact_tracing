@@ -54,3 +54,17 @@ final class CauserieIsEmpty extends CauserieState {
 final class CauserieGetSearch extends CauserieState {
   
 }
+
+/* -------------------------------------------------------------------------- */
+/*                              UPDATE CAUSERIES                              */
+/* -------------------------------------------------------------------------- */
+
+
+final class CauserieUpdated extends CauserieState {}
+
+final class CauserieUpdateError extends CauserieState {
+  final String message;
+  CauserieUpdateError(this.message);
+}
+
+final class CauserieUpdateLoading extends CauserieState {}

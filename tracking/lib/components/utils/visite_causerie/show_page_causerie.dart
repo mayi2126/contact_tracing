@@ -1,14 +1,14 @@
 part of '../../../core/cores.dart';
 
-class ShowPage extends StatefulWidget {
-  const ShowPage({super.key, required this.arguments});
+class ShowCauseriePage extends StatefulWidget {
+  const ShowCauseriePage({super.key, required this.arguments});
   final VisiteModel arguments;
 
   @override
-  State<ShowPage> createState() => _ShowPageState();
+  State<ShowCauseriePage> createState() => _ShowCauseriePageState();
 }
 
-class _ShowPageState extends State<ShowPage> {
+class _ShowCauseriePageState extends State<ShowCauseriePage> {
   late String _themeValue;
   late String _villageValue;
   late String _quartierValue;
@@ -49,8 +49,7 @@ class _ShowPageState extends State<ShowPage> {
 
     selectedDate = DateTime.parse(widget.arguments.dateAp.toString());
 
-        context.read<DataBloc>().add(FetchVillageQuartier(int.parse(widget.arguments.idvillage.toString())));
-
+    context.read<DataBloc>().add(FetchVillageQuartier(int.parse(widget.arguments.idvillage.toString())));
   }
 
   @override
@@ -93,7 +92,7 @@ class _ShowPageState extends State<ShowPage> {
 
   void _onSubmit(BuildContext context) {
     try {
-      Visite visite = Visite(
+      Causerie causerie = Causerie(
         idFsAp: 0,
         dateAp: selectedDate.toString(),
         lieuAp: _lieuApController.text,
@@ -114,7 +113,7 @@ class _ShowPageState extends State<ShowPage> {
       PanaraConfirmDialog.showAnimatedGrow(
                   context,
                   title: "Action irréversible",
-                  message: "Etes-vous sur de modifier cette visite ?",
+                  message: "Etes-vous sur de modifier cette causerie ?",
                   confirmButtonText: "Oui",
                   cancelButtonText: "Non",
                   onTapCancel: () {
@@ -122,7 +121,7 @@ class _ShowPageState extends State<ShowPage> {
                   },
                   onTapConfirm: () {
                     Navigator.pop(context);
-                     context.read<VisiteBloc>().add(UpdateVisite(visite, widget.arguments.id));
+                     context.read<CauserieBloc>().add(UpdateCauserie(causerie, widget.arguments.id));
                   },
                   panaraDialogType: PanaraDialogType.warning,
                 );
@@ -137,13 +136,13 @@ class _ShowPageState extends State<ShowPage> {
         ? 'Aucune date choisie'
         : DateFormat('d MMMM yyyy', 'fr').format(selectedDate!);
 
-    return BlocListener<VisiteBloc, VisiteState>(
+    return BlocListener<CauserieBloc, CauserieState>(
       listener: (context, state) {
-        if (state is VisiteUpdateLoading) {
+        if (state is CauserieUpdateLoading) {
           showDialogCustom(context, "Modification en cours...");
         }
 
-        if (state is VisiteUpdated) {
+        if (state is CauserieUpdated) {
           Navigator.pop(context);
 
           PanaraInfoDialog.showAnimatedGrow(
@@ -151,13 +150,13 @@ class _ShowPageState extends State<ShowPage> {
             // title: "Hello",
             buttonTextColor: Palette.white,
             color: Palette.white,
-            message: "La visite a bien été modifiée.",
+            message: "La causerie a bien été modifiée.",
             buttonText: "OK",
            onTapDismiss: () => Navigator.pop(context),
             panaraDialogType: PanaraDialogType.normal,
           );
         }
-        if (state is VisiteUpdateError) {
+        if (state is CauserieUpdateError) {
           Navigator.pop(context);
           SnackBar snackBar = SnackBar(content: Text(state.message));
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -174,8 +173,8 @@ class _ShowPageState extends State<ShowPage> {
                 height: 250,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/png/visite-removebg.png'),
-                    fit: BoxFit.fitHeight,
+                    image: AssetImage('assets/jpg/cauEdu.jpeg'),
+                    fit: BoxFit.cover,
                   ),
                   color: Palette.primary,
                 ),
@@ -201,11 +200,7 @@ class _ShowPageState extends State<ShowPage> {
                           Navigator.pop(context);
                         },
                       ),
-                      const Align(
-                        alignment: Alignment(0.6, 1),
-                        child: Icon(Icons.location_on_outlined,
-                            color: Palette.white, size: 30),
-                      ),
+                     
                     ],
                   ),
                 ),
@@ -230,11 +225,9 @@ class _ShowPageState extends State<ShowPage> {
                   padding: const EdgeInsets.only(right: 20,left: 20,bottom: 20),
                   child: ListView(
                     physics: const BouncingScrollPhysics(),
-                                        padding: EdgeInsets.all(0),
-
+                    padding: EdgeInsets.all(0),
                     children: <Widget>[
-
-                           5.verticalSpace,
+                      5.verticalSpace,
                       Align(
                         alignment: Alignment.topCenter,
                         child: Container(
@@ -322,8 +315,9 @@ class _ShowPageState extends State<ShowPage> {
                           setState(() {
                             _villageValue = value!;
                             print(_villageValue);
+
                           });
-                         context.read<DataBloc>().add(FetchVillageQuartier(int.parse(_villageValue)));
+                              context.read<DataBloc>().add(FetchVillageQuartier(int.parse(_villageValue)));
 
                         },
                         nom: widget.arguments.nomvillage,

@@ -34,8 +34,13 @@ class Routes {
         return MaterialPageRoute(builder: (context) => const AddMemberPage());
 
       case RoutesName.showVisiteAndCauserie:
-      final VisiteModel visiteModel=arguments as VisiteModel;
-        return MaterialPageRoute(builder: (context) =>  ShowPage( arguments:arguments));
+        final VisiteModel visiteModel = arguments as VisiteModel;
+        return MaterialPageRoute(
+            builder: (context) => ShowPage(arguments: visiteModel));
+      case RoutesName.showCauserie:
+        final VisiteModel causerieModel = arguments as VisiteModel;
+        return MaterialPageRoute(
+            builder: (context) => ShowCauseriePage(arguments: causerieModel));
       default:
         return MaterialPageRoute(
           builder: (context) => const Scaffold(

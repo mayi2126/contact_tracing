@@ -12,6 +12,7 @@ import 'package:tracking/app/routes/router.dart';
 import 'package:tracking/app/routes/routes_name.dart';
 import 'package:tracking/design_system/pallete.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tracking/externe-data/bloc/data_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding
@@ -47,6 +48,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               CauserieBloc(), 
+        ),
+         BlocProvider(
+          create: (context) => DataBloc(),
         ),
       ],
       child: ScreenUtilInit(

@@ -85,9 +85,8 @@ class CauserieList extends StatelessWidget {
               .showSnackBar(SnackBar(content: Text(state.message)));
         }
         if (state is CauserieGetSearch) {
-          context
-              .read<CauserieBloc>()
-              .add( GetCauseries("2023-01-01", DateFormat('yyyy-MM-dd').format(DateTime.now())));
+          context.read<CauserieBloc>().add(GetCauseries(
+              "2023-01-01", DateFormat('yyyy-MM-dd').format(DateTime.now())));
         }
       },
       child: BlocBuilder<CauserieBloc, CauserieState>(
@@ -139,10 +138,10 @@ class CauserieList extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.only(
                                 left: 20, bottom: 20, right: 20),
-                            child: CardVisiteCauserie(visites: state.causeries),
+                            child: CardCauserie(visites: state.causeries),
                           ),
                         )
-                  : state is CauserieGetLoading
+                      : state is CauserieGetLoading
                           ? const Center(
                               child: CircularProgressIndicator.adaptive(
                               semanticsLabel: "...",
@@ -162,10 +161,34 @@ class CauserieList extends StatelessWidget {
               Expanded(
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
-                  child: state  is CauserieGetLoaded ?
-                      CardToday( state.todaysCauseries) : const SizedBox(),
-                  
-                 
+                  child: state is CauserieGetLoaded &&
+                          state.todaysCauseries.isNotEmpty
+                      ? CardToday(state.todaysCauseries)
+                      : state  is CauserieGetLoading ? const Center(child: Text('...')): Center(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 70),
+                            child: Column(
+                              children: [
+                                
+
+                                const SizedBox(
+                                  height: 50,
+                                  width: 50,
+                                  child: Image(
+                                    image: AssetImage(
+                                      "assets/png/empty-box.png",
+                                    ),
+                                  ),
+                                ),
+                                5.verticalSpace,
+                                const Text(
+                                  "Aucune causerie aujourd'hui",
+                                  style: TextStyle(color: Palette.foreign),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                 ),
               )
             ],

@@ -100,7 +100,7 @@ class Items extends StatelessWidget {
                   child: CardWidget(
                     icon: Icons.handshake,
                     title: "Causeries Éducatives",
-                    image: "assets/jpg/pre.jpg",
+                    image: "assets/jpg/cauEdu.jpeg",
                     onTap: () {
                       Navigator.pushNamed(context, RoutesName.causerie);
                     },
@@ -109,6 +109,7 @@ class Items extends StatelessWidget {
               ),
             ],
           ),
+          
           10.verticalSpace,
           const Text(
             "Récencements récents",

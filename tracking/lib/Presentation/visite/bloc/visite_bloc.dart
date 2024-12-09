@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:tracking/Presentation/visite/data/Models/visite.dart';
 import 'package:tracking/Presentation/visite/data/Models/visite_model.dart';
 import 'package:tracking/Presentation/visite/data/Repository/retrieve_vististe.dart';
+import 'package:tracking/Presentation/visite/data/Repository/update_visite.dart';
 import 'package:tracking/Presentation/visite/data/Repository/visite_repo.dart';
 import 'package:tracking/components/utils/date_filter.dart';
 
@@ -14,6 +15,7 @@ class VisiteBloc extends Bloc<VisiteEvent, VisiteState> {
   VisiteBloc() : super(VisiteInitial()) {
     on<AddVisiteDomicile>(_onAddVisiteDomicile);
     on<GetVisites>(_onGetVisites);
+    on<UpdateVisite>(_onVisiteUpdate);
   }
 
   Future<void> _onAddVisiteDomicile(
@@ -58,5 +60,25 @@ class VisiteBloc extends Bloc<VisiteEvent, VisiteState> {
 
     }
 
+  }
+
+  Future<void> _onVisiteUpdate(UpdateVisite event, Emitter<VisiteState> emit) async {
+    try {
+
+      emit(VisiteUpdateLoading());
+      final UpdateVisiteImpl updateVisite = UpdateVisiteImpl();
+      
+      bool result = await updateVisite.updateVisiteDomicile(event.visite, event.id);
+
+      if (result) {
+        emit(VisiteUpdated());
+      }
+      else {
+        emit(VisiteUpdateError("Erreur lors de la mise à jour de la visite"));
+      }
+    } catch (e) {
+        emit(VisiteUpdateError("Erreur lors de la mise à jour de la visite"));
+
+    }
   }
 }

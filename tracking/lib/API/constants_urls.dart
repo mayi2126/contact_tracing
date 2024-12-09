@@ -8,8 +8,12 @@ const String login = "/login";
 /* ------------------------------ CREATE OR ADD ----------------------------- */
 const String createVisite = "/visiteadomicileApi";
 const String createCauserie = "/causerieeducativeApi";
+const String updateViste = "/visiteadomicileupdate";
+const String updateCauseriePath = "/causerieeducativeupdate";
+const String storeInfoGenRec = "/storeinfogenrec";
 /* ----------------------------- GET RESSOURCES ----------------------------- */
-const String getVillageQuarter = "/villagesquartiers";
+const String getVillage = "/villagesrechByfs";
+const String getQuartier = "/quartierrechByvillage";
 const String getThemes = "/themes";
 const String getProfessions = "/professions";
 const String getVisites = "/visiteadomicilelist";

@@ -25,3 +25,13 @@ class GetCauseries extends CauserieEvent {
   List<Object> get props => [dateMin, dateMax];
 }
 
+
+
+class UpdateCauserie extends CauserieEvent {
+  final Causerie causerie;
+  final int id;
+  const UpdateCauserie(this.causerie, this.id);
+  @override
+  List<Object> get props => [causerie];
+}
+

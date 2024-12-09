@@ -1,7 +1,6 @@
 part of '../../core/cores.dart';
-
-class CardVC extends StatelessWidget {
-  const CardVC({super.key, required this.visite});
+class CardC extends StatelessWidget {
+  const CardC({super.key, required this.visite});
 
   final VisiteModel visite;
 
@@ -16,7 +15,7 @@ class CardVC extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-                           Navigator.pushNamed(context, RoutesName.showVisiteAndCauserie, arguments: visite);
+                           Navigator.pushNamed(context, RoutesName.showCauserie, arguments: visite);
 
       },
       child: Padding(
@@ -26,8 +25,10 @@ class CardVC extends StatelessWidget {
           height: getHeight(130),
           width: getWidth(200),
           decoration: BoxDecoration(
+            // color: Palette.white,
               border: Border.all(color: Palette.primary),
-              borderRadius: BorderRadius.circular(30)),
+              borderRadius: BorderRadius.circular(30),
+               ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -37,9 +38,13 @@ class CardVC extends StatelessWidget {
                   Container(
                     width: getWidth(120),
                     padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+      
                     decoration: BoxDecoration(
                         border: Border.all(color: Palette.primary),
-                        borderRadius: BorderRadius.circular(20)),
+                        borderRadius: BorderRadius.circular(20),
+                       
+      
+                        ),
                     child: Text(
                       visite.libelementdedonnee,
                       style: const TextStyle(color: Palette.primary),
@@ -50,7 +55,7 @@ class CardVC extends StatelessWidget {
                   const Spacer(),
                   GestureDetector(
                     onTap: () {
-                     Navigator.pushNamed(context, RoutesName.showVisiteAndCauserie, arguments: visite);
+                     Navigator.pushNamed(context, RoutesName.showCauserie, arguments: visite);
                     },
                     child: const Icon(Icons.arrow_forward_ios_outlined,
                         size: 15, color: Palette.primary),

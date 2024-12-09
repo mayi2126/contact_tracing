@@ -1,5 +1,6 @@
 library core;
 
+import 'dart:async';
 import 'dart:convert';
 import 'package:intl/intl.dart';
 
@@ -10,6 +11,7 @@ import 'package:tracking/Presentation/Auth/bloc/login_bloc.dart';
 import 'package:tracking/Presentation/Auth/data/Models/user_token.dart';
 import 'package:tracking/Presentation/Causeries/bloc/causerie_bloc.dart';
 import 'package:tracking/Presentation/Causeries/data/Models/causerie.dart';
+import 'package:tracking/Presentation/recencement/bloc/recensement_bloc.dart';
 import 'package:tracking/Presentation/visite/bloc/visite_bloc.dart';
 import 'package:tracking/Presentation/visite/data/Models/visite.dart';
 import 'package:tracking/Presentation/visite/data/Models/visite_model.dart';
@@ -24,9 +26,10 @@ import 'package:tracking/app/routes/routes_name.dart';
 import 'package:tracking/design_system/pallete.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:calendar_slider/calendar_slider.dart';
-
-
+import 'package:permission_handler/permission_handler.dart';
+import 'package:location/location.dart' as l;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 
 
 part '../components/ui/auth/text_form_input.dart';
@@ -50,8 +53,10 @@ part '../components/ui/recent_tracking_card.dart';
 part '../components/ui/form_recencement.dart';
 part '../components/ui/dialog.dart';
 part '../components/ui/card_visite.dart';
+part '../components/ui/card_causerie.dart';
 part '../components/utils/card_today.dart';
 part '../components/utils/visite_causerie/show_page.dart';
+part '../components/utils/visite_causerie/show_page_causerie.dart';
 
 /* ------------------------------- RECENSEMENT ------------------------------ */
 part '../Presentation/recencement/add_recencement.dart';
@@ -69,7 +74,7 @@ part '../Presentation/visite/main.dart';
 part '../Presentation/visite/add_visite.dart';
 
 part '../components/utils/card_visi_causerie.dart';
-
+part '../components/utils/card_causerie.dart';
 
 // EXTERNE DATA
 part '../components/utils/drop_menu_quartier.dart';

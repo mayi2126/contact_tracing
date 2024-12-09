@@ -10,15 +10,6 @@ class AddRecensement extends StatefulWidget {
 class _addRecensementState extends State<AddRecensement> with RestorationMixin {
   @override
   String? restorationId = "main";
-  List<String> listVillage = <String>[
-    'Selectionner un village',
-    'Agoe',
-  ];
-
-  List<String> listQuartier = <String>[
-    'Selectionner un quartier',
-    'Mamou',
-  ];
 
   String _villageValue = "";
   String _quartierValue = "";
@@ -41,6 +32,15 @@ class _addRecensementState extends State<AddRecensement> with RestorationMixin {
       );
     },
   );
+
+
+   bool permissionGranted = false;
+  bool gpsEnabled = false;
+  l.Location location = l.Location();
+  late StreamSubscription subscription;
+  bool trackingEnabled = false;
+//start location
+  List<l.LocationData> locations = [];
 
   @pragma('vm:entry-point')
   static Route<DateTime> _datePickerRoute(
@@ -152,7 +152,6 @@ class _addRecensementState extends State<AddRecensement> with RestorationMixin {
                 onTapFunction: onTapSecondary,
                 textColor: Palette.primary,
                 btnBgColor: Palette.white,
-                
               ),
             ],
           ),
@@ -161,184 +160,216 @@ class _addRecensementState extends State<AddRecensement> with RestorationMixin {
     );
   }
 
+ void checkStatus() async {
+    bool _permissionGranted = await isPermissionGranted();
+    bool _gpsEnabled = await isGpsEnabled();
+    setState(() {
+      permissionGranted = _permissionGranted;
+      gpsEnabled = _gpsEnabled;
+    });
+  }
+
+  Future<bool> isPermissionGranted() async {
+    return await Permission.locationWhenInUse.isGranted;
+  }
 
 
-  
+  Future<bool> isGpsEnabled() async {
+    return await Permission.location.serviceStatus.isEnabled;
+  }
+
+  void requestLocationPermission() async {
+    PermissionStatus permissionStatus =
+        await Permission.locationWhenInUse.request();
+    if (permissionStatus == PermissionStatus.granted) {
+      setState(() {
+        permissionGranted = true;
+      });
+    } else {
+      setState(() {
+        permissionGranted = false;
+      });
+    }
+  }
+
+  void addLocation(l.LocationData data) {
+    setState(() {
+      locations.insert(0, data);
+    });
+  }
+
+  void clearLocation() {
+    setState(() {
+      locations.clear();
+    });
+  }
+
+  void startTracking() async {
+    if (!(await isGpsEnabled())) {
+      return;
+    }
+    if (!(await isPermissionGranted())) {
+      return;
+    }
+    subscription = location.onLocationChanged.listen((event) {
+      addLocation(event);
+    });
+
+    setState(() {
+      // print(locations.first.latitude);
+      // print(locations.first.longitude);
+      // print(locations.first.altitude);
+      print(locations);
+      trackingEnabled = true;
+    });
+  }
+
+  void stopTracking() {
+    subscription.cancel();
+    setState(() {
+      trackingEnabled = false;
+    });
+    clearLocation();
+  }
+
+  void _onSubmitInfoGenRec() {}
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Palette.primary,
-        iconTheme: const IconThemeData(color: Palette.white),
-        title: const Text(
-          "Ajouter un recenement",
-          style: TextStyle(color: Palette.white, fontSize: 17),
+    return BlocProvider(
+      create: (context) => RecensementBloc(),
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios),
+              onPressed: () {
+                context.read<DataBloc>().add(QuartierReset());
+                Navigator.pop(context);
+              }),
+          backgroundColor: Palette.primary,
+          iconTheme: const IconThemeData(color: Palette.white),
+          title: const Text(
+            "Ajouter un recenement",
+            style: TextStyle(color: Palette.white, fontSize: 17),
+          ),
         ),
-      ),
-      body: Container(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Formation Sanitaire",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            CustomTextFormInput(
-              isReadonly: true,
-              labelText: "",
-              hintText: "CMS AGA",
-              controller: _formationSanitaire,
-              isPassword: true,
-            ),
-            10.verticalSpace,
-            const Text(
-              "Village",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            DropdownMenu<String>(
-              inputDecorationTheme: InputDecorationTheme(
-                filled: true,
-                fillColor: Palette.bgGrey,
-                focusedBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide(
-                    color: Palette.primary,
-                    width: 2,
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    color: Palette.stroke,
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              initialSelection: "Agoe",
-              trailingIcon: const Icon(Icons.keyboard_arrow_down_sharp),
-              selectedTrailingIcon: const Icon(Icons.keyboard_arrow_up_sharp),
-              onSelected: (String? value) {
-                setState(() {
-                  _villageValue = value!;
-                  print(_villageValue);
-                });
-              },
-              //TODOS: remove static width
-              width: getWidth(333),
-              dropdownMenuEntries:
-                  listVillage.map<DropdownMenuEntry<String>>((String value) {
-                return DropdownMenuEntry<String>(value: value, label: value);
-              }).toList(),
-            ),
-            10.verticalSpace,
-            const Text(
-              "Quartier",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            DropdownMenu<String>(
-              inputDecorationTheme: InputDecorationTheme(
-                filled: true,
-                fillColor: Palette.bgGrey,
-                focusedBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide(
-                    color: Palette.primary,
-                    width: 2,
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    color: Palette.stroke,
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              // initialSelection: "Agoe",
-              initialSelection: "Mamou",
-              width: getWidth(333),
-
-              trailingIcon: const Icon(Icons.keyboard_arrow_down_sharp),
-              selectedTrailingIcon: const Icon(Icons.keyboard_arrow_up_sharp),
-              // initialSelection: list.first,
-              onSelected: (String? value) {
-                // This is called when the user selects an item.
-                setState(() {
-                  _quartierValue = value!;
-                  print(_quartierValue);
-                });
-              },
-              dropdownMenuEntries:
-                  listQuartier.map<DropdownMenuEntry<String>>((String value) {
-                return DropdownMenuEntry<String>(value: value, label: value);
-              }).toList(),
-            ),
-            10.verticalSpace,
-            const Text(
-              "Date",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            CustomTextFormInput(
-              labelText: "",
-              hintText: "mm/jj/aaaa",
-              controller: _dateController,
-              keybordType: TextInputType.number,
-              icon: Icons.date_range,
-              onTap: () {
-                _restorableDatePickerRouteFuture.present();
-              },
-            ),
-            10.verticalSpace,
-            const Text(
-              "Localisation GPS",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            CustomTextFormInput(
-              labelText: "",
-              hintText: "Entrer la localisation ou cliquer pour obtenir",
-              controller: _localisationController,
-              keybordType: TextInputType.number,
-              icon: Icons.location_on,
-              onTap: () {},
-            ),
-            10.verticalSpace,
-            Row(
+        body: BlocListener<RecensementBloc, RecensementState>(
+          listener: (context, state) {
+            // TODO: implement listener
+          },
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: PrimaryButton(
-                    btnBgColor: Palette.primary,
-                    textColor: Palette.white,
-                    btnText: "Enregistrer",
-                    isFilledBtn: false,
-                    onTapFunction: () {},
-                  ),
+                const Text(
+                  "Formation Sanitaire",
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                5.horizontalSpace,
-                Expanded(
-                  child: PrimaryButton(
-                    btnBgColor: Palette.primary,
-                    textColor: Palette.white,
-                    btnText: "Ajouter un Chef",
-                    isFilledBtn: false,
-                    onTapFunction: () {
-                      dialogBuilder(
-                          context,
-                          () {},
-                          () {
+                CustomTextFormInput(
+                  isReadonly: true,
+                  labelText: "",
+                  hintText: "CMS AGA",
+                  controller: _formationSanitaire,
+                  isPassword: true,
+                ),
+                10.verticalSpace,
+                const Text(
+                  "Village",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                DropMenuVillage(
+                  onSelected: (String? value) {
+                    setState(() {
+                      _villageValue = value!;
+                      print(_villageValue);
+                    });
+                    context
+                        .read<DataBloc>()
+                        .add(FetchVillageQuartier(int.parse('12')));
+                  },
+                ),
+                10.verticalSpace,
+                _villageValue == ""
+                    ? const SizedBox.shrink()
+                    : const Text(
+                        "Quartier",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                DropMenuQuartier(
+                  onSelected: (String? value) {
+                    setState(() {
+                      _quartierValue = value!;
+                      print("Quartier sélectionné: $_quartierValue");
+                    });
+                  },
+                ),
+                10.verticalSpace,
+                const Text(
+                  "Date",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                CustomTextFormInput(
+                  labelText: "",
+                  hintText: "mm/jj/aaaa",
+                  controller: _dateController,
+                  keybordType: TextInputType.number,
+                  icon: Icons.date_range,
+                  onTap: () {
+                    _restorableDatePickerRouteFuture.present();
+                  },
+                ),
+                10.verticalSpace,
+                const Text(
+                  "Localisation GPS",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                CustomTextFormInput(
+                  labelText: "",
+                  hintText:  trackingEnabled == false
+                      ? "Utiliser votre position GPS pour le localiser"
+                      : "${locations.first.latitude!}, ${locations.first.longitude!}",
+                  controller: _localisationController,
+                  keybordType: TextInputType.number,
+                  icon: Icons.location_on,
+                  onTap: () {
+                    requestLocationPermission();
+
+                    startTracking();
+                  },
+                ),
+                10.verticalSpace,
+                Row(
+                  children: [
+                    Expanded(
+                      child: PrimaryButton(
+                        btnBgColor: Palette.primary,
+                        textColor: Palette.white,
+                        btnText: "Enregistrer",
+                        isFilledBtn: false,
+                        onTapFunction: () {},
+                      ),
+                    ),
+                    5.horizontalSpace,
+                    Expanded(
+                      child: PrimaryButton(
+                        btnBgColor: Palette.primary,
+                        textColor: Palette.white,
+                        btnText: "Ajouter un Chef",
+                        isFilledBtn: false,
+                        onTapFunction: () {
+                          dialogBuilder(context, () {}, () {
                             Navigator.pushNamed(context, RoutesName.addMember);
-                          },
-                          "Ajouter un Chef Ménage",
-                          "",
-                          "Enregistrer",
-                          "Ajouter un membre de la famille");
-                    },
-                  ),
-                )
+                          }, "Ajouter un Chef Ménage", "", "Enregistrer",
+                              "Ajouter un membre de la famille");
+                        },
+                      ),
+                    )
+                  ],
+                ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );

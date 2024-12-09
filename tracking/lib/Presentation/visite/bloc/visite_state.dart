@@ -51,7 +51,15 @@ final class VisiteIsEmpty extends VisiteState {
 }
 
 
+/* -------------------------------------------------------------------------- */
+/*                                Update Visite                               */
+/* -------------------------------------------------------------------------- */
 
-/* -------------------------------------------------------------------------- */
-/*                                 Get visite                                */
-/* -------------------------------------------------------------------------- */
+final class VisiteUpdated extends VisiteState {}
+
+final class VisiteUpdateError extends VisiteState {
+  final String message;
+  VisiteUpdateError(this.message);
+}
+
+final class VisiteUpdateLoading extends VisiteState {}

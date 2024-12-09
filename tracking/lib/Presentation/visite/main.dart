@@ -250,17 +250,31 @@ class VisiteList extends StatelessWidget {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: state  is VisiteGetLoaded && state.todaysVisites.isNotEmpty ?
-                      CardToday( state.todaysVisites) : const Center(
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 100),
-                        child: CircleAvatar(
-                        radius: 20,
-                        // backgroundColor: Palette.foreign,
-                        // backgroundImage: AssetImage("assets/png/empty.png"),
-                        child: Icon(Icons.folder_open_rounded,
-                            color: Palette.primary),
-                                            ),
-                      )),
+                      CardToday( state.todaysVisites) : state  is VisiteGetLoading ? const Center(child: Text('...')) : Center(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 70),
+                            child: Column(
+                              children: [
+                                
+
+                                const SizedBox(
+                                  height: 50,
+                                  width: 50,
+                                  child: Image(
+                                    image: AssetImage(
+                                      "assets/png/empty-box.png",
+                                    ),
+                                  ),
+                                ),
+                                5.verticalSpace,
+                                const Text(
+                                  "Aucune visite aujourd'hui",
+                                  style: TextStyle(color: Palette.foreign),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                   
                 ),
               )
