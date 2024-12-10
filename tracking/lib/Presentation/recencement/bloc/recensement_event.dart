@@ -12,3 +12,19 @@ class StoreInfoGenRec extends RecensementEvent {
   final InfoGenRec infoGenRec;
   const StoreInfoGenRec(this.infoGenRec);
 }
+
+
+class AddChefMenage extends RecensementEvent {
+  final Menage menage;
+  const AddChefMenage(this.menage);
+}
+
+class AddMenageMember extends RecensementEvent {
+  final Member menage;
+  const AddMenageMember(this.menage);
+}
+
+
+class ConfirmationRecensement extends RecensementEvent {
+const ConfirmationRecensement();
+}

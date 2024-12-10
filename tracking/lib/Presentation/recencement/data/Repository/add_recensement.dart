@@ -13,12 +13,17 @@ abstract class AddRecensementRepository {
 class AddRecensementRepositoryImpl implements AddRecensementRepository {
   @override
   Future<bool> storeInfoGenRec(InfoGenRec infoGenRec) async{
-   final url = Uri.parse("$baseUrl$storeInfoGenRec");
+   final url = Uri.parse("$baseUrl$storeInfoGenRecPath");
+   print(url);
 
    // TODO: Implement the actual API call to store the infoGenRec
    // You can use a package like http or dio to make the API call
    // and handle the response accordingly
     User? user = await loadUserData();
+
+    print(user!.id);
+    print(infoGenRec.daterecensement);
+
 
      final response = await http.post(
       url,

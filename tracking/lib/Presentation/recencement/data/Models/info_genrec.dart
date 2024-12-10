@@ -3,7 +3,7 @@ import 'dart:convert';
 
 class InfoGenRec {
     int idquartier;
-    DateTime daterecensement;
+    String daterecensement;
     String localisationgpsrec;
     int userEnreg;
 
@@ -16,7 +16,7 @@ class InfoGenRec {
 
     InfoGenRec copyWith({
         int? idquartier,
-        DateTime? daterecensement,
+        String? daterecensement,
         String? localisationgpsrec,
         int? userEnreg,
     }) => 
@@ -33,14 +33,14 @@ class InfoGenRec {
 
     factory InfoGenRec.fromMap(Map<String, dynamic> json) => InfoGenRec(
         idquartier: json["Idquartier"],
-        daterecensement: DateTime.parse(json["daterecensement"]),
+        daterecensement: json["daterecensement"],
         localisationgpsrec: json["localisationgpsrec"],
         userEnreg: json["userEnreg"],
     );
 
     Map<String, dynamic> toMap() => {
         "Idquartier": idquartier,
-        "daterecensement": "${daterecensement.year.toString().padLeft(4, '0')}-${daterecensement.month.toString().padLeft(2, '0')}-${daterecensement.day.toString().padLeft(2, '0')}",
+        "daterecensement": daterecensement,
         "localisationgpsrec": localisationgpsrec,
         "userEnreg": userEnreg,
     };

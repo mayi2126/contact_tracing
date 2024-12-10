@@ -4,13 +4,11 @@ class AddRecensement extends StatefulWidget {
   const AddRecensement({super.key});
 
   @override
-  State<AddRecensement> createState() => _addRecensementState();
+  State<AddRecensement> createState() => _AddRecensementState();
 }
 
-class _addRecensementState extends State<AddRecensement> with RestorationMixin {
+class _AddRecensementState extends State<AddRecensement> {
   @override
-  String? restorationId = "main";
-
   String _villageValue = "";
   String _quartierValue = "";
   final TextEditingController _formationSanitaire = TextEditingController();
@@ -20,61 +18,146 @@ class _addRecensementState extends State<AddRecensement> with RestorationMixin {
   final TextEditingController _nomController = TextEditingController();
   final TextEditingController _prenomsController = TextEditingController();
 
-  final RestorableDateTime _selectedDate =
-      RestorableDateTime(DateTime(2021, 7, 25));
-  late final RestorableRouteFuture<DateTime?> _restorableDatePickerRouteFuture =
-      RestorableRouteFuture<DateTime?>(
-    onComplete: _selectDate,
-    onPresent: (NavigatorState navigator, Object? arguments) {
-      return navigator.restorablePush(
-        _datePickerRoute,
-        arguments: _selectedDate.value.millisecondsSinceEpoch,
-      );
-    },
-  );
-
-
-   bool permissionGranted = false;
+  bool permissionGranted = false;
   bool gpsEnabled = false;
   l.Location location = l.Location();
   late StreamSubscription subscription;
   bool trackingEnabled = false;
-//start location
-  List<l.LocationData> locations = [];
 
-  @pragma('vm:entry-point')
-  static Route<DateTime> _datePickerRoute(
-    BuildContext context,
-    Object? arguments,
-  ) {
-    return DialogRoute<DateTime>(
-      context: context,
-      builder: (BuildContext context) {
-        return DatePickerDialog(
-          restorationId: 'date_picker_dialog',
-          initialEntryMode: DatePickerEntryMode.calendarOnly,
-          initialDate: DateTime.fromMillisecondsSinceEpoch(arguments! as int),
-          firstDate: DateTime(2021),
-          lastDate: DateTime(DateTime.now().year),
-        );
-      },
-    );
-  }
+  List<l.LocationData> locations = [];
+  DateTime? selectedDate;
 
   @override
-  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
-    registerForRestoration(_selectedDate, 'selected_date');
-    registerForRestoration(
-        _restorableDatePickerRouteFuture, 'date_picker_route_future');
+  void dispose() {
+    super.dispose();
+    _formationSanitaire.dispose();
+    _dateController.dispose();
+    _localisationController.dispose();
+    _numeroMenageController.dispose();
+    _nomController.dispose();
+    _prenomsController.dispose();
   }
 
-  void _selectDate(DateTime? newSelectedDate) {
-    if (newSelectedDate != null) {
+  void checkStatus() async {
+    bool _permissionGranted = await isPermissionGranted();
+    bool _gpsEnabled = await isGpsEnabled();
+    setState(() {
+      permissionGranted = _permissionGranted;
+      gpsEnabled = _gpsEnabled;
+    });
+  }
+
+  Future<bool> isPermissionGranted() async {
+    return await Permission.locationWhenInUse.isGranted;
+  }
+
+  Future<bool> isGpsEnabled() async {
+    return await Permission.location.serviceStatus.isEnabled;
+  }
+
+  void requestLocationPermission() async {
+    PermissionStatus permissionStatus =
+        await Permission.locationWhenInUse.request();
+    if (permissionStatus == PermissionStatus.granted) {
       setState(() {
-        _selectedDate.value = newSelectedDate;
-        _dateController.text =
-            '${_selectedDate.value.day}/${_selectedDate.value.month}/${_selectedDate.value.year}';
+        permissionGranted = true;
       });
+    } else {
+      setState(() {
+        permissionGranted = false;
+      });
+    }
+  }
+
+  void addLocation(l.LocationData data) {
+    setState(() {
+      locations.insert(0, data);
+    });
+  }
+
+  void clearLocation() {
+    setState(() {
+      locations.clear();
+    });
+  }
+
+  void startTracking() async {
+    // if (!(await isGpsEnabled())) {
+    //   return;
+    // }
+    // if (!(await isPermissionGranted())) {
+    //   return;
+    // }
+    // subscription = location.onLocationChanged.listen((event) {
+    //   addLocation(event);
+    // });
+
+    setState(() {
+      // print(locations.first.latitude);
+      // print(locations.first.longitude);
+      // print(locations.first.altitude);
+      // print(locations);
+      trackingEnabled = true;
+    });
+  }
+
+  void stopTracking() {
+    subscription.cancel();
+    setState(() {
+      trackingEnabled = false;
+    });
+    clearLocation();
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    try {
+      final DateTime picked = (await showDatePicker(
+        context: context,
+        initialDate: selectedDate ?? DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime.now(),
+      ))!;
+      if (picked != selectedDate) {
+        setState(() {
+          selectedDate = picked;
+          _dateController.text = DateFormat('yyyy-MM-dd').format(selectedDate!);
+        });
+      }
+    } catch (e) {}
+  }
+
+  // Your other methods for location permissions, form submission, etc. remain the same
+
+  void _onSubmitInfoGenRec(BuildContext context) {
+    try {
+      InfoGenRec infoGenRec = InfoGenRec(
+        idquartier: int.parse("3"),
+        daterecensement: selectedDate.toString(),
+        localisationgpsrec: '6.8976789,3.456789',
+        userEnreg: 0,
+      );
+
+      BlocProvider.of<RecensementBloc>(context)
+          .add(StoreInfoGenRec(infoGenRec));
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void _onSubmitChefMenage(BuildContext context) {
+    try {
+      Menage chefMenage = Menage(
+          nomchefmenagerec: _nomController.text,
+          prenomchefmenagerec: _prenomsController.text,
+          userEnreg: 0); // Replace with your actual CheMenage
+
+        print(chefMenage.nomchefmenagerec);
+
+      BlocProvider.of<RecensementBloc>(context)
+          .add(AddChefMenage(chefMenage));
+
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -122,7 +205,7 @@ class _addRecensementState extends State<AddRecensement> with RestorationMixin {
                 labelText: "",
                 hintText: "Entrer le nom du chef",
                 controller: _nomController,
-                isPassword: true,
+                // isPassword: true,
               ),
               10.verticalSpaceFromWidth,
               const Text(
@@ -133,7 +216,7 @@ class _addRecensementState extends State<AddRecensement> with RestorationMixin {
                 labelText: "",
                 hintText: "Entrer le(s) prénoms du chef",
                 controller: _prenomsController,
-                isPassword: true,
+                // isPassword: true,
               ),
               10.verticalSpaceFromWidth,
               PrimaryButton(
@@ -160,218 +243,183 @@ class _addRecensementState extends State<AddRecensement> with RestorationMixin {
     );
   }
 
- void checkStatus() async {
-    bool _permissionGranted = await isPermissionGranted();
-    bool _gpsEnabled = await isGpsEnabled();
-    setState(() {
-      permissionGranted = _permissionGranted;
-      gpsEnabled = _gpsEnabled;
-    });
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              context.read<DataBloc>().add(QuartierReset());
+              Navigator.pop(context);
+            }),
+        backgroundColor: Palette.primary,
+        iconTheme: const IconThemeData(color: Palette.white),
+        title: const Text(
+          "Ajouter un recenement",
+          style: TextStyle(color: Palette.white, fontSize: 17),
+        ),
+      ),
+      body: BlocListener<RecensementBloc, RecensementState>(
+        listener: (context, state) {
+          // Handle any state changes if needed
+          if (state is InfoGenRecStored) {
+            Navigator.pop(context);
+
+            PanaraInfoDialog.showAnimatedGrow(
+              context,
+              // title: "Hello",
+              buttonTextColor: Palette.white,
+              color: Palette.white,
+              message: "Info recensement ajoutée avec succès",
+              buttonText: "OK",
+              onTapDismiss: () => Navigator.pop(context),
+              panaraDialogType: PanaraDialogType.normal,
+            );
+          }
+          if (state is InfoGenRecError) {
+            Navigator.pop(context);
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+              ),
+            );
+          }
+          if (state is InfoGenRecLoading) {
+            showDialogCustom(context, "Enregistrement en cours...");
+          }
+        },
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Formation Sanitaire",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              CustomTextFormInput(
+                isReadonly: true,
+                labelText: "",
+                hintText: "CMS AGA",
+                controller: _formationSanitaire,
+                isPassword: true,
+              ),
+              10.verticalSpace,
+              const Text(
+                "Village",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              DropMenuVillage(
+                onSelected: (String? value) {
+                  setState(() {
+                    _villageValue = value!;
+                    print(_villageValue);
+                  });
+                  context
+                      .read<DataBloc>()
+                      .add(FetchVillageQuartier(int.parse('12')));
+                },
+              ),
+              10.verticalSpace,
+              _villageValue == ""
+                  ? const SizedBox.shrink()
+                  : const Text(
+                      "Quartier",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+              DropMenuQuartier(
+                onSelected: (String? value) {
+                  setState(() {
+                    _quartierValue = value!;
+                    print("Quartier sélectionné: $_quartierValue");
+                  });
+                },
+              ),
+              10.verticalSpace,
+              const Text(
+                "Date",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              CustomTextFormInput(
+                labelText: "",
+                hintText: "mm/jj/aaaa",
+                controller: _dateController,
+                keybordType: TextInputType.number,
+                icon: Icons.date_range,
+                onTap: () {
+                  _selectDate(context);
+                },
+              ),
+              10.verticalSpace,
+              const Text(
+                "Localisation GPS",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              CustomTextFormInput(
+                labelText: "",
+                hintText: trackingEnabled == false
+                    ? "Utiliser votre position GPS pour le localiser"
+                    : "6,8976789, 3,456789",
+                controller: _localisationController,
+                keybordType: TextInputType.number,
+                icon: Icons.location_on,
+                onTap: () {
+                  requestLocationPermission();
+                  startTracking();
+                },
+              ),
+              10.verticalSpace,
+              Row(
+                children: [
+                  Expanded(
+                    child: PrimaryButton(
+                      btnBgColor: Palette.primary,
+                      textColor: Palette.white,
+                      btnText: "Enregistrer",
+                      isFilledBtn: false,
+                      onTapFunction: () {
+                        _onSubmitInfoGenRec(context);
+                      },
+                    ),
+                  ),
+                  5.horizontalSpace,
+                  Expanded(
+                    child: PrimaryButton(
+                      btnBgColor: Palette.primary,
+                      textColor: Palette.white,
+                      btnText: "Ajouter un Chef",
+                      isFilledBtn: false,
+                      onTapFunction: () {
+                        dialogBuilder(context, () {
+                          _onSubmitChefMenage(context);
+                        }, () {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, RoutesName.addMember);
+                        }, "Ajouter un Chef Ménage", "", "Enregistrer",
+                            "Ajouter un membre de la famille");
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
+}
 
-  Future<bool> isPermissionGranted() async {
-    return await Permission.locationWhenInUse.isGranted;
-  }
-
-
-  Future<bool> isGpsEnabled() async {
-    return await Permission.location.serviceStatus.isEnabled;
-  }
-
-  void requestLocationPermission() async {
-    PermissionStatus permissionStatus =
-        await Permission.locationWhenInUse.request();
-    if (permissionStatus == PermissionStatus.granted) {
-      setState(() {
-        permissionGranted = true;
-      });
-    } else {
-      setState(() {
-        permissionGranted = false;
-      });
-    }
-  }
-
-  void addLocation(l.LocationData data) {
-    setState(() {
-      locations.insert(0, data);
-    });
-  }
-
-  void clearLocation() {
-    setState(() {
-      locations.clear();
-    });
-  }
-
-  void startTracking() async {
-    if (!(await isGpsEnabled())) {
-      return;
-    }
-    if (!(await isPermissionGranted())) {
-      return;
-    }
-    subscription = location.onLocationChanged.listen((event) {
-      addLocation(event);
-    });
-
-    setState(() {
-      // print(locations.first.latitude);
-      // print(locations.first.longitude);
-      // print(locations.first.altitude);
-      print(locations);
-      trackingEnabled = true;
-    });
-  }
-
-  void stopTracking() {
-    subscription.cancel();
-    setState(() {
-      trackingEnabled = false;
-    });
-    clearLocation();
-  }
-
-  void _onSubmitInfoGenRec() {}
+class AddRecensementScreen extends StatelessWidget {
+  const AddRecensementScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => RecensementBloc(),
-      child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                context.read<DataBloc>().add(QuartierReset());
-                Navigator.pop(context);
-              }),
-          backgroundColor: Palette.primary,
-          iconTheme: const IconThemeData(color: Palette.white),
-          title: const Text(
-            "Ajouter un recenement",
-            style: TextStyle(color: Palette.white, fontSize: 17),
-          ),
-        ),
-        body: BlocListener<RecensementBloc, RecensementState>(
-          listener: (context, state) {
-            // TODO: implement listener
-          },
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Formation Sanitaire",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                CustomTextFormInput(
-                  isReadonly: true,
-                  labelText: "",
-                  hintText: "CMS AGA",
-                  controller: _formationSanitaire,
-                  isPassword: true,
-                ),
-                10.verticalSpace,
-                const Text(
-                  "Village",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                DropMenuVillage(
-                  onSelected: (String? value) {
-                    setState(() {
-                      _villageValue = value!;
-                      print(_villageValue);
-                    });
-                    context
-                        .read<DataBloc>()
-                        .add(FetchVillageQuartier(int.parse('12')));
-                  },
-                ),
-                10.verticalSpace,
-                _villageValue == ""
-                    ? const SizedBox.shrink()
-                    : const Text(
-                        "Quartier",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                DropMenuQuartier(
-                  onSelected: (String? value) {
-                    setState(() {
-                      _quartierValue = value!;
-                      print("Quartier sélectionné: $_quartierValue");
-                    });
-                  },
-                ),
-                10.verticalSpace,
-                const Text(
-                  "Date",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                CustomTextFormInput(
-                  labelText: "",
-                  hintText: "mm/jj/aaaa",
-                  controller: _dateController,
-                  keybordType: TextInputType.number,
-                  icon: Icons.date_range,
-                  onTap: () {
-                    _restorableDatePickerRouteFuture.present();
-                  },
-                ),
-                10.verticalSpace,
-                const Text(
-                  "Localisation GPS",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                CustomTextFormInput(
-                  labelText: "",
-                  hintText:  trackingEnabled == false
-                      ? "Utiliser votre position GPS pour le localiser"
-                      : "${locations.first.latitude!}, ${locations.first.longitude!}",
-                  controller: _localisationController,
-                  keybordType: TextInputType.number,
-                  icon: Icons.location_on,
-                  onTap: () {
-                    requestLocationPermission();
-
-                    startTracking();
-                  },
-                ),
-                10.verticalSpace,
-                Row(
-                  children: [
-                    Expanded(
-                      child: PrimaryButton(
-                        btnBgColor: Palette.primary,
-                        textColor: Palette.white,
-                        btnText: "Enregistrer",
-                        isFilledBtn: false,
-                        onTapFunction: () {},
-                      ),
-                    ),
-                    5.horizontalSpace,
-                    Expanded(
-                      child: PrimaryButton(
-                        btnBgColor: Palette.primary,
-                        textColor: Palette.white,
-                        btnText: "Ajouter un Chef",
-                        isFilledBtn: false,
-                        onTapFunction: () {
-                          dialogBuilder(context, () {}, () {
-                            Navigator.pushNamed(context, RoutesName.addMember);
-                          }, "Ajouter un Chef Ménage", "", "Enregistrer",
-                              "Ajouter un membre de la famille");
-                        },
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+      child:
+          const AddRecensement(), // Now RecensementBloc is available in AddRecensement
     );
   }
 }

@@ -13,7 +13,7 @@ class Routes {
       case RoutesName.main:
         return MaterialPageRoute(builder: (context) => const DashboardPage());
       case RoutesName.addRecensement:
-        return MaterialPageRoute(builder: (context) => const AddRecensement());
+        return MaterialPageRoute(builder: (context) => const AddRecensementScreen());
       case RoutesName.mainRecensement:
         return MaterialPageRoute(builder: (context) => const MainRecensement());
       case RoutesName.splash:
@@ -31,7 +31,7 @@ class Routes {
         return MaterialPageRoute(builder: (context) => const VisitePage());
 
       case RoutesName.addMember:
-        return MaterialPageRoute(builder: (context) => const AddMemberPage());
+        return MaterialPageRoute(builder: (context) => const AddMenageMemberScreen());
 
       case RoutesName.showVisiteAndCauserie:
         final VisiteModel visiteModel = arguments as VisiteModel;

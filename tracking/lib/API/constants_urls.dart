@@ -10,7 +10,10 @@ const String createVisite = "/visiteadomicileApi";
 const String createCauserie = "/causerieeducativeApi";
 const String updateViste = "/visiteadomicileupdate";
 const String updateCauseriePath = "/causerieeducativeupdate";
-const String storeInfoGenRec = "/storeinfogenrec";
+const String storeInfoGenRecPath = "/storeinfogenrec";
+const String addMenagePath = "/storechefmenage";
+const String addMemberMenagePath = "/storemembremenage";
+const String recConfPath = "/storefinal";
 /* ----------------------------- GET RESSOURCES ----------------------------- */
 const String getVillage = "/villagesrechByfs";
 const String getQuartier = "/quartierrechByvillage";
