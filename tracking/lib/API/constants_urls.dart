@@ -12,7 +12,7 @@ const String updateViste = "/visiteadomicileupdate";
 const String updateCauseriePath = "/causerieeducativeupdate";
 const String storeInfoGenRecPath = "/storeinfogenrec";
 const String addMenagePath = "/storechefmenage";
-const String addMemberMenagePath = "/storemembremenage";
+const String addMemberMenagePath = "/storemembre";
 const String recConfPath = "/storefinal";
 /* ----------------------------- GET RESSOURCES ----------------------------- */
 const String getVillage = "/villagesrechByfs";
@@ -21,4 +21,5 @@ const String getThemes = "/themes";
 const String getProfessions = "/professions";
 const String getVisites = "/visiteadomicilelist";
 const String getCauseries = "/causerieeducativelist";
+const String getRecensementPath = "/recensementlist";
 

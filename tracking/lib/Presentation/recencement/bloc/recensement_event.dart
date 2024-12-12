@@ -28,3 +28,12 @@ class AddMenageMember extends RecensementEvent {
 class ConfirmationRecensement extends RecensementEvent {
 const ConfirmationRecensement();
 }
+
+
+class HandleGetRecensement extends RecensementEvent {
+  final String dateMin;
+  final String dateMax;
+  const HandleGetRecensement( this.dateMin, this.dateMax);
+  @override
+  List<Object> get props => [dateMin, dateMax];
+}

@@ -25,10 +25,7 @@ class _AddMemberPageState extends State<AddMemberPage> {
     'Homme',
     'Femme',
   ];
-  List<String> listPrefession = <String>[
-    'Selectionner un profession',
-    'Commerçante',
-  ];
+ 
   String _sexeValue = "";
   String _professionValue = "";
 
@@ -37,7 +34,7 @@ class _AddMemberPageState extends State<AddMemberPage> {
       final DateTime picked = (await showDatePicker(
         context: context,
         initialDate: selectedDate ?? DateTime.now(),
-        firstDate: DateTime(2000),
+        firstDate: DateTime(1900),
         lastDate: DateTime.now(),
       ))!;
       if (picked != selectedDate) {
@@ -103,6 +100,8 @@ class _AddMemberPageState extends State<AddMemberPage> {
   }
 
   void _onSubmit(BuildContext context) {
+
+    print(_dateController.text);
     try {
       Member menage = Member(
         membredatenaissrec: DateTime.parse(_dateController.text),
@@ -151,8 +150,8 @@ class _AddMemberPageState extends State<AddMemberPage> {
             if (state is MenageMemberStored) {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: const Text("Le membre a été ajoutée avec succès"),
+                const SnackBar(
+                  content:  Text("Le membre a été ajoutée avec succès"),
                 ),
               );
 
@@ -160,10 +159,11 @@ class _AddMemberPageState extends State<AddMemberPage> {
                   context,
                   title: "Voulez-vous terminer l'enregistrement ?",
                   message: "Ou voulez-vous continuer ?",
-                  confirmButtonText: "Oui",
-                  cancelButtonText: "Non",
+                  confirmButtonText: "Terminer",
+                  cancelButtonText: "Continuer",
                   onTapCancel: () {
                     Navigator.pop(context);
+                    Navigator.pushReplacementNamed(context, RoutesName.addRecensement);
                   },
                   onTapConfirm: () {
                     Navigator.pop(context);
@@ -174,6 +174,36 @@ class _AddMemberPageState extends State<AddMemberPage> {
             }
 
             if (state is MenageMemberError) {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.message),
+                ),
+              );
+            }
+
+            if(state is ConfirmationRecensementLoading){
+              showDialogCustom(context, "Confirmation en cours...");
+            }
+
+            if(state is ConfirmationRecensementSuccess){
+              Navigator.pop(context);
+
+              PanaraInfoDialog.showAnimatedGrow(
+                context,
+                title: "Confirmation",
+                message: "La recensement a été terminer avec succès",
+                buttonText: "Ok",
+                panaraDialogType: PanaraDialogType.success,
+                barrierDismissible: false,
+                onTapDismiss: () {
+                  Navigator.pop(context);
+                  Navigator.pushReplacementNamed(context, RoutesName.mainRecensement);
+                }
+              );
+            }
+
+            if(state is ConfirmationRecensementError){
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -408,7 +438,6 @@ class _AddMemberPageState extends State<AddMemberPage> {
                                         labelText: "",
                                         hintText: "+228 98969856",
                                         controller: _contactController,
-                                        isPassword: true,
                                       ),
                                       10.verticalSpaceFromWidth,
                                       const Text(
@@ -420,7 +449,6 @@ class _AddMemberPageState extends State<AddMemberPage> {
                                         labelText: "",
                                         hintText: "Observation",
                                         controller: _observationController,
-                                        isPassword: true,
                                       ),
                                     ],
                                   ),

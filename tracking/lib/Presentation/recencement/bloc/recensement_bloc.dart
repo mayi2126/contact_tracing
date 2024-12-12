@@ -7,6 +7,10 @@ import 'package:tracking/Presentation/recencement/data/Repository/add_member_men
 import 'package:tracking/Presentation/recencement/data/Repository/add_menage.dart';
 import 'package:tracking/Presentation/recencement/data/Repository/add_recensement.dart';
 import 'package:tracking/Presentation/recencement/data/Repository/confirmation.dart';
+import 'package:tracking/Presentation/recencement/data/Models/recensement.dart';
+import 'package:tracking/Presentation/recencement/data/Repository/retrieve_rec.dart';
+import 'package:tracking/components/utils/date_filter.dart';
+
 
 part 'recensement_event.dart';
 part 'recensement_state.dart';
@@ -17,6 +21,7 @@ class RecensementBloc extends Bloc<RecensementEvent, RecensementState> {
     on<AddChefMenage>(_onAddChefMenage);
     on<AddMenageMember>(_onAddMenageMember);
     on<ConfirmationRecensement>(_onConfRec);
+    on<HandleGetRecensement>(_onGetRecensement);
   }
 
   Future<void> _onStoreInfoGenRec(StoreInfoGenRec event, Emitter<RecensementState> emit) async {
@@ -28,7 +33,10 @@ class RecensementBloc extends Bloc<RecensementEvent, RecensementState> {
       emit(InfoGenRecStored());
         
       }
+      else{
+
       emit(const InfoGenRecError("Erreur lors de l'ajout d'un recensement"));
+      }
 
     } catch (e) {
       emit(InfoGenRecError(e.toString()));
@@ -52,7 +60,10 @@ class RecensementBloc extends Bloc<RecensementEvent, RecensementState> {
         
       emit(ChefMenageStored());
       }
+      else{
       emit(const ChefMenageError("Erreur lors de l'ajout d'un chef de menage"));
+
+      }
 
     } catch (e) {
       emit(ChefMenageError(e.toString()));
@@ -70,11 +81,13 @@ class RecensementBloc extends Bloc<RecensementEvent, RecensementState> {
     try {
       final AddMember repository = AddMemberImpl();
       bool result = await repository.addMemberMenage(event.menage);
+
       if (result) {
-        
       emit(MenageMemberStored());
-      }
+      }else{
       emit(const MenageMemberError("Erreur lors de l'ajout d'un membre de menage"));
+
+      }
 
     } catch (e) {
       emit(MenageMemberError(e.toString()));
@@ -87,15 +100,54 @@ class RecensementBloc extends Bloc<RecensementEvent, RecensementState> {
     try {
       final RecConfRepositoryImpl repository = RecConfRepositoryImpl();
       bool result = await repository.recConf();
+
       if (result) {
         
-      emit(ConfirmationRecensementStored());
+      emit(ConfirmationRecensementSuccess());
       }
+      else{
       emit(const ConfirmationRecensementError("Erreur lors de la confirmation du recensement"));
+
+      }
 
     } catch (e) {
       emit(ConfirmationRecensementError(e.toString()));
     }
+  }
+
+
+  Future<void> _onGetRecensement(
+      HandleGetRecensement event, Emitter<RecensementState> emit) async {
+        
+    emit(GetRecensementLoading());
+
+    final RetrieveRecensementRepository retrieveRecensementRepository =
+        RetrieveRecensementRepositoryImpl();
+
+    try {
+      final List<Recensement> result = await retrieveRecensementRepository
+          .fetchRecensementsById(event.dateMin, event.dateMax);
+        
+     
+
+      if (result.isNotEmpty)
+       {
+            final List<Recensement> todayVisites = filterRecensementByToday(result);
+      
+        emit(GetRecensementSuccess(result,todayVisites));
+      }
+      else {
+              print("get 3");
+
+      emit(EmptyRecensement());
+      }
+
+    } catch (e) {
+
+    emit(const GetRecensementError("Erreur lors de la récupération des recensements"));
+
+    }
+
   }
 
 

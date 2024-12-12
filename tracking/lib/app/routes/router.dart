@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tracking/Presentation/recencement/data/Models/recensement.dart';
 import 'package:tracking/Presentation/visite/data/Models/visite_model.dart';
 import 'package:tracking/app/routes/routes_name.dart';
 import 'package:tracking/core/cores.dart';
@@ -15,7 +16,9 @@ class Routes {
       case RoutesName.addRecensement:
         return MaterialPageRoute(builder: (context) => const AddRecensementScreen());
       case RoutesName.mainRecensement:
-        return MaterialPageRoute(builder: (context) => const MainRecensement());
+              
+
+        return MaterialPageRoute(builder: (context) =>  const MainRecensement());
       case RoutesName.splash:
         return MaterialPageRoute(builder: (context) => const SplashPage());
       case RoutesName.causerie:

@@ -1,5 +1,8 @@
 part of 'recensement_bloc.dart';
 
+
+
+
 sealed class RecensementState extends Equatable {
   const RecensementState();
   
@@ -71,7 +74,7 @@ final class MenageMemberError extends RecensementState {
 final class ConfirmationRecensementLoading extends RecensementState {
 
 }
-final class ConfirmationRecensementStored extends RecensementState { 
+final class ConfirmationRecensementSuccess extends RecensementState { 
 }
 final class ConfirmationRecensementError extends RecensementState {
   final String message;
@@ -79,4 +82,33 @@ final class ConfirmationRecensementError extends RecensementState {
   @override
   List<Object> get props => [message];
 }
+
+
+/* -------------------------------------------------------------------------- */
+/*                               Get recensement                              */
+/* -------------------------------------------------------------------------- */
+
+
+final class GetRecensementLoading extends RecensementState {
+
+}
+// ignore: must_be_immutable
+final class GetRecensementSuccess extends RecensementState { 
+  List<Recensement> recensements;
+  List<Recensement> todaysRecensements;
+  GetRecensementSuccess(this.recensements, this.todaysRecensements);
+
+  @override
+  List<Object> get props => [recensements, todaysRecensements];
+
+}
+final class GetRecensementError extends RecensementState {
+  final String message;
+  const GetRecensementError(this.message);
+  @override
+  List<Object> get props => [message];
+}
+
+final class EmptyRecensement extends RecensementState {}
+
 

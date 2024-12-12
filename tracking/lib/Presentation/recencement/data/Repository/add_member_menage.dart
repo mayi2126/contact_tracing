@@ -14,14 +14,12 @@ class AddMemberImpl implements AddMember {
   @override
   Future<bool> addMemberMenage(Member member) async{
    final url = Uri.parse("$baseUrl$addMemberMenagePath");
-   print(url);
+
 
    // TODO: Implement the actual API call to store the member
    // You can use a package like http or dio to make the API call
    // and handle the response accordingly
     User? user = await loadUserData();
-
-
 
 
      final response = await http.post(
@@ -30,7 +28,7 @@ class AddMemberImpl implements AddMember {
         'Content-Type': 'application/json',
       },
       body: jsonEncode({
-        "membredatenaissrec": member.membredatenaissrec,
+        "membredatenaissrec": member.membredatenaissrec.toString(),
         "membrenomrec": member.membreagerec,
         "membreprenomrec": member.membreprenomrec,
         "membreagerec": member.membreagerec,

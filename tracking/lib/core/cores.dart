@@ -20,8 +20,11 @@ import 'package:tracking/components/utils/load_user.dart';
 import 'package:tracking/externe-data/bloc/data_bloc.dart';
 import 'package:tracking/externe-data/repo/professions_repo.dart';
 import 'package:tracking/externe-data/repo/theme_repo.dart';
+
 import 'package:tracking/Presentation/recencement/data/Models/info_genrec.dart';
 import 'package:tracking/Presentation/recencement/data/Models/menage.dart';
+import 'package:tracking/Presentation/recencement/data/Models/recensement.dart';
+
 import 'package:tracking/externe-data/repo/village_repo.dart';
 import 'package:tracking/app/config/app_config.dart';
 import 'package:tracking/app/routes/routes_name.dart';
