@@ -79,7 +79,7 @@ class _MainRecensementState extends State<MainRecensement> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    "La liste des recensements ...",
+                    "La liste des recensements ",
                     style: TextStyle(fontSize: 16),
                   ),
                   15.verticalSpace,

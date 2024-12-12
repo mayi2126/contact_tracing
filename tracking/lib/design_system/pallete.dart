@@ -18,7 +18,7 @@ class Palette {
   static const Color layout = Color.fromARGB(112, 14, 12, 12);
   static const Color hintColor = Color.fromARGB(111, 70, 70, 70);
   static const Color cardBorderColor = Color.fromARGB(92, 87, 87, 87);
-
+static const Color border =  Color.fromARGB(92, 139, 139, 139);
   static const Color foreign = Color.fromARGB(202, 82, 82, 82);
   static const Color containerBackground = Color.fromARGB(41, 197, 10, 10);
 }

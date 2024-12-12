@@ -49,7 +49,7 @@ class _ShowPageState extends State<ShowPage> {
 
     selectedDate = DateTime.parse(widget.arguments.dateAp.toString());
 
-        context.read<DataBloc>().add(FetchVillageQuartier(int.parse(widget.arguments.idvillage.toString())));
+    context.read<DataBloc>().add(FetchVillageQuartier(int.parse(widget.arguments.idvillage.toString())));
 
   }
 

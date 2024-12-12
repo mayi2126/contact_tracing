@@ -16,6 +16,7 @@ import 'package:tracking/Presentation/recencement/data/Models/member.dart';
 import 'package:tracking/Presentation/visite/bloc/visite_bloc.dart';
 import 'package:tracking/Presentation/visite/data/Models/visite.dart';
 import 'package:tracking/Presentation/visite/data/Models/visite_model.dart';
+import 'package:tracking/components/ui/string_date.dart';
 import 'package:tracking/components/utils/load_user.dart';
 import 'package:tracking/externe-data/bloc/data_bloc.dart';
 import 'package:tracking/externe-data/repo/professions_repo.dart';
@@ -67,6 +68,7 @@ part '../components/utils/visite_causerie/show_page_causerie.dart';
 part '../Presentation/recencement/add_recencement.dart';
 part '../Presentation/recencement/page_recensement.dart';
 part '../Presentation/recencement/add_member.dart';
+part '../Presentation/recencement/recencement_details.dart';
 
 
 /* --------------------------------- PROFILE -------------------------------- */

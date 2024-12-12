@@ -44,6 +44,11 @@ class Routes {
         final VisiteModel causerieModel = arguments as VisiteModel;
         return MaterialPageRoute(
             builder: (context) => ShowCauseriePage(arguments: causerieModel));
+
+            case RoutesName.showRecensement:
+        final Recensement recensement = arguments as Recensement;
+        return MaterialPageRoute(
+            builder: (context) => RecencementDetails(arguments: recensement));
       default:
         return MaterialPageRoute(
           builder: (context) => const Scaffold(

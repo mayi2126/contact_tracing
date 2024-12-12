@@ -29,7 +29,7 @@ class AddMemberImpl implements AddMember {
       },
       body: jsonEncode({
         "membredatenaissrec": member.membredatenaissrec.toString(),
-        "membrenomrec": member.membreagerec,
+        "membrenomrec": member.membrenomrec,
         "membreprenomrec": member.membreprenomrec,
         "membreagerec": member.membreagerec,
         "agemois": member.agemois,

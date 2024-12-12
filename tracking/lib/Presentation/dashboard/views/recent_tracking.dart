@@ -22,6 +22,7 @@ class RecentTrackingWidget extends StatelessWidget {
             children: cards.map((rec) {
               return TrackingCard(
                 recensement: rec,
+                onTap: () => Navigator.pushNamed(context, RoutesName.showRecensement, arguments: rec),
               );
             }).toList(),
           ),
