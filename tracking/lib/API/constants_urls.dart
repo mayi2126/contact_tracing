@@ -22,4 +22,5 @@ const String getProfessions = "/professions";
 const String getVisites = "/visiteadomicilelist";
 const String getCauseries = "/causerieeducativelist";
 const String getRecensementPath = "/recensementlist";
+const String getReferencementPath = "/listeCible";
 

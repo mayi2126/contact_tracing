@@ -11,6 +11,7 @@ import 'package:tracking/Presentation/Auth/bloc/login_bloc.dart';
 import 'package:tracking/Presentation/Auth/data/Models/user_token.dart';
 import 'package:tracking/Presentation/Causeries/bloc/causerie_bloc.dart';
 import 'package:tracking/Presentation/Causeries/data/Models/causerie.dart';
+import 'package:tracking/Presentation/Referencement/bloc/referencement_bloc.dart';
 import 'package:tracking/Presentation/recencement/bloc/recensement_bloc.dart';
 import 'package:tracking/Presentation/recencement/data/Models/member.dart';
 import 'package:tracking/Presentation/visite/bloc/visite_bloc.dart';
@@ -25,6 +26,8 @@ import 'package:tracking/externe-data/repo/theme_repo.dart';
 import 'package:tracking/Presentation/recencement/data/Models/info_genrec.dart';
 import 'package:tracking/Presentation/recencement/data/Models/menage.dart';
 import 'package:tracking/Presentation/recencement/data/Models/recensement.dart';
+import 'package:tracking/Presentation/Referencement/data/Models/referencement.dart';
+
 
 import 'package:tracking/externe-data/repo/village_repo.dart';
 import 'package:tracking/app/config/app_config.dart';
@@ -63,6 +66,7 @@ part '../components/ui/card_causerie.dart';
 part '../components/utils/card_today.dart';
 part '../components/utils/visite_causerie/show_page.dart';
 part '../components/utils/visite_causerie/show_page_causerie.dart';
+part '../components/ui/card_referencement.dart';
 
 /* ------------------------------- RECENSEMENT ------------------------------ */
 part '../Presentation/recencement/add_recencement.dart';

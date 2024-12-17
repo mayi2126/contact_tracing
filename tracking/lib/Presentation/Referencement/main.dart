@@ -12,15 +12,18 @@ class _MainReferencementState extends State<MainReferencement> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return BlocProvider(
+      create: (context) => ReferencementBloc()..add(GetReferencementEvent()),
+      child: Scaffold(
         backgroundColor: Palette.primary,
-        iconTheme: const IconThemeData(color: Palette.white),
-        title: const Text(
-          "Recensements",
-          style: TextStyle(color: Palette.white, fontSize: 17),
-        ),
-        bottom: PreferredSize(
+        appBar: AppBar(
+          backgroundColor: Palette.primary,
+          iconTheme: const IconThemeData(color: Palette.white),
+          title: const Text(
+            "Recensements",
+            style: TextStyle(color: Palette.white, fontSize: 17),
+          ),
+          bottom: PreferredSize(
             preferredSize: const Size(
               double.infinity,
               60,
@@ -34,18 +37,17 @@ class _MainReferencementState extends State<MainReferencement> {
                     Expanded(
                       flex: 2,
                       child: CustomTextFormInput(
-                          icon: Icons.search,
-                          controller: search,
-                          hintText: "Recherche ...",
-                          labelText: "Recherche..."),
+                        icon: Icons.search,
+                        controller: search,
+                        hintText: "Recherche ...",
+                        labelText: "Recherche...",
+                      ),
                     ),
-                    // const Spacer(),
                     5.horizontalSpace,
                     Container(
                       width: 50,
                       height: 50,
                       decoration: BoxDecoration(
-                        // color: Palette.white,
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: Palette.stroke, width: 2),
                       ),
@@ -60,31 +62,87 @@ class _MainReferencementState extends State<MainReferencement> {
                   ],
                 ),
               ),
-            )),
-      ),
-      body: CustomScrollView(
-        primary: false,
-        slivers: <Widget>[
-          SliverPadding(
-            padding: const EdgeInsets.all(20),
-            sliver: SliverGrid.count(
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              crossAxisCount: 2,
-              children: <Widget>[
-                Container(
-                  height: 700,
-                  padding: const EdgeInsets.all(8),
-                  color: Colors.green[100],
-                  child: Container(
-                    height: 100,
-                    color: Colors.green[200],
-                  ),
-                ),
-              ],
             ),
           ),
-        ],
+        ),
+        body: BlocBuilder<ReferencementBloc, ReferencementState>(
+          builder: (context, state) {
+            if (state is ReferencementGetLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (state is ReferencementGetLoaded) {
+              return  state.referencements.isEmpty ?   Container(
+                color: Palette.white,
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 70),
+                  child: Column(
+                    children: [
+                      
+                                
+                      const SizedBox(
+                        height: 50,
+                        width: 50,
+                        child: Image(
+                          image: AssetImage(
+                            "assets/png/empty-box.png",
+                          ),
+                        ),
+                      ),
+                      5.verticalSpace,
+                      const Text(
+                        "Aucun Cible",
+                        style: TextStyle(color: Palette.foreign),
+                      ),
+                    ],
+                  ),
+                ),
+              ) : Stack(
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20)),
+                      color: Palette.white,
+                    ),
+                    child: CustomScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      slivers: <Widget>[
+                        SliverGrid(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2, // Deux éléments par ligne
+                            crossAxisSpacing:
+                                5, // Espacement horizontal entre les éléments
+                            mainAxisSpacing:
+                                2, // Espacement vertical entre les éléments
+                            // Définir un ratio d'aspect qui donne la hauteur désirée
+                            childAspectRatio: 1, // La largeur est 2x la hauteur
+                          ),
+                          delegate: SliverChildListDelegate(
+                            
+                              state.referencements
+                                  .map((referencement) => ReferencementCard(
+                                        referencement: referencement,
+                                      ))
+                                  .toList(),
+                            
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            }
+            if (state is ReferencementGetError) {
+              return Center(child: Text(state.errorMessage));
+            }
+            return Container();
+          },
+        ),
       ),
     );
   }
