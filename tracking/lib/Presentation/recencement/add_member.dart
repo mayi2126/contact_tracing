@@ -251,10 +251,11 @@ class _AddMemberPageState extends State<AddMemberPage> {
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
+                                      //TODO: add number of menage
                                       CustomTextFormInput(
                                         isReadonly: true,
                                         labelText: "",
-                                        hintText: "NME 123466",
+                                        hintText: "12",
                                         controller: _numeroMenageController,
                                       ),
                                       10.verticalSpaceFromWidth,

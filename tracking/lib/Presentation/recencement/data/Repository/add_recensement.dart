@@ -34,7 +34,7 @@ class AddRecensementRepositoryImpl implements AddRecensementRepository {
         "localisationgpsrec": infoGenRec.localisationgpsrec,
         "Idquartier": infoGenRec.idquartier,
         "daterecensement": infoGenRec.daterecensement,
-        "userEnreg": user!.id,
+        "userEnreg": user.id,
      
       }),
     );

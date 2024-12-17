@@ -283,7 +283,7 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                     "Quartier",
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
-                                  ):SizedBox.shrink(),
+                                  ):const SizedBox.shrink(),
 
                                   _dropDownQuartier(_villageValue),
 

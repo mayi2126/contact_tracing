@@ -225,7 +225,7 @@ class _ShowCauseriePageState extends State<ShowCauseriePage> {
                   padding: const EdgeInsets.only(right: 20,left: 20,bottom: 20),
                   child: ListView(
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.all(0),
+                    padding: const EdgeInsets.all(0),
                     children: <Widget>[
                       5.verticalSpace,
                       Align(

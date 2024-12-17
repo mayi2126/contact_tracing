@@ -61,7 +61,7 @@ class RecencementDetails extends StatelessWidget {
                                       fontSize: 16)),
                               5.verticalSpace,
                               Text(arguments.codemembreFamille,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 14,
                                       color: Palette.foreign)),
@@ -94,6 +94,20 @@ class RecencementDetails extends StatelessWidget {
                           color: Palette.foreign)),
                   5.horizontalSpace,
                   Text("${arguments.membreagerec} (ans)",
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 14)),
+                ],
+              ),10.verticalSpace,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text("Sexe",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                          color: Palette.foreign)),
+                  5.horizontalSpace,
+                  Text(arguments.sexezerovingtquatremoisrec,
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 14)),
                 ],
@@ -167,7 +181,7 @@ class RecencementDetails extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10)),
                 child: Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.info_outline_rounded,
                       color: Palette.primary,
                       size: 20,

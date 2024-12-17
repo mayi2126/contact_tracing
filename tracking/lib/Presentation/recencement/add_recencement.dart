@@ -39,11 +39,11 @@ class _AddRecensementState extends State<AddRecensement> {
   }
 
   void checkStatus() async {
-    bool _permissionGranted = await isPermissionGranted();
-    bool _gpsEnabled = await isGpsEnabled();
+    bool permissionGranted = await isPermissionGranted();
+    bool gpsEnabled = await isGpsEnabled();
     setState(() {
-      permissionGranted = _permissionGranted;
-      gpsEnabled = _gpsEnabled;
+      permissionGranted = permissionGranted;
+      gpsEnabled = gpsEnabled;
     });
   }
 
@@ -189,10 +189,11 @@ class _AddRecensementState extends State<AddRecensement> {
                 "Numéro de ménage",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
+              //TODO:add number of menage
               CustomTextFormInput(
                 isReadonly: true,
                 labelText: "",
-                hintText: "NME 123466",
+                hintText: "12",
                 controller: _numeroMenageController,
                 isPassword: true,
               ),
@@ -298,10 +299,11 @@ class _AddRecensementState extends State<AddRecensement> {
                 "Formation Sanitaire",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
+              //TODOS:  add formation sanitaire
               CustomTextFormInput(
                 isReadonly: true,
                 labelText: "",
-                hintText: "CMS AGA",
+                hintText: "19",
                 controller: _formationSanitaire,
                 isPassword: true,
               ),

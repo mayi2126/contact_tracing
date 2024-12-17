@@ -49,17 +49,17 @@ class TrackingCard extends StatelessWidget {
                       Text(
                          "${recensement.membrenomrec} ${recensement.membreprenomrec}",
                         style:
-                            TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                            const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                       ),
                       3.verticalSpace,
                       Text(
                         recensement.nomvillage,
-                        style: TextStyle( fontSize: 12),
+                        style: const TextStyle( fontSize: 12),
                       ),
                       3.verticalSpace,
                       Text(
                         recensement.libprofession,
-                        style: TextStyle(color: Palette.foreign, fontSize: 10),
+                        style: const TextStyle(color: Palette.foreign, fontSize: 10),
                       ),
                      
                     ],
@@ -75,6 +75,9 @@ class TrackingCard extends StatelessWidget {
               //         )),
               //   ],
               // )
+              const Spacer(),
+
+             const Icon(Icons.keyboard_arrow_down_sharp)
             ],
           ),
         ),

@@ -14,11 +14,10 @@ class Routes {
       case RoutesName.main:
         return MaterialPageRoute(builder: (context) => const DashboardPage());
       case RoutesName.addRecensement:
-        return MaterialPageRoute(builder: (context) => const AddRecensementScreen());
+        return MaterialPageRoute(
+            builder: (context) => const AddRecensementScreen());
       case RoutesName.mainRecensement:
-              
-
-        return MaterialPageRoute(builder: (context) =>  const MainRecensement());
+        return MaterialPageRoute(builder: (context) => const MainRecensement());
       case RoutesName.splash:
         return MaterialPageRoute(builder: (context) => const SplashPage());
       case RoutesName.causerie:
@@ -34,7 +33,8 @@ class Routes {
         return MaterialPageRoute(builder: (context) => const VisitePage());
 
       case RoutesName.addMember:
-        return MaterialPageRoute(builder: (context) => const AddMenageMemberScreen());
+        return MaterialPageRoute(
+            builder: (context) => const AddMenageMemberScreen());
 
       case RoutesName.showVisiteAndCauserie:
         final VisiteModel visiteModel = arguments as VisiteModel;
@@ -45,10 +45,15 @@ class Routes {
         return MaterialPageRoute(
             builder: (context) => ShowCauseriePage(arguments: causerieModel));
 
-            case RoutesName.showRecensement:
+      case RoutesName.showRecensement:
         final Recensement recensement = arguments as Recensement;
         return MaterialPageRoute(
             builder: (context) => RecencementDetails(arguments: recensement));
+
+      case RoutesName.mainReferencement:
+        return MaterialPageRoute(
+            builder: (context) => const MainReferencement());
+        
       default:
         return MaterialPageRoute(
           builder: (context) => const Scaffold(

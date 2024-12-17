@@ -57,7 +57,10 @@ class Items extends StatelessWidget {
                               icon: Icons.local_activity_outlined,
                               title: "Compte Referentiel",
                               image: "assets/jpg/pp.jpg",
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, RoutesName.mainReferencement);
+                              },
                             ),
                           ),
                         ),
