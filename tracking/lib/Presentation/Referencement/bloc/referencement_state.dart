@@ -16,3 +16,21 @@ final class ReferencementGetError extends ReferencementState {
   final String errorMessage;
   ReferencementGetError(this.errorMessage);
 }
+
+
+/* -------------------------------------------------------------------------- */
+/*                              Refered Ref     state                         */
+/* -------------------------------------------------------------------------- */
+
+
+final class ReferedRefGetLoading extends ReferencementState {}
+
+final class ReferedRefGetLoaded extends ReferencementState {
+  final List<Referencement> referedRefs;
+  ReferedRefGetLoaded(this.referedRefs);
+}
+
+final class ReferedRefGetError extends ReferencementState {
+  final String errorMessage;
+  ReferedRefGetError(this.errorMessage);
+}

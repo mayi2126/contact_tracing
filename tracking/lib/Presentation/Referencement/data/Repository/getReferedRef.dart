@@ -5,17 +5,17 @@ import 'package:tracking/Presentation/Referencement/data/Models/referencement.da
 import 'package:tracking/components/utils/load_user.dart';
 import 'package:http/http.dart' as http;
 
-abstract class RetrieveReferencementRepository {
+abstract class RetrieveReferedRefRepository {
   // Mise à jour de la signature de la méthode pour retourner une liste de VisiteModel
   Future<List<Referencement>> fetchAll();
 }
 
-class RetrieveReferencementRepositoryImpl
-    implements RetrieveReferencementRepository {
+class RetrieveReferedRefRepositoryImpl
+    implements RetrieveReferedRefRepository {
   @override
   Future<List<Referencement>> fetchAll() async {
     // Construction de l'URL pour l'API
-    final url = Uri.parse("$baseUrl$getReferencementPath");
+    final url = Uri.parse("$baseUrl$getReferedRefPath");
 
     // Chargement des données utilisateur
     User? user = await loadUserData();
@@ -26,9 +26,9 @@ class RetrieveReferencementRepositoryImpl
       headers: {
         'Content-Type': 'application/json',
       },
-
-      //TODOS: Remplacer l'ID utilisateur par celui de l'utilisateur connecté
       body: jsonEncode({
+        "min":"2023-01-01",
+        "max":DateTime.now().toString(),
         "userEnreg": 23, // Assurez-vous que l'ID utilisateur est valide
       }),
     );

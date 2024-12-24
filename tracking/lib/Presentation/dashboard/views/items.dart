@@ -41,7 +41,7 @@ class Items extends StatelessWidget {
                             child: CardWidget(
                               icon: Icons.recent_actors,
                               title: "Recensements",
-                              image: "assets/jpg/pre.jpg",
+                              image: "assets/jpg/pregnant.jpg",
                               onTap: () {
                                 Navigator.pushNamed(
                                     context, RoutesName.mainRecensement);

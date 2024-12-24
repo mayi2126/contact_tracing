@@ -1,8 +1,9 @@
 part of '../../core/cores.dart';
 
 class ReferencementCard extends StatelessWidget {
-  const ReferencementCard({super.key,  required this.referencement});
+  const ReferencementCard({super.key,  required this.referencement, this.onDoubleTap});
   final Referencement referencement;
+   final VoidCallback? onDoubleTap;
 
   @override
   Widget build(BuildContext context) {
@@ -27,43 +28,46 @@ class ReferencementCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             //
             children: [
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(5),
-                height: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  // border: Border.all(color: Palette.stroke, width: 2),
-                  color: const Color.fromARGB(57, 33, 149, 243),
-                ),
-                child: Stack(children: [
-                  Center(
-                    child: SizedBox(
-                        height: 80,
-                        width: 80,
-                        child: Image.asset(
-                          "assets/png/woman.png",
-                          fit: BoxFit.fill,
-                        )),
+              GestureDetector(
+                onDoubleTap: onDoubleTap,
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(5),
+                  height: 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    // border: Border.all(color: Palette.stroke, width: 2),
+                    color: const Color.fromARGB(57, 33, 149, 243),
                   ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Container(
-                      padding: EdgeInsets.all(5),
-                      width: 30,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        color: Palette.white,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                          child: Text(
-                        referencement.membreagerec.toString(),
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      )),
+                  child: Stack(children: [
+                    Center(
+                      child: SizedBox(
+                          height: 80,
+                          width: 80,
+                          child: Image.asset(
+                            "assets/png/woman.png",
+                            fit: BoxFit.fill,
+                          )),
                     ),
-                  )
-                ]),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          color: Palette.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                            child: Text(
+                          referencement.membreagerec.toString(),
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        )),
+                      ),
+                    )
+                  ]),
+                ),
               ),
               5.verticalSpace,
               Text(
