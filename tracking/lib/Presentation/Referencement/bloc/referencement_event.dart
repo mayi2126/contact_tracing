@@ -7,3 +7,7 @@ class GetReferencementEvent extends ReferencementEvent {}
 
 class GetReferedRefEvent extends ReferencementEvent {}
 
+class GetContreReferedEvent extends ReferencementEvent {}
+
+
+

@@ -1,9 +1,10 @@
 part of '../../core/cores.dart';
 
 class ReferencementCard extends StatelessWidget {
-  const ReferencementCard({super.key,  required this.referencement, this.onDoubleTap});
+  const ReferencementCard({super.key,  required this.referencement, this.onDoubleTap, this.onTap});
   final Referencement referencement;
    final VoidCallback? onDoubleTap;
+   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +31,7 @@ class ReferencementCard extends StatelessWidget {
             children: [
               GestureDetector(
                 onDoubleTap: onDoubleTap,
+                onTap:onTap,
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(5),
@@ -71,7 +73,7 @@ class ReferencementCard extends StatelessWidget {
               ),
               5.verticalSpace,
               Text(
-                referencement.fullName,
+                referencement.fullName??"",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               2.verticalSpace,
@@ -84,7 +86,7 @@ class ReferencementCard extends StatelessWidget {
                   ),
                   2.horizontalSpace,
                   Text(
-                    referencement.nomvillage,
+                    referencement.nomvillage ?? "",
                     style: TextStyle(color: Palette.foreign, fontSize: 12),
                   ),
                 ],

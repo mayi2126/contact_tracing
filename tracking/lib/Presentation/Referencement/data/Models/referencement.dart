@@ -2,12 +2,12 @@
 import 'dart:convert';
 
 class Referencement {
-    String fullName;
-    String nomquartier;
-    String nomvillage;
-    String libcpecm;
-    String sexezerovingtquatremoisrec;
-    int membreagerec;
+    String? fullName;
+    String? nomquartier;
+    String? nomvillage;
+    String? libcpecm;
+    String? sexezerovingtquatremoisrec;
+    int? membreagerec;
 
     Referencement({
         required this.fullName,

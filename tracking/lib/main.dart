@@ -99,6 +99,9 @@ class MyApp extends StatelessWidget {
               //   displaySmall: TextStyle(color: Palette.white),
               //   // Autres styles de texte (#FFFF87)
               // ),
+                progressIndicatorTheme: const ProgressIndicatorThemeData(
+          color: Palette.primary, // Set your preferred color here
+        ),
               focusColor: Palette.white,
               appBarTheme: const AppBarTheme(
                 backgroundColor:

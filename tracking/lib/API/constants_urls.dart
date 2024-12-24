@@ -15,6 +15,7 @@ const String addMenagePath = "/storechefmenage";
 const String addMemberMenagePath = "/storemembre";
 const String recConfPath = "/storefinal";
 const String makeReferencementPath = "/storereferencementApi";
+const String makeContreReferencementPath = "/storereferencementContreApi";
 /* ----------------------------- GET RESSOURCES ----------------------------- */
 const String getVillage = "/villagesrechByfs";
 const String getQuartier = "/quartierrechByvillage";
@@ -25,4 +26,5 @@ const String getCauseries = "/causerieeducativelist";
 const String getRecensementPath = "/recensementlist";
 const String getReferencementPath = "/listeCible";
 const String getReferedRefPath =  "/refererlist";
+const String getContreReferedPath =  "/contreReferencementlist";
 
