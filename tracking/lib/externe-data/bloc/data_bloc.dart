@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:tracking/externe-data/repo/motif_repo.dart';
 import 'package:tracking/externe-data/repo/professions_repo.dart';
 import 'package:tracking/externe-data/repo/quartier_repo.dart';
 import 'package:tracking/externe-data/repo/theme_repo.dart';
@@ -79,6 +80,23 @@ class ProfessionBloc extends Bloc<DataEvent, DataState> {
         emit(ProfessionLoaded(professions));
       } catch (e) {
         emit(ProfessionError(e.toString()));
+      }
+    });
+  }
+}
+
+/* ---------------------------------- Motif --------------------------------- */
+class MotifBloc extends Bloc<DataEvent, DataState> {
+  final MotifsRepository _motifsRepository;
+
+  MotifBloc(this._motifsRepository) : super(MotifInitial()) {
+    on<MotifsEvent>((event, emit) async {
+      emit(MotifLoading());
+      try {
+        final professions = await _motifsRepository.fetchMotifs();
+        emit(MotifLoaded(professions));
+      } catch (e) {
+        emit(MotifError(e.toString()));
       }
     });
   }

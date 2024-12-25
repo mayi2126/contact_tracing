@@ -6,12 +6,12 @@ import 'package:http/http.dart' as http;
 import 'package:tracking/components/utils/load_user.dart';
 
 abstract class MakeReferencementRepository {
-  Future<bool> makeReferencement(int idRecensement);
+  Future<bool> makeReferencement(int idRecensement,String idMotif);
 }
 
 class MakeReferencementRepositoryImpl implements MakeReferencementRepository {
   @override
-  Future<bool> makeReferencement(int idRecensement) async {
+  Future<bool> makeReferencement(int idRecensement,String idMotif) async {
     final url = Uri.parse("$baseUrl$makeReferencementPath");
 
     // TODO: Implement the actual API call to store the referencement
@@ -30,7 +30,7 @@ class MakeReferencementRepositoryImpl implements MakeReferencementRepository {
         "userEnreg": user!.id,
         "idFsref": user.idFsUser,
         "dateref": DateTime.now().toString(),
-        "idmotifRef":6
+        "idmotifRef":int.parse(idMotif)
       }),
     );
 

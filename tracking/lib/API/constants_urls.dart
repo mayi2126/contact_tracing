@@ -21,6 +21,7 @@ const String getVillage = "/villagesrechByfs";
 const String getQuartier = "/quartierrechByvillage";
 const String getThemes = "/themes";
 const String getProfessions = "/professions";
+const String getMotifs = "/motifList";
 const String getVisites = "/visiteadomicilelist";
 const String getCauseries = "/causerieeducativelist";
 const String getRecensementPath = "/recensementlist";

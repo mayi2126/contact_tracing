@@ -22,6 +22,7 @@ import 'package:tracking/Presentation/visite/data/Models/visite_model.dart';
 import 'package:tracking/components/ui/string_date.dart';
 import 'package:tracking/components/utils/load_user.dart';
 import 'package:tracking/externe-data/bloc/data_bloc.dart';
+import 'package:tracking/externe-data/repo/motif_repo.dart';
 import 'package:tracking/externe-data/repo/professions_repo.dart';
 import 'package:tracking/externe-data/repo/theme_repo.dart';
 
@@ -94,6 +95,7 @@ part '../components/utils/drop_menu_quartier.dart';
 part '../components/utils/drop_menu_village.dart';
 part '../components/utils/drop_menu_theme.dart';
 part '../components/utils/drop_menu_profession.dart';
+part '../components/utils/drop_menu_motif.dart';
 
 
 /* ------------------------------ REFERENCEMENT ----------------------------- */

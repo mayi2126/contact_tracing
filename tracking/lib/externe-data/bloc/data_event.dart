@@ -28,3 +28,6 @@ class ThemesEvent extends DataEvent {
 class ProfessionsEvent extends DataEvent {
 
 }
+
+class MotifsEvent extends DataEvent {
+}

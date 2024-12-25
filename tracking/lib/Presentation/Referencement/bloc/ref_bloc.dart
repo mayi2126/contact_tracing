@@ -17,7 +17,7 @@ class RefBloc extends Bloc<RefEvent, RefState> {
     try {
        final MakeReferencementRepositoryImpl makeReferencementRepository =
         MakeReferencementRepositoryImpl();
-      final bool result = await makeReferencementRepository.makeReferencement(event.id);
+      final bool result = await makeReferencementRepository.makeReferencement(event.id,event.idMotif);
 
       emit(MakeReferencementSuccess());
 

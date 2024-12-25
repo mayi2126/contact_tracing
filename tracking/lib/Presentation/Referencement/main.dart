@@ -20,6 +20,8 @@ class _InnerRefState extends State<InnerRef> {
 
   bool _isSwitched = false;
 
+  String? _motifValue = '';
+
   // Fonction pour changer l'état du container cliqué
   void toggleSelection(int containerIndex) {
     setState(() {
@@ -159,6 +161,103 @@ class _InnerRefState extends State<InnerRef> {
     );
   }
 
+  Future<void> _onContainerTap2(BuildContext myContext) async {
+    dynamic result = await showDialog(
+      context: myContext,
+      builder: (myContext) => AlertDialog(
+        title: const Text(
+          'Créer un contre referencement',
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+              color: Palette.primary),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Form(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Chosir un motif",
+                  ),
+                  DropMenuMotif(onSelected: (String? value) {
+                    setState(() {
+                      _motifValue = value!;
+                      print("Motif sélectionné: $_motifValue");
+                    });
+                  }),
+                  10.verticalSpace,
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     print(_isSwitched);
+                  //     setState(() {
+                  //       _isSwitched = !_isSwitched;
+                  //     });
+                  //   },
+                  //   child: AnimatedContainer(
+                  //     duration: Duration(milliseconds: 300),
+                  //     width: 80,
+                  //     height: 40,
+                  //     decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(20),
+                  //       color: _isSwitched ? Colors.blue : Colors.grey,
+                  //     ),
+                  //     child: Padding(
+                  //       padding: const EdgeInsets.all(4.0),
+                  //       child: AnimatedAlign(
+                  //         duration: Duration(milliseconds: 300),
+                  //         alignment: _isSwitched
+                  //             ? Alignment.centerRight
+                  //             : Alignment.centerLeft,
+                  //         child: Container(
+                  //           width: 32,
+                  //           height: 32,
+                  //           decoration: BoxDecoration(
+                  //             color: Colors.white,
+                  //             borderRadius: BorderRadius.circular(16),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                ],
+              ),
+            )
+          ],
+        ),
+        actions: [
+          TextButton(
+            child: const Text(
+              'Annuler',
+              style: TextStyle(
+                  color: Palette.primary,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+              child: const Text(
+                'Créer',
+                style: TextStyle(
+                    color: Palette.primary,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold),
+              ),
+              onPressed: () {
+                BlocProvider.of<RefBloc>(context).add(
+                    HandleMakeReferencementEvent(id: 3, idMotif: _motifValue!));
+              }),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -223,10 +322,12 @@ class _InnerRefState extends State<InnerRef> {
         listener: (context, state) {
           // TODO: implement listener
           if (state is MakeReferencementLoading) {
+            Navigator.pop(context);
             showDialogCustom(context, "En cours...");
           } else if (state is MakeReferencementSuccess) {
             Navigator.pop(context);
           } else if (state is MakeReferencementError) {
+            _onContainerTap2(context);
             SnackBar snackBar = SnackBar(content: Text(state.message));
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
           }
@@ -234,19 +335,18 @@ class _InnerRefState extends State<InnerRef> {
         child: BlocListener<ContreRefBloc, ContreRefState>(
           listener: (context, state) {
             // TODO: implement listener
-            if (state is CreateContreReferencementLoading){
+            if (state is CreateContreReferencementLoading) {
               Navigator.pop(context);
               showDialogCustom(context, "En cours...");
-            }
-            else if (state is CreateContreReferencementSuccess){
+            } else if (state is CreateContreReferencementSuccess) {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content:  Text("Le contre referencement a été ajouté avec succés"),
+                  content: Text(
+                      "Le contre referencement a été ajouté avec succés"),
                 ),
               );
-            }
-            else if (state is CreateContreReferencementError){
+            } else if (state is CreateContreReferencementError) {
               Navigator.pop(context);
               SnackBar snackBar = SnackBar(content: Text(state.errorMessage));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -385,11 +485,8 @@ class _InnerRefState extends State<InnerRef> {
                                                                   referencement,
                                                               onDoubleTap: () {
                                                                 // Gérer le double-clic ici
-                                                                BlocProvider.of<
-                                                                            RefBloc>(
-                                                                        context)
-                                                                    .add(HandleMakeReferencementEvent(
-                                                                        id: 3));
+                                                                _onContainerTap2(
+                                                                    context);
                                                               },
                                                             ))
                                                         .toList(),
@@ -468,7 +565,7 @@ class _InnerRefState extends State<InnerRef> {
                                                                           ReferencementCard(
                                                                         referencement:
                                                                             referencement,
-                                                                        onTap:() =>
+                                                                        onTap: () =>
                                                                             _onContainerTap(context),
                                                                       ),
                                                                     )

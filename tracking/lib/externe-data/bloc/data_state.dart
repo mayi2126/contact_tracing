@@ -69,3 +69,21 @@ class ProfessionError extends DataState {
   ProfessionError(this.message);
 }
 
+
+/* ---------------------------------- Motif --------------------------------- */
+
+final class MotifInitial extends DataState {}
+
+
+class MotifLoading extends DataState {}
+
+class MotifLoaded extends DataState {
+  final List<Map<String, dynamic>> motifs;
+  MotifLoaded(this.motifs);
+}
+
+class MotifError extends DataState {
+  final String message;
+  MotifError(this.message);
+}
+

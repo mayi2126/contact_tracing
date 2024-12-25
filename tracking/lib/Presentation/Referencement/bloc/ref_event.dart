@@ -6,5 +6,6 @@ sealed class RefEvent {}
 
 class HandleMakeReferencementEvent extends RefEvent {
   final int id;
-  HandleMakeReferencementEvent({required this.id});
+  final String idMotif;
+  HandleMakeReferencementEvent({required this.id, required this.idMotif});
 }
