@@ -100,6 +100,13 @@ class _VisitePageState extends State<VisitePage> {
           VisiteBloc()..add( GetVisites("2023-01-01", DateFormat('yyyy-MM-dd').format(DateTime.now()))),
       child: Scaffold(
         appBar: AppBar(
+           leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_outlined,
+            color: Palette.white,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
           backgroundColor: Palette.primary,
           iconTheme: const IconThemeData(color: Palette.white),
           title: const Text(

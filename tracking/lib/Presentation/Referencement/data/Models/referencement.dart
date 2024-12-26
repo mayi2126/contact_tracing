@@ -11,6 +11,8 @@ class Referencement {
     String? recommandation;
     String? agegrossesse;
     String? dateref;
+    String? libmotif;
+    String? refereVers;
 
     Referencement({
         required this.fullName,
@@ -22,6 +24,8 @@ class Referencement {
         required this.recommandation,
         required this.agegrossesse,
         required this.dateref,
+        required this.libmotif,
+        required this.refereVers,
     });
 
     Referencement copyWith({
@@ -34,8 +38,12 @@ class Referencement {
         String? recommandation,
         String? agegrossesse,
         String? dateref,
+        String ? libmotif,
+        String? refereVers,
     }) => 
         Referencement(
+          refereVers: refereVers ?? this.refereVers,
+          libmotif: libmotif ?? this.libmotif,
           dateref: dateref ?? this.dateref,
           agegrossesse: agegrossesse ?? this.agegrossesse,
           recommandation: recommandation ?? this.recommandation,
@@ -52,6 +60,8 @@ class Referencement {
     String toJson() => json.encode(toMap());
 
     factory Referencement.fromMap(Map<String, dynamic> json) => Referencement(
+      refereVers: json["refereVers"],
+      libmotif: json["libmotif"],
       dateref: json["dateref"],
       agegrossesse: json["agegrossesse"],
       recommandation: json["recommandation"],
@@ -64,6 +74,8 @@ class Referencement {
     );
 
     Map<String, dynamic> toMap() => {
+      "refereVers": refereVers,
+      "libmotif": libmotif,
       "dateref": dateref,
       "agegrossesse":agegrossesse,
         "full_name": fullName,
