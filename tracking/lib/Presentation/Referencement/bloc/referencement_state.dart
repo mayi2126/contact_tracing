@@ -35,21 +35,4 @@ final class ReferedRefGetError extends ReferencementState {
   ReferedRefGetError(this.errorMessage);
 }
 
-/* -------------------------------------------------------------------------- */
-/*                          contre refrencementState                          */
-/* -------------------------------------------------------------------------- */
-
-
-final class CounterReferencementLoading extends ReferencementState {}
-
-
-final class CounterReferencementLoaded extends ReferencementState {
-  final List<Referencement> counterReferencements;
-  CounterReferencementLoaded(this.counterReferencements);
-}
-
-final class CounterReferencementError extends ReferencementState {
-  final String errorMessage;
-  CounterReferencementError(this.errorMessage);
-}
 

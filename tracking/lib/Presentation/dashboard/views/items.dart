@@ -55,7 +55,7 @@ class Items extends StatelessWidget {
                             width: 120, // largeur fixe
                             child: CardWidget(
                               icon: Icons.local_activity_outlined,
-                              title: "Compte Referentiel",
+                              title: "Référencement",
                               image: "assets/jpg/pp.jpg",
                               onTap: () {
                                 Navigator.pushNamed(
@@ -70,9 +70,13 @@ class Items extends StatelessWidget {
                             width: 120, // largeur fixe
                             child: CardWidget(
                               icon: Icons.people_sharp,
-                              title: "Suivis F/E",
+                              title: "Ctre Référencement",
                               image: "assets/jpg/pre.jpg",
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, RoutesName.mainContreRef
+                                );
+                              },
                             ),
                           ),
                         ),
