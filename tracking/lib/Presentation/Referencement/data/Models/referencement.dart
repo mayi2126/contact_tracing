@@ -8,6 +8,9 @@ class Referencement {
     String? libcpecm;
     String? sexezerovingtquatremoisrec;
     int? membreagerec;
+    String? recommandation;
+    String? agegrossesse;
+    String? dateref;
 
     Referencement({
         required this.fullName,
@@ -16,6 +19,9 @@ class Referencement {
         required this.libcpecm,
         required this.sexezerovingtquatremoisrec,
         required this.membreagerec,
+        required this.recommandation,
+        required this.agegrossesse,
+        required this.dateref,
     });
 
     Referencement copyWith({
@@ -25,8 +31,14 @@ class Referencement {
         String? libcpecm,
         String? sexezerovingtquatremoisrec,
         int? membreagerec,
+        String? recommandation,
+        String? agegrossesse,
+        String? dateref,
     }) => 
         Referencement(
+          dateref: dateref ?? this.dateref,
+          agegrossesse: agegrossesse ?? this.agegrossesse,
+          recommandation: recommandation ?? this.recommandation,
             fullName: fullName ?? this.fullName,
             nomquartier: nomquartier ?? this.nomquartier,
             nomvillage: nomvillage ?? this.nomvillage,
@@ -40,6 +52,9 @@ class Referencement {
     String toJson() => json.encode(toMap());
 
     factory Referencement.fromMap(Map<String, dynamic> json) => Referencement(
+      dateref: json["dateref"],
+      agegrossesse: json["agegrossesse"],
+      recommandation: json["recommandation"],
         fullName: json["full_name"],
         nomquartier: json["nomquartier"],
         nomvillage: json["nomvillage"],
@@ -49,11 +64,14 @@ class Referencement {
     );
 
     Map<String, dynamic> toMap() => {
+      "dateref": dateref,
+      "agegrossesse":agegrossesse,
         "full_name": fullName,
         "nomquartier": nomquartier,
         "nomvillage": nomvillage,
         "libcpecm": libcpecm,
         "sexezerovingtquatremoisrec": sexezerovingtquatremoisrec,
         "membreagerec": membreagerec,
+        "recommandation": recommandation
     };
 }

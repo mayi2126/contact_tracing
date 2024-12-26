@@ -17,7 +17,6 @@ import 'package:tracking/externe-data/bloc/data_bloc.dart';
 void main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); // Assurez-vous que les bindings sont initialisés
-  // await initializeDateFormatting('fr_FR', null);  // Initialisation de la locale 'fr_FR'
 
   runApp(MyApp());
 }

@@ -1,10 +1,11 @@
 part of '../../core/cores.dart';
 
 class ReferencementCard extends StatelessWidget {
-  const ReferencementCard({super.key,  required this.referencement, this.onDoubleTap, this.onTap});
+  const ReferencementCard(
+      {super.key, required this.referencement, this.onDoubleTap, this.onTap});
   final Referencement referencement;
-   final VoidCallback? onDoubleTap;
-   final VoidCallback? onTap;
+  final VoidCallback? onDoubleTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class ReferencementCard extends StatelessWidget {
             children: [
               GestureDetector(
                 onDoubleTap: onDoubleTap,
-                onTap:onTap,
+                onTap: onTap,
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(5),
@@ -73,23 +74,145 @@ class ReferencementCard extends StatelessWidget {
               ),
               5.verticalSpace,
               Text(
-                referencement.fullName??"",
+                referencement.fullName ?? "",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               2.verticalSpace,
-              Row(
-                children: [
-                  const Icon(
-                    Icons.location_on_outlined,
-                    color: Palette.primary,
-                    size: 15,
-                  ),
-                  2.horizontalSpace,
-                  Text(
-                    referencement.nomvillage ?? "",
-                    style: TextStyle(color: Palette.foreign, fontSize: 12),
-                  ),
-                ],
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "Détails de ",
+                              style: TextStyle(fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    color: Palette.foreign),
+                            ),
+                            TextSpan(
+                              text: referencement.fullName ?? "",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Palette.primary,
+                                  fontSize: 15),
+                            ),
+                          ],
+                        ),
+                      ),
+                      content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+
+                            const Divider(color: Palette.foreign, height: 5,endIndent: 10,indent: 10,),
+
+                            referencement.recommandation != null
+                                ? const Text("Recommandation ",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    color: Palette.foreign
+                                    ))
+                                : SizedBox(),
+                            referencement.recommandation != null
+                                ? Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      " ${referencement.recommandation}",
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  )
+                                : SizedBox(),
+                            10.verticalSpace,
+                            referencement.agegrossesse != null
+                                ? const Text("Age du grossesse ",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    color: Palette.foreign
+                                    ))
+                                : SizedBox(),
+                            referencement.agegrossesse != null
+                                ? Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      " ${referencement.agegrossesse}",
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  )
+                                : SizedBox(),
+                            10.verticalSpace,
+                            referencement.dateref != null
+                                ? const Text("Date du referencement ",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    color: Palette.foreign
+                                    ))
+                                : SizedBox(),
+                            referencement.dateref != null
+                                ? Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      dateStringFormat(referencement.dateref!),
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  )
+                                : SizedBox(),
+                            10.verticalSpace,
+                            const Text("Quartier",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    color: Palette.foreign)),
+                            3.verticalSpace,
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  color: Palette.bgGrey,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Row(children: [
+                                const Icon(
+                                  Icons.local_gas_station_outlined,
+                                  color: Palette.primary,
+                                  size: 20,
+                                ),
+                                5.horizontalSpace,
+                                Text(referencement.nomquartier!,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    )),
+                              ]),
+                            ),
+                          ]),
+                    ),
+                  );
+                },
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.location_on_outlined,
+                      color: Palette.primary,
+                      size: 15,
+                    ),
+                    2.horizontalSpace,
+                    Text(
+                      referencement.nomvillage ?? "",
+                      style: TextStyle(color: Palette.foreign, fontSize: 12),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

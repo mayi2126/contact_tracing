@@ -43,12 +43,20 @@ class _CauseriePageState extends State<CauseriePage> {
                             labelText: "Recherche..."),
                       ),
                       // const Spacer(),
-                      2.horizontalSpace,
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.filter_alt_sharp,
-                          color: Palette.white,
+                      5.horizontalSpace,
+                      Container(
+                         width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: Palette.stroke, width: 2),
+                    ),
+                        child: IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.sort,
+                            color: Palette.white,
+                          ),
                         ),
                       )
                     ],

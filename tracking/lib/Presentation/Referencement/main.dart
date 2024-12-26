@@ -184,7 +184,7 @@ class _InnerRefState extends State<InnerRef> {
                     child: IconButton(
                       onPressed: () {},
                       icon: const Icon(
-                        Icons.filter_alt_sharp,
+                        Icons.sort,
                         color: Palette.white,
                       ),
                     ),

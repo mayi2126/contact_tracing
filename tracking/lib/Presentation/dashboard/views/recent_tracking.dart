@@ -19,7 +19,7 @@ class RecentTrackingWidget extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(10),
           child: Column(
-            children: cards.map((rec) {
+            children: cards.isEmpty ? [const Text("Aucun recensement trouvé")] :  cards.map((rec) {
               return TrackingCard(
                 recensement: rec,
                 onTap: () => Navigator.pushNamed(context, RoutesName.showRecensement, arguments: rec),

@@ -151,6 +151,8 @@ class _InnerContreRefState extends State<InnerContreRef> {
   void dispose() {
     _prestataireController.dispose();
     _recommendationController.dispose();
+    _searchController.removeListener(_filterReferencements);
+    _searchController.dispose();
     super.dispose();
   }
 
@@ -224,7 +226,7 @@ class _InnerContreRefState extends State<InnerContreRef> {
                     child: IconButton(
                       onPressed: () {},
                       icon: const Icon(
-                        Icons.filter_alt_sharp,
+                        Icons.sort,
                         color: Palette.white,
                       ),
                     ),

@@ -134,7 +134,7 @@ class Items extends StatelessWidget {
                   const Padding(
                     padding: EdgeInsets.only(left: 8.0),
                     child:  Text(
-                      "Récencements récents",
+                      "Récencements d'aujourd'hui",
                       style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                     ),
                   ),
