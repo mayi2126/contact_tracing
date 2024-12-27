@@ -41,6 +41,7 @@ class _CauseriePageState extends State<CauseriePage> {
       create: (context) =>
           CauserieBloc()..add(const GetCauseries("2023-01-01", "2024-12-31")),
       child: Scaffold(
+        backgroundColor: Palette.primary,
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(
@@ -114,108 +115,116 @@ class _CauseriePageState extends State<CauseriePage> {
           },
           child: BlocBuilder<CauserieBloc, CauserieState>(
             builder: (context, state) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "Causeries",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Palette.foreign),
-                          ),
-                          state is CauserieIsEmpty
-                              ? const SizedBox(height: 0, width: 0)
-                              : TextButton.icon(
-                                  onPressed: () {},
-                                  label: const Text(
-                                    "Voir tous",
-                                    style: TextStyle(color: Palette.foreign),
-                                  ),
-                                  icon: const Icon(
-                                    Icons.arrow_forward_ios_outlined,
-                                    size: 15,
-                                    color: Palette.foreign,
-                                  ),
-                                  iconAlignment: IconAlignment.end,
-                                )
-                        ]),
-                  ),
-                  state is CauserieIsEmpty
-                      ? const Center(
-                          child: CircleAvatar(
-                          radius: 20,
-                          // backgroundColor: Palette.foreign,
-                          // backgroundImage: AssetImage("assets/png/empty.png"),
-                          child: Icon(Icons.folder_open_rounded,
-                              color: Palette.primary),
-                        ))
-                      : state is CauserieGetLoaded
-                          ? SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 20, bottom: 20, right: 20),
-                                child: CardCauserie(visites: _filteredCauseries),
-                              ),
-                            )
-                          : state is CauserieGetLoading
-                              ? const Center(
-                                  child: CircularProgressIndicator.adaptive(
-                                  semanticsLabel: "...",
-                                  backgroundColor: Palette.primary,
-                                ))
-                              : const SizedBox(),
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-                    child: Text(
-                      "Causeries d'Aujourd'hui",
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Palette.foreign),
+              return Container(
+                 height: double.infinity,
+        width: double.infinity,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
+                  color: Colors.white,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "Causeries",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Palette.foreign),
+                            ),
+                            state is CauserieIsEmpty
+                                ? const SizedBox(height: 0, width: 0)
+                                : TextButton.icon(
+                                    onPressed: () {},
+                                    label: const Text(
+                                      "Voir tous",
+                                      style: TextStyle(color: Palette.foreign),
+                                    ),
+                                    icon: const Icon(
+                                      Icons.arrow_forward_ios_outlined,
+                                      size: 15,
+                                      color: Palette.foreign,
+                                    ),
+                                    iconAlignment: IconAlignment.end,
+                                  )
+                          ]),
                     ),
-                  ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: state is CauserieGetLoaded &&
-                              state.todaysCauseries.isNotEmpty
-                          ? CardToday(state.todaysCauseries)
-                          : state is CauserieGetLoading
-                              ? const Center(child: Text('...'))
-                              : Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 70),
-                                    child: Column(
-                                      children: [
-                                        const SizedBox(
-                                          height: 50,
-                                          width: 50,
-                                          child: Image(
-                                            image: AssetImage(
-                                              "assets/png/empty-box.png",
+                    state is CauserieIsEmpty
+                        ? const Center(
+                            child: CircleAvatar(
+                            radius: 20,
+                            // backgroundColor: Palette.foreign,
+                            // backgroundImage: AssetImage("assets/png/empty.png"),
+                            child: Icon(Icons.folder_open_rounded,
+                                color: Palette.primary),
+                          ))
+                        : state is CauserieGetLoaded
+                            ? SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 20, bottom: 20, right: 20),
+                                  child: CardCauserie(visites: _filteredCauseries),
+                                ),
+                              )
+                            : state is CauserieGetLoading
+                                ? const Center(
+                                    child: CircularProgressIndicator.adaptive(
+                                    semanticsLabel: "...",
+                                    backgroundColor: Palette.primary,
+                                  ))
+                                : const SizedBox(),
+                    const Padding(
+                      padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                      child: Text(
+                        "Causeries d'Aujourd'hui",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Palette.foreign),
+                      ),
+                    ),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: state is CauserieGetLoaded &&
+                                state.todaysCauseries.isNotEmpty
+                            ? CardToday(state.todaysCauseries)
+                            : state is CauserieGetLoading
+                                ? const Center(child: Text('...'))
+                                : Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(top: 70),
+                                      child: Column(
+                                        children: [
+                                          const SizedBox(
+                                            height: 50,
+                                            width: 50,
+                                            child: Image(
+                                              image: AssetImage(
+                                                "assets/png/empty-box.png",
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        5.verticalSpace,
-                                        const Text(
-                                          "Aucune causerie aujourd'hui",
-                                          style:
-                                              TextStyle(color: Palette.foreign),
-                                        ),
-                                      ],
+                                          5.verticalSpace,
+                                          const Text(
+                                            "Aucune causerie aujourd'hui",
+                                            style:
+                                                TextStyle(color: Palette.foreign),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                    ),
-                  )
-                ],
+                      ),
+                    )
+                  ],
+                ),
               );
             },
           ),

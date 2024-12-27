@@ -53,9 +53,10 @@ class Routes {
       case RoutesName.mainReferencement:
         return MaterialPageRoute(
             builder: (context) => const MainReferencement());
-         case RoutesName.mainContreRef:
-        return MaterialPageRoute(
-            builder: (context) => const MainContreRef());
+      case RoutesName.mainContreRef:
+        return MaterialPageRoute(builder: (context) => const MainContreRef());
+              case RoutesName.mainSuivi:
+        return MaterialPageRoute(builder: (context) => const MainSuivi());
       default:
         return MaterialPageRoute(
           builder: (context) => const Scaffold(

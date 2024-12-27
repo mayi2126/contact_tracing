@@ -54,6 +54,7 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Palette.primary,
       appBar: _selectedIndex == 0
           ? user == null ? null : PreferredSize(
               preferredSize: const Size(

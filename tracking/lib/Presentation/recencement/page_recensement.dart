@@ -48,6 +48,7 @@ class _MainRecensementState extends State<MainRecensement> {
       create: (context) => RecensementBloc()
         ..add(HandleGetRecensement("2023-01-01", DateTime.now().toString())),
       child: Scaffold(
+        backgroundColor: Palette.primary,
         appBar: AppBar(
         leading: IconButton(
           icon: const Icon(
@@ -114,33 +115,41 @@ class _MainRecensementState extends State<MainRecensement> {
           },
           child: BlocBuilder<RecensementBloc, RecensementState>(
             builder: (context, state) {
-              return Padding(
-                padding: const EdgeInsets.all(15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "La liste des recensements ",
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    15.verticalSpace,
-                    // state is GetRecensementLoading() ? const Center(
-                    //   child: CircularProgressIndicator(),
-                    // ): state is GetRecensementSuccess() ?
-
-                    // RecentTrackingWidget(cards: state.recensements,),
-
-                    state is GetRecensementSuccess
-                        ? RecentTrackingWidget(cards: _filteredRecensements)
-                        : const Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                    state is GetRecensementError
-                        ? Center(
-                            child: Text(state.message),
-                          )
-                        : const SizedBox(),
-                  ],
+              return Container(
+                 height: double.infinity,
+        width: double.infinity,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
+                  color: Colors.white,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "La liste des recensements ",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      15.verticalSpace,
+                      // state is GetRecensementLoading() ? const Center(
+                      //   child: CircularProgressIndicator(),
+                      // ): state is GetRecensementSuccess() ?
+                
+                      // RecentTrackingWidget(cards: state.recensements,),
+                
+                      state is GetRecensementSuccess
+                          ? RecentTrackingWidget(cards: _filteredRecensements)
+                          : const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                      state is GetRecensementError
+                          ? Center(
+                              child: Text(state.message),
+                            )
+                          : const SizedBox(),
+                    ],
+                  ),
                 ),
               );
             },

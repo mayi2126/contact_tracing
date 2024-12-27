@@ -102,3 +102,7 @@ part '../components/utils/drop_menu_motif.dart';
 /* ------------------------------ REFERENCEMENT ----------------------------- */
 part '../Presentation/Referencement/main.dart';
 part '../Presentation/ContreRef/main.dart';
+
+
+/* ---------------------------------- Suivi --------------------------------- */
+part '../Presentation/Suivi/main.dart';

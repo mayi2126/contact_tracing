@@ -10,6 +10,7 @@ class RoutesName{
   static const String mainRecensement = "mainRecensement";
   static const String mainReferencement = "mainReferencement";
   static const String mainContreRef =  "mainContreRef";
+  static const String mainSuivi = "mainSuivi";
   static const String causerie = "causerie";
   static const String addCauserie = "addCauserie";
   static const String visite = "visite";
