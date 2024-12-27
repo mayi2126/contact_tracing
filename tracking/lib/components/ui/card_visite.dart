@@ -57,7 +57,7 @@ class CardVC extends StatelessWidget {
                   )
                 ],
               ),
-              20.verticalSpace,
+              10.verticalSpace,
               Text(
                 visite.lieuAp,
                 overflow: TextOverflow.ellipsis,
@@ -73,7 +73,7 @@ class CardVC extends StatelessWidget {
                 style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Palette.foreign,
-                    fontSize: 12),
+                    fontSize: 10),
               ),
             ],
           ),

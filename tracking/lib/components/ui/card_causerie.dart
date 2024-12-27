@@ -1,4 +1,5 @@
 part of '../../core/cores.dart';
+
 class CardC extends StatelessWidget {
   const CardC({super.key, required this.visite});
 
@@ -6,17 +7,15 @@ class CardC extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     DateTime dateTime = DateTime.parse(visite.dateEnreg);
 
     // Formater la date sans l'heure en utilisant 'd MMMM yyyy'
-    String formattedDate = DateFormat('d MMMM yyyy','fr').format(dateTime);
-
+    String formattedDate = DateFormat('d MMMM yyyy', 'fr').format(dateTime);
 
     return GestureDetector(
       onTap: () {
-                           Navigator.pushNamed(context, RoutesName.showCauserie, arguments: visite);
-
+        Navigator.pushNamed(context, RoutesName.showCauserie,
+            arguments: visite);
       },
       child: Padding(
         padding: const EdgeInsets.only(left: 10),
@@ -26,9 +25,9 @@ class CardC extends StatelessWidget {
           width: getWidth(200),
           decoration: BoxDecoration(
             // color: Palette.white,
-              border: Border.all(color: Palette.primary),
-              borderRadius: BorderRadius.circular(30),
-               ),
+            border: Border.all(color: Palette.primary),
+            borderRadius: BorderRadius.circular(30),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -38,15 +37,13 @@ class CardC extends StatelessWidget {
                   Container(
                     width: getWidth(120),
                     padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
-      
                     decoration: BoxDecoration(
-                        border: Border.all(color: Palette.primary),
-                        borderRadius: BorderRadius.circular(20),
-                       
-      
-                        ),
+                      border: Border.all(color: Palette.primary),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
                     child: Text(
                       visite.libelementdedonnee,
+                      
                       style: const TextStyle(color: Palette.primary),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
@@ -55,14 +52,15 @@ class CardC extends StatelessWidget {
                   const Spacer(),
                   GestureDetector(
                     onTap: () {
-                     Navigator.pushNamed(context, RoutesName.showCauserie, arguments: visite);
+                      Navigator.pushNamed(context, RoutesName.showCauserie,
+                          arguments: visite);
                     },
                     child: const Icon(Icons.arrow_forward_ios_outlined,
                         size: 15, color: Palette.primary),
                   )
                 ],
               ),
-              20.verticalSpace,
+              10.verticalSpace,
               Text(
                 visite.lieuAp,
                 overflow: TextOverflow.ellipsis,
@@ -75,10 +73,11 @@ class CardC extends StatelessWidget {
               const Spacer(),
               Text(
                 formattedDate,
+                overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Palette.foreign,
-                    fontSize: 12),
+                    fontSize: 10),
               ),
             ],
           ),

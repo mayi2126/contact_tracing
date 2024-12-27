@@ -49,7 +49,14 @@ class _ShowCauseriePageState extends State<ShowCauseriePage> {
 
     selectedDate = DateTime.parse(widget.arguments.dateAp.toString());
 
+ String? idvillage = widget.arguments.idvillage;
+    if (idvillage != null) {
+      
     context.read<DataBloc>().add(FetchVillageQuartier(int.parse(widget.arguments.idvillage.toString())));
+    }
+    else{
+      context.read<DataBloc>().add(FetchVillageQuartier(6));
+    }  
   }
 
   @override
