@@ -13,6 +13,9 @@ class Referencement {
     String? dateref;
     String? libmotif;
     String? refereVers;
+    String? prestatairesoins;
+    String? dateprochainrdv;
+    String? grossesseconfirme;
 
     Referencement({
         required this.fullName,
@@ -26,9 +29,13 @@ class Referencement {
         required this.dateref,
         required this.libmotif,
         required this.refereVers,
+        required this.prestatairesoins,
+        required this.dateprochainrdv,
+        required this.grossesseconfirme,
     });
 
     Referencement copyWith({
+String? grossesseconfirme,
         String? fullName,
         String? nomquartier,
         String? nomvillage,
@@ -40,8 +47,13 @@ class Referencement {
         String? dateref,
         String ? libmotif,
         String? refereVers,
+        String? prestatairesoins,
+        String? dateprochainrdv,
     }) => 
         Referencement(
+          grossesseconfirme: grossesseconfirme ?? this.grossesseconfirme,
+          dateprochainrdv: dateprochainrdv ?? this.dateprochainrdv,
+          prestatairesoins: prestatairesoins ?? this.prestatairesoins,
           refereVers: refereVers ?? this.refereVers,
           libmotif: libmotif ?? this.libmotif,
           dateref: dateref ?? this.dateref,
@@ -60,6 +72,9 @@ class Referencement {
     String toJson() => json.encode(toMap());
 
     factory Referencement.fromMap(Map<String, dynamic> json) => Referencement(
+      grossesseconfirme: json["grossesseconfirme"],
+      dateprochainrdv: json["dateprochainrdv"],
+      prestatairesoins: json["prestatairesoins"],
       refereVers: json["refereVers"],
       libmotif: json["libmotif"],
       dateref: json["dateref"],
@@ -74,6 +89,9 @@ class Referencement {
     );
 
     Map<String, dynamic> toMap() => {
+      "grossesseconfirme": grossesseconfirme,
+      "dateprochainrdv": dateprochainrdv,
+      "prestatairesoins": prestatairesoins,
       "refereVers": refereVers,
       "libmotif": libmotif,
       "dateref": dateref,

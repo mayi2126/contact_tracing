@@ -15,6 +15,7 @@ import 'package:tracking/Presentation/ContreRef/bloc/contre_ref_bloc.dart';
 import 'package:tracking/Presentation/ContreRef/bloc/list_bloc.dart';
 import 'package:tracking/Presentation/Referencement/bloc/ref_bloc.dart';
 import 'package:tracking/Presentation/Referencement/bloc/referencement_bloc.dart';
+import 'package:tracking/Presentation/Suivi/bloc/suivi_bloc.dart';
 import 'package:tracking/Presentation/recencement/bloc/recensement_bloc.dart';
 import 'package:tracking/Presentation/recencement/data/Models/member.dart';
 import 'package:tracking/Presentation/visite/bloc/visite_bloc.dart';
