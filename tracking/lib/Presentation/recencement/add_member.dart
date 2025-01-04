@@ -22,8 +22,8 @@ class _AddMemberPageState extends State<AddMemberPage> {
   DateTime? selectedDate;
 
   List<String> listSexe = <String>[
-    'Homme',
-    'Femme',
+    'Masculin',
+    'Féminin',
   ];
  
   String _sexeValue = "";
@@ -394,7 +394,7 @@ class _AddMemberPageState extends State<AddMemberPage> {
                                                 BorderRadius.circular(10),
                                           ),
                                         ),
-                                        initialSelection: "Homme",
+                                        initialSelection: "Masculin",
                                         trailingIcon: const Icon(
                                             Icons.keyboard_arrow_down_sharp),
                                         selectedTrailingIcon: const Icon(

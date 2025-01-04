@@ -109,7 +109,7 @@ class _ShowCauseriePageState extends State<ShowCauseriePage> {
         nbreenfantzvtouche: int.parse(_nbreenfantsController.text),
         nbrepersonnetoucheeH: int.parse(_nbrepersonnetoucheeHController.text),
         nbrepersonnetoucheeFe: int.parse(_nbrepersonnetoucheeFEController.text),
-        nbreautrestouche: int.parse(_nbreautresController.text),
+        nbreautrestouche: _nbreautresController.text,
         idvillage: int.parse(_villageValue),
         idquartier: int.parse(_quartierValue),
         idelementDonnee: int.parse(_themeValue),

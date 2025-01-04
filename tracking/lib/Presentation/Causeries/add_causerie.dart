@@ -28,7 +28,7 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
   final TextEditingController __nbrePersonnesTHommesController =
       TextEditingController(text: '0');
   final TextEditingController __nbrePersonnesTEnceintesController =
-      TextEditingController(text: '0');
+      TextEditingController();
 
   final TextEditingController __autresController = TextEditingController(text:'0');
 
@@ -36,6 +36,8 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
 
   int _index = 0;
+    User? user; // Variable pour stocker les infos utilisateur
+
 
   final RestorableDateTime _selectedDate =
       RestorableDateTime(DateTime(2021, 7, 25));
@@ -49,6 +51,28 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
       );
     },
   );
+
+  Future<void> _loadUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? userJson = prefs.getString('user_info');
+
+    if (userJson != null) {
+      setState(() {
+        user = User.fromJson(
+            jsonDecode(userJson)); // Stocker les infos dans la variable
+          
+      });
+
+    }
+  }
+
+
+   @override
+  void initState() {
+    super.initState();
+    _loadUserData(); // Charger les infos utilisateur à l'initialisation
+  }
+
 
   @pragma('vm:entry-point')
   static Route<DateTime> _datePickerRoute(
@@ -120,7 +144,7 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
         nbrepersonnetoucheeH: int.parse(__nbrePersonnesTHommesController.text),
         nbrepersonnetoucheeFe:
             int.parse(__nbrePersonnesTEnceintesController.text),
-        nbreautrestouche: int.parse(__autresController.text),
+        nbreautrestouche: __autresController.text,
         idvillage: int.parse(_villageValue),
         idquartier: int.parse(_quartierValue),
         idelementDonnee: int.parse(_themeValue),
@@ -201,7 +225,7 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
                                 CustomTextFormInput(
                                   isReadonly: true,
                                   labelText: "",
-                                  hintText: "CMS AGA",
+                                  hintText: user != null ? user!.name : "",
                                   controller: _formationSanitaire,
                                   isPassword: true,
                                 ),
@@ -263,17 +287,17 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
                                 ),
                                 10.verticalSpace,
                                 const Text(
-                                  "Thème",
+                                  "Motif",
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
-                                DropMenuTheme(
+                                DropMenuMotif(
                                     onSelected: (String? value) {
                                       setState(() {
                                         _themeValue = value!;
                                         print(_themeValue);
                                       });
                                     },
-                                    type: 'CAUSERIE EDUCATIVE',
+                                    // type: 'CAUSERIE EDUCATIVE',
                                   ),
                                 10.verticalSpace,
                                Center(
@@ -372,9 +396,9 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
                                   ),
                                   CustomTextFormInput(
                                     labelText: "",
-                                    hintText: "0",
+                                    hintText: "Autres",
                                     controller: __autresController,
-                                    keybordType: TextInputType.number,
+                                    keybordType: TextInputType.text,
                                     onTap: () {},
                                   ),
                                   10.verticalSpace,

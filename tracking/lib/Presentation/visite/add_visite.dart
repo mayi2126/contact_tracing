@@ -18,24 +18,26 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _localisationController = TextEditingController();
   final TextEditingController _nbrePersonnesTController =
-      TextEditingController();
+      TextEditingController(text: "0");
   final TextEditingController __nbrePersonnesTAllaitantesController =
-      TextEditingController();
+      TextEditingController(text: "0");
   final TextEditingController __nbrePersonnesTEnfantsController =
-      TextEditingController();
+      TextEditingController(text: "0");
 
   final TextEditingController __nbrePersonnesTHommesController =
-      TextEditingController();
+      TextEditingController(text: "0");
   final TextEditingController __nbrePersonnesTEnceintesController =
-      TextEditingController();
+      TextEditingController(text: "0");
 
   final TextEditingController __autresController =
-      TextEditingController(text: '0');
+      TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
 
   int _index = 0;
+  User? user; // Variable pour stocker les infos utilisateur
+
 
   final RestorableDateTime _selectedDate =
       RestorableDateTime(DateTime(2021, 7, 25));
@@ -49,6 +51,28 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
       );
     },
   );
+
+
+  Future<void> _loadUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? userJson = prefs.getString('user_info');
+
+    if (userJson != null) {
+      setState(() {
+        user = User.fromJson(
+            jsonDecode(userJson)); // Stocker les infos dans la variable
+          
+      });
+
+    }
+  }
+
+
+   @override
+  void initState() {
+    super.initState();
+    _loadUserData(); // Charger les infos utilisateur à l'initialisation
+  }
 
   @override
   void dispose() {
@@ -136,7 +160,7 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
               int.parse(__nbrePersonnesTHommesController.text),
           nbrepersonnetoucheeFe:
               int.parse(__nbrePersonnesTEnceintesController.text),
-          nbreautrestouche: int.parse(__autresController.text),
+          nbreautrestouche: __autresController.text,
           idvillage: int.parse(_villageValue),
           idquartier: int.parse(_quartierValue),
           idelementDonnee: int.parse(_themeValue),
@@ -256,7 +280,7 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                   CustomTextFormInput(
                                     isReadonly: true,
                                     labelText: "",
-                                    hintText: "FS-19",
+                                    hintText: user != null ? user!.name : "",
                                     controller: _formationSanitaire,
                                     isPassword: false,
                                   ),
@@ -319,7 +343,7 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                   ),
                                   10.verticalSpace,
                                   const Text(
-                                    "Thème",
+                                    "Motif",
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
@@ -363,7 +387,7 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                   //   }).toList(),
                                   // ),
 
-                                  DropMenuTheme(
+                                  DropMenuMotif(
                                     onSelected: (String? value) {
                                       setState(() {
                                         _themeValue = value!;
@@ -371,7 +395,7 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                         print(_themeValue);
                                       });
                                     },
-                                    type: 'ACTIVITÉS PRÉVENTIVES ',
+                                    // type: 'ACTIVITÉS PRÉVENTIVES ',
                                   ),
 
                                   20.verticalSpace,
@@ -481,7 +505,7 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                     ),
                                     CustomTextFormInput(
                                       labelText: "",
-                                      hintText: "0",
+                                      hintText: "Autres",
                                       controller: __autresController,
                                       keybordType: TextInputType.number,
                                       onTap: () {},

@@ -14,7 +14,7 @@ class Visite {
     int nbrepersonnetoucheeFa;
     int nbrepersonnetoucheeH;
     int nbreenfantzvtouche;
-    int nbreautrestouche;
+    String nbreautrestouche;
     int userEnreg;
 
     Visite({
@@ -47,7 +47,7 @@ class Visite {
         int? nbrepersonnetoucheeFa,
         int? nbrepersonnetoucheeH,
         int? nbreenfantzvtouche,
-        int? nbreautrestouche,
+        String? nbreautrestouche,
         int? userEnreg,
     }) => 
         Visite(

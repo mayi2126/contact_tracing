@@ -27,6 +27,9 @@ class _AddRecensementState extends State<AddRecensement> {
   List<l.LocationData> locations = [];
   DateTime? selectedDate;
 
+      User? user; // Variable pour stocker les infos utilisateur
+
+
   @override
   void dispose() {
     super.dispose();
@@ -36,6 +39,27 @@ class _AddRecensementState extends State<AddRecensement> {
     _numeroMenageController.dispose();
     _nomController.dispose();
     _prenomsController.dispose();
+  }
+
+    Future<void> _loadUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? userJson = prefs.getString('user_info');
+
+    if (userJson != null) {
+      setState(() {
+        user = User.fromJson(
+            jsonDecode(userJson)); // Stocker les infos dans la variable
+          
+      });
+
+    }
+  }
+
+
+   @override
+  void initState() {
+    super.initState();
+    _loadUserData(); // Charger les infos utilisateur à l'initialisation
   }
 
   void checkStatus() async {
@@ -303,9 +327,9 @@ class _AddRecensementState extends State<AddRecensement> {
               CustomTextFormInput(
                 isReadonly: true,
                 labelText: "",
-                hintText: "19",
+                hintText: user != null ? user!.name : "",
                 controller: _formationSanitaire,
-                isPassword: true,
+                // isPassword: true,
               ),
               10.verticalSpace,
               const Text(

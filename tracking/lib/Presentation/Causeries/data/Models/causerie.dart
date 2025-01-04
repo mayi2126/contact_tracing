@@ -14,7 +14,7 @@ class Causerie {
     int nbrepersonnetoucheeFa;
     int nbrepersonnetoucheeH;
     int nbreenfantzvtouche;
-    int nbreautrestouche;
+    String nbreautrestouche;
     int userEnreg;
 
     Causerie({
@@ -47,7 +47,7 @@ class Causerie {
         int? nbrepersonnetoucheeFa,
         int? nbrepersonnetoucheeH,
         int? nbreenfantzvtouche,
-        int? nbreautrestouche,
+        String? nbreautrestouche,
         int? userEnreg,
     }) => 
         Causerie(

@@ -18,6 +18,7 @@ class RoutesName{
   static const String showVisiteAndCauserie = "showVisiteAndCauserie";
   static const String showCauserie = "showCauserie";
   static const String showRecensement = "showRecensement";
+  static const String checkList = "checkList";
 
 
 }
