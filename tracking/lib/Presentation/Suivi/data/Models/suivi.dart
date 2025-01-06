@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 class Suivi {
@@ -19,6 +18,7 @@ class Suivi {
     String issusaccouchement;
     String lieuaccouchementfs;
     String sirdvrespectenon;
+    int? idRef;
 
     Suivi({
         required this.rdvrespecte,
@@ -38,6 +38,7 @@ class Suivi {
         required this.issusaccouchement,
         required this.lieuaccouchementfs,
         required this.sirdvrespectenon,
+        required this.idRef
     });
 
     Suivi copyWith({
@@ -58,6 +59,7 @@ class Suivi {
         String? issusaccouchement,
         String? lieuaccouchementfs,
         String? sirdvrespectenon,
+        int? idRef
     }) => 
         Suivi(
             rdvrespecte: rdvrespecte ?? this.rdvrespecte,
@@ -77,6 +79,7 @@ class Suivi {
             issusaccouchement: issusaccouchement ?? this.issusaccouchement,
             lieuaccouchementfs: lieuaccouchementfs ?? this.lieuaccouchementfs,
             sirdvrespectenon: sirdvrespectenon ?? this.sirdvrespectenon,
+            idRef: idRef
         );
 
     factory Suivi.fromJson(String str) => Suivi.fromMap(json.decode(str));
@@ -84,6 +87,7 @@ class Suivi {
     String toJson() => json.encode(toMap());
 
     factory Suivi.fromMap(Map<String, dynamic> json) => Suivi(
+        idRef: json["idRef"],
         rdvrespecte: json["rdvrespecte"],
         cpnavantdouzsa: json["cpnavantdouzsa"],
         dispomedicament: json["dispomedicament"],
@@ -121,5 +125,6 @@ class Suivi {
         "issusaccouchement": issusaccouchement,
         "lieuaccouchementfs": lieuaccouchementfs,
         "sirdvrespectenon": sirdvrespectenon,
+        "idRef": idRef
     };
 }

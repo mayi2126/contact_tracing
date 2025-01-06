@@ -7,10 +7,14 @@ class InnerMainSuivi extends StatefulWidget {
   State<InnerMainSuivi> createState() => _InnerMainSuiviState();
 }
 
+enum SampleItem { addSuivi }
+
 class _InnerMainSuiviState extends State<InnerMainSuivi> {
   final TextEditingController _searchController = TextEditingController();
   List<Referencement> _filtedPatients = [];
   List<Referencement> _filtedPatientsAll = [];
+
+  SampleItem? selectedItem;
 
   String? _respecte = "Oui";
   String? _cpnavantdouzsa = "Non";
@@ -25,18 +29,24 @@ class _InnerMainSuiviState extends State<InnerMainSuivi> {
   String? _analysemedrealise = "Non";
   String? _recherchesignedanger = "";
   String? _lieuaccouchementfs = "Non";
-  String? _issusaccouchement="";
+  String? _issusaccouchement = "";
   String? _sirdvrespectenon = "";
 
-  final List<String> dangers = ["Fièvre (Corps chaud)","Maux de tête"];
-  final List<String> accouchements = ["Accouchement","Avortement spontané","Autres à preciser"];
-  final List<String> rdvs = ["Pas disponible","Intempérie","Absence de moyen de déplacement","Refus du conjoint","Autres à preciser"];
+  final List<String> dangers = ["Fièvre (Corps chaud)", "Maux de tête"];
+  final List<String> accouchements = [
+    "Accouchement",
+    "Avortement spontané",
+    "Autres à preciser"
+  ];
+  final List<String> rdvs = [
+    "Pas disponible",
+    "Intempérie",
+    "Absence de moyen de déplacement",
+    "Refus du conjoint",
+    "Autres à preciser"
+  ];
 
-
-  void _showBottomDialog(BuildContext myContext) {
-    
-   
-
+  void _showBottomDialog(BuildContext myContext, int? id) {
     showModalBottomSheet<void>(
       context: myContext,
       scrollControlDisabledMaxHeightRatio: 0.8,
@@ -55,7 +65,10 @@ class _InnerMainSuiviState extends State<InnerMainSuivi> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(" Rendez-vous respecté ?",style: TextStyle(fontWeight: FontWeight.bold),),
+                      const Text(
+                        " Rendez-vous respecté ?",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       5.verticalSpace,
                       Row(
                         children: [
@@ -83,54 +96,59 @@ class _InnerMainSuiviState extends State<InnerMainSuivi> {
                           const Text('Non'),
                         ],
                       ),
-                       3.verticalSpace,
-                      
-                      _respecte == "Non" ? DropdownMenu<String>(
-                        inputDecorationTheme: InputDecorationTheme(
-                          filled: true,
-                          fillColor: Palette.bgGrey,
-                          focusedBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide: BorderSide(
-                              color: Palette.primary,
-                              width: 2,
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Palette.stroke,
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        // initialSelection: themes.isNotEmpty
-                        //     ? (themes.firstWhere((theme) => theme['id'] == id,
-                        //             orElse: () => themes.first))['id']
-                        //         .toString()
-                        //     : null,
-                        width: getWidth(333),
+                      3.verticalSpace,
+                      _respecte == "Non"
+                          ? DropdownMenu<String>(
+                              inputDecorationTheme: InputDecorationTheme(
+                                filled: true,
+                                fillColor: Palette.bgGrey,
+                                focusedBorder: const OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  borderSide: BorderSide(
+                                    color: Palette.primary,
+                                    width: 2,
+                                  ),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Palette.stroke,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              // initialSelection: themes.isNotEmpty
+                              //     ? (themes.firstWhere((theme) => theme['id'] == id,
+                              //             orElse: () => themes.first))['id']
+                              //         .toString()
+                              //     : null,
+                              width: getWidth(333),
 
-                        trailingIcon:
-                            const Icon(Icons.keyboard_arrow_down_sharp),
-                        selectedTrailingIcon:
-                            const Icon(Icons.keyboard_arrow_up_sharp),
-                        initialSelection: rdvs.first,
-                        onSelected: (value) {
-                          _recherchesignedanger = value;
-                        },
-                        // Appel du callback avec l'id sélectionné
-                        dropdownMenuEntries: rdvs
-                            .map<DropdownMenuEntry<String>>((String rdv) {
-                          return DropdownMenuEntry<String>(
-                            value: rdv, // Utilisez l'id comme valeur
-                            label: rdv, // Affichez le name comme label
-                          );
-                        }).toList(),
-                      ):const SizedBox(),
+                              trailingIcon:
+                                  const Icon(Icons.keyboard_arrow_down_sharp),
+                              selectedTrailingIcon:
+                                  const Icon(Icons.keyboard_arrow_up_sharp),
+                              initialSelection: rdvs.first,
+                              onSelected: (value) {
+                                _recherchesignedanger = value;
+                              },
+                              // Appel du callback avec l'id sélectionné
+                              dropdownMenuEntries: rdvs
+                                  .map<DropdownMenuEntry<String>>((String rdv) {
+                                return DropdownMenuEntry<String>(
+                                  value: rdv, // Utilisez l'id comme valeur
+                                  label: rdv, // Affichez le name comme label
+                                );
+                              }).toList(),
+                            )
+                          : const SizedBox(),
                       const Divider(endIndent: 50, indent: 50),
                       3.verticalSpace,
-                      const Text(" CPN effectuées avant 12 SA ?",style: TextStyle(fontWeight: FontWeight.bold),),
+                      const Text(
+                        " CPN effectuées avant 12 SA ?",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       5.verticalSpace,
                       Row(
                         children: [
@@ -160,7 +178,10 @@ class _InnerMainSuiviState extends State<InnerMainSuivi> {
                       ),
                       const Divider(endIndent: 50, indent: 50),
                       3.verticalSpace,
-                      const Text(" Dispose t’elle des médicaments prescrits ?",style: TextStyle(fontWeight: FontWeight.bold),),
+                      const Text(
+                        " Dispose t’elle des médicaments prescrits ?",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       5.verticalSpace,
                       Row(
                         children: [
@@ -190,7 +211,10 @@ class _InnerMainSuiviState extends State<InnerMainSuivi> {
                       ),
                       const Divider(endIndent: 50, indent: 50),
                       3.verticalSpace,
-                      const Text(" MII disponible ?",style: TextStyle(fontWeight: FontWeight.bold),),
+                      const Text(
+                        " MII disponible ?",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       5.verticalSpace,
                       Row(
                         children: [
@@ -219,7 +243,10 @@ class _InnerMainSuiviState extends State<InnerMainSuivi> {
                         ],
                       ),
                       3.verticalSpace,
-                      const Text(" Dormir sous MII ?",style: TextStyle(fontWeight: FontWeight.bold),),
+                      const Text(
+                        " Dormir sous MII ?",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       5.verticalSpace,
                       Row(
                         children: [
@@ -248,7 +275,10 @@ class _InnerMainSuiviState extends State<InnerMainSuivi> {
                         ],
                       ),
                       3.verticalSpace,
-                      const Text(" TPI 1 disponible ?",style: TextStyle(fontWeight: FontWeight.bold),),
+                      const Text(
+                        " TPI 1 disponible ?",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       5.verticalSpace,
                       Row(
                         children: [
@@ -277,7 +307,10 @@ class _InnerMainSuiviState extends State<InnerMainSuivi> {
                         ],
                       ),
                       3.verticalSpace,
-                      const Text(" TPI 2 disponible ?",style: TextStyle(fontWeight: FontWeight.bold),),
+                      const Text(
+                        " TPI 2 disponible ?",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       5.verticalSpace,
                       Row(
                         children: [
@@ -306,7 +339,10 @@ class _InnerMainSuiviState extends State<InnerMainSuivi> {
                         ],
                       ),
                       3.verticalSpace,
-                      const Text(" TPI 3 disponible ?",style: TextStyle(fontWeight: FontWeight.bold),),
+                      const Text(
+                        " TPI 3 disponible ?",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       5.verticalSpace,
                       Row(
                         children: [
@@ -335,7 +371,10 @@ class _InnerMainSuiviState extends State<InnerMainSuivi> {
                         ],
                       ),
                       3.verticalSpace,
-                      const Text(" TPI 4 disponible ?",style: TextStyle(fontWeight: FontWeight.bold),),
+                      const Text(
+                        " TPI 4 disponible ?",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       5.verticalSpace,
                       Row(
                         children: [
@@ -365,7 +404,10 @@ class _InnerMainSuiviState extends State<InnerMainSuivi> {
                       ),
                       const Divider(endIndent: 50, indent: 50),
                       3.verticalSpace,
-                      const Text("Statut vaccinal correct ?",style: TextStyle(fontWeight: FontWeight.bold),),
+                      const Text(
+                        "Statut vaccinal correct ?",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       5.verticalSpace,
                       Row(
                         children: [
@@ -395,7 +437,10 @@ class _InnerMainSuiviState extends State<InnerMainSuivi> {
                       ),
                       const Divider(endIndent: 50, indent: 50),
                       3.verticalSpace,
-                      const Text(" Analyse médicales réalisées",style: TextStyle(fontWeight: FontWeight.bold),),
+                      const Text(
+                        " Analyse médicales réalisées",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       5.verticalSpace,
                       Row(
                         children: [
@@ -425,7 +470,10 @@ class _InnerMainSuiviState extends State<InnerMainSuivi> {
                       ),
                       const Divider(endIndent: 50, indent: 50),
                       3.verticalSpace,
-                      const Text(" Rechercher les signes de danger chez la FE",style: TextStyle(fontWeight: FontWeight.bold),),
+                      const Text(
+                        " Rechercher les signes de danger chez la FE",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       5.verticalSpace,
                       DropdownMenu<String>(
                         inputDecorationTheme: InputDecorationTheme(
@@ -472,9 +520,11 @@ class _InnerMainSuiviState extends State<InnerMainSuivi> {
                         }).toList(),
                       ),
                       const Divider(endIndent: 50, indent: 50),
-
                       3.verticalSpace,
-                      const Text(" Accouchement à la FS",style: TextStyle(fontWeight: FontWeight.bold),),
+                      const Text(
+                        " Accouchement à la FS",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       5.verticalSpace,
                       Row(
                         children: [
@@ -503,8 +553,11 @@ class _InnerMainSuiviState extends State<InnerMainSuivi> {
                         ],
                       ),
                       const Divider(endIndent: 50, indent: 50),
- 3.verticalSpace,
-                      const Text(" Issus de la grossesse",style: TextStyle(fontWeight: FontWeight.bold),),
+                      3.verticalSpace,
+                      const Text(
+                        " Issus de la grossesse",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       5.verticalSpace,
                       DropdownMenu<String>(
                         inputDecorationTheme: InputDecorationTheme(
@@ -549,6 +602,38 @@ class _InnerMainSuiviState extends State<InnerMainSuivi> {
                             label: accou, // Affichez le name comme label
                           );
                         }).toList(),
+                      ),
+                      10.verticalSpace,
+                      PrimaryButton(
+                        btnText: "Enregistrer",
+                        width: double.infinity,
+                        textColor: Palette.white,
+                        isFilledBtn: true,
+                        onTapFunction: () {
+                          Suivi suivi = Suivi(
+                              idRef: id,
+                              rdvrespecte: _respecte!,
+                              cpnavantdouzsa: _cpnavantdouzsa!,
+                              dispomedicament: _dispomedicament!,
+                              palumiidisponible: _palumiidisponible!,
+                              paludormirsousmii: _paludormirsousmii!,
+                              palutpiun: _palutpiun!,
+                              palutpideux: _palutpideux!,
+                              palutpitrois: _palutpitrois!,
+                              palutpiquatre: _palutpiquatre!,
+                              statuvaccorrect: _statuvaccorrect!,
+                              analysemedrealise: _analysemedrealise!,
+                              recherchesignedanger: _recherchesignedanger!,
+                              grossesseconfirme: "Oui",
+                              agegrossesse: "20 S",
+                              lieuaccouchementfs: _lieuaccouchementfs!,
+                              issusaccouchement: _issusaccouchement!,
+                              sirdvrespectenon: _sirdvrespectenon!);
+
+                          BlocProvider.of<ManageBloc>(context)
+                              .add(AddingSuiviEvent(suivi));
+                        },
+                        btnBgColor: Palette.primary,
                       ),
                     ],
                   ),
@@ -657,7 +742,7 @@ class _InnerMainSuiviState extends State<InnerMainSuivi> {
                             .map((patient) => CardSuivi(
                                   patient: patient,
                                   onPressed: () {
-                                    _showBottomDialog(context);
+                                    _showBottomDialog(context, patient.id);
                                   },
                                 ))
                             .toList()
@@ -730,6 +815,8 @@ class CardSuivi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SampleItem? selectedItem;
+
     return SliverToBoxAdapter(
       child: Container(
         margin: const EdgeInsets.all(15),
@@ -755,7 +842,7 @@ class CardSuivi extends StatelessWidget {
                 8.horizontalSpace,
                 Text(
                   "${patient.fullName}",
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
                       color: Palette.textSuccess),
@@ -900,8 +987,26 @@ class CardSuivi extends StatelessWidget {
                   ],
                 ),
                 const Spacer(),
-                IconButton(
-                    onPressed: onPressed, icon: Icon(Icons.more_vert_outlined))
+                PopupMenuButton<SampleItem>(
+                  initialValue: selectedItem,
+                  onSelected: (SampleItem item) {},
+                  itemBuilder: (BuildContext context) =>
+                      <PopupMenuEntry<SampleItem>>[
+                    PopupMenuItem<SampleItem>(
+                      onTap: onPressed,
+                      value: SampleItem.addSuivi,
+                      child: Text('Créer un suivi'),
+                    ),
+                    // const PopupMenuItem<SampleItem>(
+                    //   value: SampleItem.itemTwo,
+                    //   child: Text('Item 2'),
+                    // ),
+                    // const PopupMenuItem<SampleItem>(
+                    //   value: SampleItem.itemThree,
+                    //   child: Text('Item 3'),
+                    // ),
+                  ],
+                ),
               ],
             )
           ],
@@ -919,6 +1024,7 @@ class MainSuivi extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => SuiviBloc()..add(GetPatientsEvent())),
+        BlocProvider(create: (context) => ManageBloc()),
       ],
       child: const InnerMainSuivi(),
     );

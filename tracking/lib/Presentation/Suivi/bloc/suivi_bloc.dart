@@ -20,11 +20,12 @@ class SuiviBloc extends Bloc<SuiviEvent, SuiviState> {
 
        List<Referencement> result = [];
 
-       Referencement s1 = Referencement(agegrossesse: "20",recommandation: ",jlksdjl",libcpecm: "ckljvl",fullName: "Ahoui",nomquartier: "dklfoo",nomvillage: "koojoj",sexezerovingtquatremoisrec: "20",membreagerec: 20,dateprochainrdv: "2024-05-10",libmotif: "kmlkf",prestatairesoins: "koh",dateref: "2024-06-10",refereVers: "Kpogan",grossesseconfirme: "Oui");
+       Referencement s1 = Referencement(id:12,agegrossesse: "20",recommandation: ",jlksdjl",libcpecm: "ckljvl",fullName: "Ahoui",nomquartier: "dklfoo",nomvillage: "koojoj",sexezerovingtquatremoisrec: "20",membreagerec: 20,dateprochainrdv: "2024-05-10",libmotif: "kmlkf",prestatairesoins: "koh",dateref: "2024-06-10",refereVers: "Kpogan",grossesseconfirme: "Oui");
        result.add(s1);
       emit(GetPatientsSuccess(result));
     }
     catch (e) {
+      print(e.toString());
       emit(GetPatientsError(e.toString()));
     }
 

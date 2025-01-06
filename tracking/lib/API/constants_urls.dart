@@ -16,6 +16,7 @@ const String addMemberMenagePath = "/storemembre";
 const String recConfPath = "/storefinal";
 const String makeReferencementPath = "/storereferencementApi";
 const String makeContreReferencementPath = "/storereferencementContreApi";
+const String addSuiviPath = "/storeSuiviFe";
 /* ----------------------------- GET RESSOURCES ----------------------------- */
 const String getVillage = "/villagesrechByfs";
 const String getQuartier = "/quartierrechByvillage";

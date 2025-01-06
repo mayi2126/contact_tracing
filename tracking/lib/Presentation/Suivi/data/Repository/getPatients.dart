@@ -43,6 +43,7 @@ class RetrievePatientsRepositoryImpl
       final List<dynamic> data =
           responseJson['data']; // Accède à la clé 'data' du JSON
 
+
       List<Referencement> referencements =
           data.map((json) => Referencement.fromMap(json)).toList();
 
