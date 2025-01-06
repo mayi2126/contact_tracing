@@ -13,6 +13,8 @@ class _InnerMainSuiviState extends State<InnerMainSuivi> {
   final TextEditingController _searchController = TextEditingController();
   List<Referencement> _filtedPatients = [];
   List<Referencement> _filtedPatientsAll = [];
+  List<PatientSuivi> _filtedPatientsSuivis = [];
+  List<PatientSuivi> _filtedPatientsSuivisAll = [];
 
   SampleItem? selectedItem;
 
@@ -45,6 +47,37 @@ class _InnerMainSuiviState extends State<InnerMainSuivi> {
     "Refus du conjoint",
     "Autres à preciser"
   ];
+  bool isTargetsSelected = true;
+  bool isPatientsSuiviSelected = false;
+
+  void _filterPatients() {
+    String query = _searchController.text.toLowerCase();
+
+    setState(() {
+      if (query.isEmpty) {
+        _filtedPatients = _filtedPatientsAll;
+      }
+      // Filtrer les `contreReferencements` en fonction de la recherche
+      _filtedPatients = _filtedPatientsAll
+          .where((patient) =>
+              patient.fullName!.toLowerCase().contains(query) ||
+              patient.prestatairesoins!.toLowerCase().contains(query))
+          .toList();
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    _searchController.removeListener(_filterPatients);
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController.addListener(_filterPatients);
+  }
 
   void _showBottomDialog(BuildContext myContext, int? id) {
     showModalBottomSheet<void>(
@@ -646,6 +679,18 @@ class _InnerMainSuiviState extends State<InnerMainSuivi> {
     );
   }
 
+  void toggleSelection(int index) {
+    if (index == 1) {
+      isTargetsSelected = true;
+      isPatientsSuiviSelected = false;
+      BlocProvider.of<SuiviBloc>(context).add(GetPatientsEvent());
+    } else if (index == 2) {
+      isTargetsSelected = false;
+      isPatientsSuiviSelected = true;
+      BlocProvider.of<SuiviBloc>(context).add(GetPatientSuiviEvent());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -713,9 +758,32 @@ class _InnerMainSuiviState extends State<InnerMainSuivi> {
               if (state is GetPatientsSuccess) {
                 _filtedPatients = state.patients;
                 _filtedPatientsAll = state.patients;
-              }
+              } else if (state is GetPatientsSuiviSuccess) {
+                _filtedPatientsSuivis = state.patients;
+                _filtedPatientsSuivisAll = state.patients;
+              } else if (state is GetPatientsSuiviLoading) {}
             },
           ),
+          BlocListener<ManageBloc, ManageState>(
+            listener: (context, state) {
+              if (state is AddingLoading) {
+                Navigator.pop(context);
+                showDialogCustom(context, "En cours ...");
+              } else if (state is AddSuiviSuccessed) {
+                Navigator.pop(context);
+                PanaraInfoDialog.showAnimatedGrow(
+                  context,
+                  // title: "Hello",
+                  buttonTextColor: Palette.white,
+                  color: Palette.white,
+                  message: "Le suivi a été enregistré.",
+                  buttonText: "OK",
+                  onTapDismiss: () => Navigator.pop(context),
+                  panaraDialogType: PanaraDialogType.normal,
+                );
+              }
+            },
+          )
         ],
         child: BlocBuilder<SuiviBloc, SuiviState>(
           builder: (context, state) {
@@ -733,71 +801,326 @@ class _InnerMainSuiviState extends State<InnerMainSuivi> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text("On danse"),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () => toggleSelection(1),
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          width: 100,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: isTargetsSelected
+                                ? Palette.primary
+                                : const Color.fromARGB(255, 112, 179, 233),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: const Center(
+                              child: Text(
+                            "Tous",
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Palette.white),
+                          )),
+                        ),
+                      ),
+                      5.horizontalSpace,
+                      GestureDetector(
+                        onTap: () => toggleSelection(2),
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          // width: 100,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: isPatientsSuiviSelected
+                                ? Palette.primary
+                                : const Color.fromARGB(255, 112, 179, 233),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: const Center(
+                              child: Text(
+                            "Liste de suivi",
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Palette.white),
+                          )),
+                        ),
+                      ),
+                    ],
+                  ),
                   Expanded(
-                      child: CustomScrollView(
-                    scrollBehavior: MaterialScrollBehavior(),
-                    slivers: state is GetPatientsSuccess
-                        ? _filtedPatients
-                            .map((patient) => CardSuivi(
-                                  patient: patient,
-                                  onPressed: () {
-                                    _showBottomDialog(context, patient.id);
-                                  },
-                                ))
-                            .toList()
-                        : state is GetPatientsLoading
-                            ? [
-                                const SliverAppBar.large(
-                                  automaticallyImplyLeading: false,
-                                  backgroundColor: Palette.white,
-                                  flexibleSpace: FlexibleSpaceBar(
-                                    background: Center(
-                                        child: CircularProgressIndicator()),
-                                  ),
-                                )
-                              ]
-                            : [
-                                const SliverAppBar.large(
-                                  automaticallyImplyLeading: false,
-                                  backgroundColor: Palette.white,
-                                  flexibleSpace: FlexibleSpaceBar(
-                                    background: Center(child: Text("Erreur")),
-                                  ),
-                                )
-                              ],
-                    // [
-                    //   SliverAnimatedList(
-                    //     itemBuilder: (context, index, animation)
+                      child: Scrollbar(
+                    thumbVisibility: true,
+                    interactive: true,
+                    radius: const Radius.circular(10),
+                    child: CustomScrollView(
+                      scrollBehavior: const MaterialScrollBehavior(),
+                      slivers: state is GetPatientsSuiviSuccess
+                          ? _filtedPatientsSuivis
+                              .map((patient) => CardPatientSuivi(
+                                    patient: patient,
+                                    onPressed: () {
+                                      _showBottomDialog(context, 10);
+                                    },
+                                  ))
+                              .toList()
+                          : state is GetPatientsSuccess
+                              ? _filtedPatients
+                                  .map((patient) => CardSuivi(
+                                        patient: patient,
+                                        onPressed: () {
+                                          _showBottomDialog(
+                                              context, patient.id);
+                                        },
+                                      ))
+                                  .toList()
+                              : state is GetPatientsLoading
+                                  ? [
+                                      const SliverAppBar.large(
+                                        automaticallyImplyLeading: false,
+                                        backgroundColor: Palette.white,
+                                        flexibleSpace: FlexibleSpaceBar(
+                                          background: Center(
+                                              child:
+                                                  CircularProgressIndicator()),
+                                        ),
+                                      )
+                                    ]
+                                  : state is GetPatientsSuiviLoading
+                                      ? [
+                                          const SliverAppBar.large(
+                                            automaticallyImplyLeading: false,
+                                            backgroundColor: Palette.white,
+                                            flexibleSpace: FlexibleSpaceBar(
+                                              background: Center(
+                                                  child:
+                                                      CircularProgressIndicator()),
+                                            ),
+                                          )
+                                        ]
+                                      : [
+                                          const SliverAppBar.large(
+                                            automaticallyImplyLeading: false,
+                                            backgroundColor: Palette.white,
+                                            flexibleSpace: FlexibleSpaceBar(
+                                              background:
+                                                  Center(child: Text("Erreur")),
+                                            ),
+                                          )
+                                        ],
+                      // [
+                      //   SliverAnimatedList(
+                      //     itemBuilder: (context, index, animation)
 
-                    // [
-                    //   SliverAnimatedList(
-                    //     itemBuilder: (context, index, animation) {
-                    //       return SlideTransition(
-                    //         position: Tween<Offset>(
-                    //           begin: const Offset(0, 1),
-                    //           end: Offset.zero,
-                    //         ).animate(animation),
-                    //         child: Container(
-                    //           margin: const EdgeInsets.only(bottom: 15),
-                    //           padding: const EdgeInsets.all(15),
-                    //           decoration: BoxDecoration(
-                    //             borderRadius: BorderRadius.circular(10),
-                    //             color: Palette.stroke,
-                    //           ),
-                    //           child: const Text("df"),
-                    //         ),
-                    //       );
-                    //     },
-                    //   ),
+                      // [
+                      //   SliverAnimatedList(
+                      //     itemBuilder: (context, index, animation) {
+                      //       return SlideTransition(
+                      //         position: Tween<Offset>(
+                      //           begin: const Offset(0, 1),
+                      //           end: Offset.zero,
+                      //         ).animate(animation),
+                      //         child: Container(
+                      //           margin: const EdgeInsets.only(bottom: 15),
+                      //           padding: const EdgeInsets.all(15),
+                      //           decoration: BoxDecoration(
+                      //             borderRadius: BorderRadius.circular(10),
+                      //             color: Palette.stroke,
+                      //           ),
+                      //           child: const Text("df"),
+                      //         ),
+                      //       );
+                      //     },
+                      //   ),
 
-                    //   _filtedPatients.map(toElement => SliverToBoxAdapter()).toList(),
-                    // ],
+                      //   _filtedPatients.map(toElement => SliverToBoxAdapter()).toList(),
+                      // ],
+                    ),
                   ))
                 ],
               ),
             );
           },
+        ),
+      ),
+    );
+  }
+}
+
+class CardPatientSuivi extends StatelessWidget {
+  const CardPatientSuivi({super.key, required this.patient, required this.onPressed});
+  final PatientSuivi patient;
+  final VoidCallback onPressed;
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: GestureDetector(
+        onTap: ()=> Navigator.pushNamed(context, RoutesName.suiviDetails,arguments: patient),
+        child: Container(
+          margin: const EdgeInsets.all(15),
+          padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Palette.bgGrey,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    patient.fullName,
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  8.horizontalSpace,
+                  const Text("|"),
+                  8.horizontalSpace,
+                  Text(
+                    patient.statutref,
+                    style: TextStyle(fontSize: 16, color: Palette.textSuccess),
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(
+                      Icons.edit_rounded,
+                      color: Palette.primary,
+                    ),
+                    onPressed: 
+                      onPressed
+                    ,
+                  )
+                ],
+              ),
+              const Divider(
+                indent: 30,
+              ),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    // color: Palette.bgGrey,
+                    borderRadius: BorderRadius.circular(10)),
+                child: Row(
+                  children: [
+                    const Text(
+                      "Rendez-vous respecté",
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 13,
+                      ),
+                    ),
+                    const Spacer(),
+                    patient.rdvrespecte == "Oui"
+                        ? const Icon(
+                            Icons.check_outlined,
+                            color: Palette.primary,
+                            size: 20,
+                          )
+                        : const Icon(
+                            Icons.close_outlined,
+                            color: Palette.danger,
+                            size: 20,
+                          ),
+                  ],
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    // color: Palette.bgGrey,
+                    borderRadius: BorderRadius.circular(10)),
+                child: Row(
+                  children: [
+                    const Text(
+                      "Medicament diponible",
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 13,
+                      ),
+                    ),
+                    const Spacer(),
+                    patient.dispomedicament == "Oui"
+                        ? const Icon(
+                            Icons.check_outlined,
+                            color: Palette.primary,
+                            size: 20,
+                          )
+                        : const Icon(
+                            Icons.close_outlined,
+                            color: Palette.danger,
+                            size: 20,
+                          ),
+                  ],
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    // color: Palette.bgGrey,
+                    borderRadius: BorderRadius.circular(10)),
+                child: Row(
+                  children: [
+                    const Text(
+                      "Mi disponible",
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 13,
+                      ),
+                    ),
+                    const Spacer(),
+                    patient.palumiidisponible == "Oui"
+                        ? const Icon(
+                            Icons.check_outlined,
+                            color: Palette.primary,
+                            size: 20,
+                          )
+                        : const Icon(
+                            Icons.close_outlined,
+                            color: Palette.danger,
+                            size: 20,
+                          ),
+                  ],
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    // color: Palette.bgGrey,
+                    borderRadius: BorderRadius.circular(10)),
+                child: Row(
+                  children: [
+                    const Text(
+                      "Issue d'accouchement",
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 13,
+                      ),
+                    ),
+                    const Spacer(),
+                    Text(
+                      patient.issusaccouchement,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          fontSize: 13, color: Palette.warningText),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -31,4 +31,5 @@ const String getReferedRefPath =  "/refererlist";
 const String getContreReferedPath =  "/contreReferencementlist";
 const String getContreReferedRefPath  = "/listecontrereference";
 const String getPregnantPath = "/listepatientasuivre";
+const String getPatientsSuiviPath = "/suiviFelist";
 

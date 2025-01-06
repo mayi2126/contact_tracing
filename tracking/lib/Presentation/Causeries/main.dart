@@ -175,8 +175,7 @@ class _CauseriePageState extends State<CauseriePage> {
                             : state is CauserieGetLoading
                                 ? const Center(
                                     child: CircularProgressIndicator.adaptive(
-                                    semanticsLabel: "...",
-                                    backgroundColor: Palette.primary,
+                                    
                                   ))
                                 : const SizedBox(),
                     const Padding(

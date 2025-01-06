@@ -7,24 +7,33 @@ class RecentTrackingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Container(
-          decoration: const BoxDecoration(
-                      color: Palette.bgGrey,
-
+      child: Scrollbar(
+        thumbVisibility: true,
+        trackVisibility: false,
+        thickness: 4,
+        radius: const Radius.circular(10),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Palette.bgGrey,
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20), topRight: Radius.circular(20)),
             ),
-          width: double.infinity,
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: cards.isEmpty ? [const Text("Aucun recensement trouvé")] :  cards.map((rec) {
-              return TrackingCard(
-                recensement: rec,
-                onTap: () => Navigator.pushNamed(context, RoutesName.showRecensement, arguments: rec),
-              );
-            }).toList(),
+            width: double.infinity,
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: cards.isEmpty
+                  ? [const Text("Aucun recensement trouvé")]
+                  : cards.map((rec) {
+                      return TrackingCard(
+                        recensement: rec,
+                        onTap: () => Navigator.pushNamed(
+                            context, RoutesName.showRecensement,
+                            arguments: rec),
+                      );
+                    }).toList(),
+            ),
           ),
         ),
       ),

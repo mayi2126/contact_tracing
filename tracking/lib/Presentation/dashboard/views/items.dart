@@ -75,7 +75,7 @@ class Items extends StatelessWidget {
                               width: 120, // largeur fixe
                               child: CardWidget(
                                 icon: Icons.people_sharp,
-                                title: "Ctre Référencement",
+                                title: "Contres Référés",
                                 image: "assets/jpg/pre.jpg",
                                 onTap: () {
                                   Navigator.pushNamed(
@@ -147,7 +147,7 @@ class Items extends StatelessWidget {
                       ),
                     ),
                     10.verticalSpace,
-                    state is GetRecensementLoading ? const CircularProgressIndicator() : state is GetRecensementSuccess ?  RecentTrackingWidget(
+                    state is GetRecensementLoading ? const Center(child:  CircularProgressIndicator()) : state is GetRecensementSuccess ?  RecentTrackingWidget(
                       cards: state.todaysRecensements,
                     ): const Text("Aucun récencement"),
                   ],

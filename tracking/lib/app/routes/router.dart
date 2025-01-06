@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tracking/Presentation/Suivi/data/Models/patient_suivi.dart';
 import 'package:tracking/Presentation/recencement/data/Models/recensement.dart';
 import 'package:tracking/Presentation/visite/data/Models/visite_model.dart';
 import 'package:tracking/app/routes/routes_name.dart';
@@ -44,6 +45,10 @@ class Routes {
         final VisiteModel causerieModel = arguments as VisiteModel;
         return MaterialPageRoute(
             builder: (context) => ShowCauseriePage(arguments: causerieModel));
+            case RoutesName.suiviDetails:
+        final PatientSuivi patients = arguments as PatientSuivi;
+        return MaterialPageRoute(
+            builder: (context) => DetailsSuivi(arguments: patients));
 
       case RoutesName.showRecensement:
         final Recensement recensement = arguments as Recensement;

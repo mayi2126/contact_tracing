@@ -19,5 +19,16 @@ class GetPatientsError extends SuiviState {
   GetPatientsError(this.message);
 }
 
-/* -------------------------- Get femme enceinte -------------------------- */
+/* --------------------------- Get Patients suivis -------------------------- */
 
+class GetPatientsSuiviLoading extends SuiviState {}
+
+class GetPatientsSuiviSuccess extends SuiviState {
+  final List<PatientSuivi> patients;
+  GetPatientsSuiviSuccess(this.patients);
+}
+
+class GetPatientsSuiviError extends SuiviState {
+  final String message;
+  GetPatientsSuiviError(this.message);
+}

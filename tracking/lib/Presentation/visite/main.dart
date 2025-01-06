@@ -256,8 +256,7 @@ class VisiteList extends StatelessWidget {
                         : state is VisiteGetLoading
                             ? const Center(
                                 child: CircularProgressIndicator.adaptive(
-                                semanticsLabel: "...",
-                                backgroundColor: Palette.primary,
+                                
                               ))
                             : const SizedBox(),
                 const Padding(

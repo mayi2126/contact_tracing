@@ -17,6 +17,7 @@ import 'package:tracking/Presentation/Referencement/bloc/ref_bloc.dart';
 import 'package:tracking/Presentation/Referencement/bloc/referencement_bloc.dart';
 import 'package:tracking/Presentation/Suivi/bloc/manage_bloc.dart';
 import 'package:tracking/Presentation/Suivi/bloc/suivi_bloc.dart';
+import 'package:tracking/Presentation/Suivi/data/Models/patient_suivi.dart';
 import 'package:tracking/Presentation/Suivi/data/Models/suivi.dart';
 import 'package:tracking/Presentation/recencement/bloc/recensement_bloc.dart';
 import 'package:tracking/Presentation/recencement/data/Models/member.dart';
@@ -109,3 +110,4 @@ part '../Presentation/ContreRef/main.dart';
 
 /* ---------------------------------- Suivi --------------------------------- */
 part '../Presentation/Suivi/main.dart';
+part '../Presentation/Suivi/details_suivi.dart';
