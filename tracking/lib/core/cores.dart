@@ -2,6 +2,7 @@ library core;
 
 import 'dart:async';
 import 'dart:convert';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
@@ -24,8 +25,12 @@ import 'package:tracking/Presentation/recencement/data/Models/member.dart';
 import 'package:tracking/Presentation/visite/bloc/visite_bloc.dart';
 import 'package:tracking/Presentation/visite/data/Models/visite.dart';
 import 'package:tracking/Presentation/visite/data/Models/visite_model.dart';
+import 'package:tracking/db/inserts/motifs.dart';
+import 'package:tracking/db/inserts/professions.dart';
+import 'package:tracking/db/inserts/village_insert.dart';
 import 'package:tracking/components/ui/string_date.dart';
 import 'package:tracking/components/utils/load_user.dart';
+import 'package:tracking/db/sync_api.dart';
 import 'package:tracking/externe-data/bloc/data_bloc.dart';
 import 'package:tracking/externe-data/repo/motif_repo.dart';
 import 'package:tracking/externe-data/repo/professions_repo.dart';

@@ -16,6 +16,8 @@ class Visite {
     int nbreenfantzvtouche;
     String nbreautrestouche;
     int userEnreg;
+    String? libelementdedonnee;
+    int? id;
 
     Visite({
         required this.idFsAp,
@@ -32,6 +34,8 @@ class Visite {
         required this.nbreenfantzvtouche,
         required this.nbreautrestouche,
         required this.userEnreg,
+         this.libelementdedonnee,
+         this.id,
     });
 
     Visite copyWith({
@@ -48,9 +52,11 @@ class Visite {
         int? nbrepersonnetoucheeH,
         int? nbreenfantzvtouche,
         String? nbreautrestouche,
+        String? libelementdedonnee,
         int? userEnreg,
     }) => 
         Visite(
+          libelementdedonnee : libelementdedonnee ?? this.libelementdedonnee,
             idFsAp: idFsAp ?? this.idFsAp,
             idquartier: idquartier ?? this.idquartier,
             idAscAp: idAscAp ?? this.idAscAp,
@@ -72,9 +78,9 @@ class Visite {
     String toJson() => json.encode(toMap());
 
     factory Visite.fromMap(Map<String, dynamic> json) => Visite(
-        idFsAp: json["idFsAp"],
+        idFsAp: json["idFsAp"]?? 0,
         idquartier: json["Idquartier"],
-        idAscAp: json["idAscAp"],
+        idAscAp: json["idAscAp"] ?? 0,
         idvillage: json["Idvillage"],
         dateAp: json["dateAp"],
         lieuAp: json["lieuAp"],
@@ -85,13 +91,14 @@ class Visite {
         nbrepersonnetoucheeH: json["nbrepersonnetoucheeH"],
         nbreenfantzvtouche: json["nbreenfantzvtouche"],
         nbreautrestouche: json["nbreautrestouche"],
-        userEnreg: json["userEnreg"],
+        userEnreg: json["userEnreg"] ?? 0,
+        id:json["id"]
     );
 
     Map<String, dynamic> toMap() => {
-        "idFsAp": idFsAp,
+        // "idFsAp": idFsAp,
         "Idquartier": idquartier,
-        "idAscAp": idAscAp,
+        // "idAscAp": idAscAp,
         "Idvillage": idvillage,
         "dateAp": dateAp,
         "lieuAp": lieuAp,
@@ -102,6 +109,7 @@ class Visite {
         "nbrepersonnetoucheeH": nbrepersonnetoucheeH,
         "nbreenfantzvtouche": nbreenfantzvtouche,
         "nbreautrestouche": nbreautrestouche,
-        "userEnreg": userEnreg,
+        "libelementdedonnee": libelementdedonnee,
+        // "userEnreg": userEnreg,
     };
 }

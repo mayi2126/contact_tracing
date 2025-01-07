@@ -10,11 +10,23 @@ class VisitePage extends StatefulWidget {
 class _VisitePageState extends State<VisitePage> {
   TextEditingController search = TextEditingController();
   User? user;
+  bool isInternetAvailable = true;
 
   @override
   void initState() {
     super.initState();
     _loadUserData(); // Charger les infos utilisateur à l'initialisation
+    _checkConnectivity();
+  }
+
+  Future<void> _checkConnectivity() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult.first == ConnectivityResult.none) {
+      // Si pas de connexion internet, afficher un message d'erreur
+      setState(() {
+        isInternetAvailable = false;
+      });
+    }
   }
 
   Future<void> _loadUserData() async {
@@ -96,18 +108,19 @@ class _VisitePageState extends State<VisitePage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          VisiteBloc()..add( GetVisites("2023-01-01", DateFormat('yyyy-MM-dd').format(DateTime.now()))),
+      create: (context) => VisiteBloc()
+        ..add(GetVisites(
+            "2023-01-01", DateFormat('yyyy-MM-dd').format(DateTime.now()))),
       child: Scaffold(
         backgroundColor: Palette.primary,
         appBar: AppBar(
-           leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_ios_outlined,
-            color: Palette.white,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios_outlined,
+              color: Palette.white,
+            ),
+            onPressed: () => Navigator.pop(context),
           ),
-          onPressed: () => Navigator.pop(context),
-        ),
           backgroundColor: Palette.primary,
           iconTheme: const IconThemeData(color: Palette.white),
           title: const Text(
@@ -136,13 +149,12 @@ class _VisitePageState extends State<VisitePage> {
                       // const Spacer(),
                       5.horizontalSpace,
                       Container(
-                         width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Palette.stroke, width: 2),
-
-                      ),
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Palette.stroke, width: 2),
+                        ),
                         child: IconButton(
                           onPressed: () {
                             _showBottomDialog(context);
@@ -158,7 +170,7 @@ class _VisitePageState extends State<VisitePage> {
                 ),
               )),
         ),
-        body: const VisiteList(),
+        body: VisiteList(isInternetAvailable: isInternetAvailable),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.pushNamed(context, RoutesName.addVisite);
@@ -176,7 +188,8 @@ class _VisitePageState extends State<VisitePage> {
 }
 
 class VisiteList extends StatelessWidget {
-  const VisiteList({super.key});
+  const VisiteList({super.key, required this.isInternetAvailable});
+  final bool isInternetAvailable;
 
   @override
   Widget build(BuildContext context) {
@@ -187,20 +200,21 @@ class VisiteList extends StatelessWidget {
               .showSnackBar(SnackBar(content: Text(state.message)));
         }
         if (state is VisiteGetYesterday) {
-          context
-              .read<VisiteBloc>()
-              .add( GetVisites(DateFormat('yyyy-MM-dd').format(DateTime.now()), DateFormat('yyyy-MM-dd').format(DateTime.now())));
+          context.read<VisiteBloc>().add(GetVisites(
+              DateFormat('yyyy-MM-dd').format(DateTime.now()),
+              DateFormat('yyyy-MM-dd').format(DateTime.now())));
         }
       },
       child: BlocBuilder<VisiteBloc, VisiteState>(
         builder: (context, state) {
           return Container(
-             height: double.infinity,
-        width: double.infinity,
+            height: double.infinity,
+            width: double.infinity,
             decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
-                  color: Colors.white,
-                ),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+              color: Colors.white,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -209,7 +223,7 @@ class VisiteList extends StatelessWidget {
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                       const Text(
+                        const Text(
                           "Visites",
                           style: TextStyle(
                               fontSize: 20,
@@ -233,6 +247,19 @@ class VisiteList extends StatelessWidget {
                               )
                       ]),
                 ),
+                isInternetAvailable
+                    ? const SizedBox()
+                    : const Center(
+                        child: CircleAvatar(
+                          backgroundColor: Palette.bgGrey,
+                          radius: 30,
+                          child: Icon(
+                            Icons.wifi_off,
+                            color: Palette.foreign,
+                            size: 30,
+                          ),
+                        ),
+                      ),
                 state is VisiteIsEmpty
                     ? const Center(
                         child: CircleAvatar(
@@ -255,9 +282,7 @@ class VisiteList extends StatelessWidget {
                           )
                         : state is VisiteGetLoading
                             ? const Center(
-                                child: CircularProgressIndicator.adaptive(
-                                
-                              ))
+                                child: CircularProgressIndicator.adaptive())
                             : const SizedBox(),
                 const Padding(
                   padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
@@ -272,33 +297,35 @@ class VisiteList extends StatelessWidget {
                 Expanded(
                   child: SingleChildScrollView(
                     scrollDirection: Axis.vertical,
-                    child: state  is VisiteGetLoaded && state.todaysVisites.isNotEmpty ?
-                        CardToday( state.todaysVisites) : state  is VisiteGetLoading ? const Center(child: Text('...')) : Center(
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 70),
-                              child: Column(
-                                children: [
-                                  
-            
-                                  const SizedBox(
-                                    height: 50,
-                                    width: 50,
-                                    child: Image(
-                                      image: AssetImage(
-                                        "assets/png/empty-box.png",
+                    child: state is VisiteGetLoaded &&
+                            state.todaysVisites.isNotEmpty
+                        ? CardToday(state.todaysVisites)
+                        : state is VisiteGetLoading
+                            ? const Center(child: Text('...'))
+                            : Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 70),
+                                  child: Column(
+                                    children: [
+                                      const SizedBox(
+                                        height: 50,
+                                        width: 50,
+                                        child: Image(
+                                          image: AssetImage(
+                                            "assets/png/empty-box.png",
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                      5.verticalSpace,
+                                      const Text(
+                                        "Aucune visite aujourd'hui",
+                                        style:
+                                            TextStyle(color: Palette.foreign),
+                                      ),
+                                    ],
                                   ),
-                                  5.verticalSpace,
-                                  const Text(
-                                    "Aucune visite aujourd'hui",
-                                    style: TextStyle(color: Palette.foreign),
-                                  ),
-                                ],
+                                ),
                               ),
-                            ),
-                          ),
-                    
                   ),
                 )
               ],

@@ -13,6 +13,7 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
 
   String _villageValue = "";
   String _quartierValue = "";
+  String _label = "";
   String _themeValue = "";
   final TextEditingController _formationSanitaire = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
@@ -149,6 +150,7 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
 
       try {
         Visite visite = Visite(
+          libelementdedonnee: _label,
           idFsAp: 0,
           dateAp: _dateController.text,
           lieuAp: _localisationController.text,
@@ -162,7 +164,7 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
               int.parse(__nbrePersonnesTEnceintesController.text),
           nbreautrestouche: __autresController.text,
           idvillage: int.parse(_villageValue),
-          idquartier: int.parse(_quartierValue),
+          idquartier: int.parse("12"),
           idelementDonnee: int.parse(_themeValue),
           idAscAp: 0,
           userEnreg: 0,
@@ -173,7 +175,7 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
         PanaraInfoDialog.showAnimatedGrow(
           context,
           // title: "Hello",
-          message: "Erreur de saisie",
+          message: e.toString(),
           buttonText: "Okay",
           onTapDismiss: () {
             Navigator.pop(context);
@@ -390,8 +392,12 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                   DropMenuMotif(
                                     onSelected: (String? value) {
                                       setState(() {
-                                        _themeValue = value!;
-                                        
+                                       
+                                        List<String> parts = value!.split(':');
+                                        _themeValue = parts[0];
+                                        _label = parts[1];
+
+
                                         print(_themeValue);
                                       });
                                     },

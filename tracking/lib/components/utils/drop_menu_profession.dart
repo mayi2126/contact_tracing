@@ -8,7 +8,7 @@ class DropMenuProfession extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          ProfessionBloc(ProfessionsRepository())..add(ProfessionsEvent()),
+          ProfessionBloc()..add(ProfessionsEvent()),
       child: BlocBuilder<ProfessionBloc, DataState>(
         builder: (context, state) {
 

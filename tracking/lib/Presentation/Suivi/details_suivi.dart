@@ -439,7 +439,7 @@ class DetailsSuivi extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 13,
                           ),
-                        ),
+                        ),   
                         const Spacer(),
                         Text(
                           arguments.recherchesignedanger,

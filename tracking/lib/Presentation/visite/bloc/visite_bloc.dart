@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:tracking/Presentation/visite/data/Models/visite.dart';
@@ -7,6 +8,7 @@ import 'package:tracking/Presentation/visite/data/Repository/retrieve_vististe.d
 import 'package:tracking/Presentation/visite/data/Repository/update_visite.dart';
 import 'package:tracking/Presentation/visite/data/Repository/visite_repo.dart';
 import 'package:tracking/components/utils/date_filter.dart';
+import 'package:tracking/db/selects/selects.dart';
 
 part 'visite_event.dart';
 part 'visite_state.dart';
@@ -33,52 +35,49 @@ class VisiteBloc extends Bloc<VisiteEvent, VisiteState> {
   Future<void> _onGetVisites(
       GetVisites event, Emitter<VisiteState> emit) async {
     emit(VisiteGetLoading());
+    final connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult.first == ConnectivityResult.none) {
+      final List<VisiteModel> result = [];
+      final List<VisiteModel> todayVisites = await retrievedVisiteData();
+      emit(VisiteGetLoaded(result, todayVisites));
+    } else {
+      final RetrieveVisiteRepositoryImpl retrieveVisiteRepository =
+          RetrieveVisiteRepositoryImpl();
 
-    final RetrieveVisiteRepositoryImpl retrieveVisiteRepository =
-        RetrieveVisiteRepositoryImpl();
+      try {
+        final List<VisiteModel> result = await retrieveVisiteRepository
+            .fetchVisitesById(event.dateMin, event.dateMax);
 
-    try {
-      final List<VisiteModel> result = await retrieveVisiteRepository
-          .fetchVisitesById(event.dateMin, event.dateMax);
-        
+        if (result.isNotEmpty) {
+          final List<VisiteModel> todayVisites = await retrievedVisiteData();
 
-      if (result.isNotEmpty)
-       {
-                final List<VisiteModel> todayVisites = filterResultsByToday(result);
-
-        
-        emit(VisiteGetLoaded(result,todayVisites));
+          emit(VisiteGetLoaded(result, todayVisites));
+        } else {
+          emit(VisiteIsEmpty());
+        }
+      } catch (e) {
+        print(e.toString());
+        emit(VisiteGetError("Erreur lors de la récupération des visites"));
       }
-      else {
-        
-      emit(VisiteIsEmpty());
-      }
-
-    } catch (e) {
-      print(e.toString());
-    emit(VisiteGetError("Erreur lors de la récupération des visites"));
-
     }
-
   }
 
-  Future<void> _onVisiteUpdate(UpdateVisite event, Emitter<VisiteState> emit) async {
+  Future<void> _onVisiteUpdate(
+      UpdateVisite event, Emitter<VisiteState> emit) async {
     try {
-
       emit(VisiteUpdateLoading());
       final UpdateVisiteImpl updateVisite = UpdateVisiteImpl();
-      
-      bool result = await updateVisite.updateVisiteDomicile(event.visite, event.id);
+
+      bool result =
+          await updateVisite.updateVisiteDomicile(event.visite, event.id);
 
       if (result) {
         emit(VisiteUpdated());
-      }
-      else {
+      } else {
         emit(VisiteUpdateError("Erreur lors de la mise à jour de la visite"));
       }
     } catch (e) {
-        emit(VisiteUpdateError("Erreur lors de la mise à jour de la visite"));
-
+      emit(VisiteUpdateError("Erreur lors de la mise à jour de la visite"));
     }
   }
 }

@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:tracking/db/selects/selects.dart';
 import 'package:tracking/externe-data/repo/motif_repo.dart';
 import 'package:tracking/externe-data/repo/professions_repo.dart';
 import 'package:tracking/externe-data/repo/quartier_repo.dart';
 import 'package:tracking/externe-data/repo/theme_repo.dart';
-import 'package:tracking/externe-data/repo/village_repo.dart';
 
 part 'data_event.dart';
 part 'data_state.dart';
@@ -34,14 +34,14 @@ class DataBloc extends Bloc<DataEvent, DataState> {
 
 /* --------------------------------- Village -------------------------------- */
 class VillageBloc extends Bloc<DataEvent, DataState> {
-  final VillageRepository villageRepository;
+  // final VillageRepository villageRepository;
 
-  VillageBloc(this.villageRepository) : super(VillageInitial()) {
+  VillageBloc() : super(VillageInitial()) {
     on<VillageEvent>((event, emit) async {
       emit(VillageLoading());
       try {
         final villages =
-            await villageRepository.fetchVillage();
+            await retrievedVillagesData();
         emit(VillageLoaded(villages));
       } catch (e) {
         emit(VillageError(e.toString()));
@@ -70,13 +70,13 @@ class ThemeBloc extends Bloc<DataEvent, DataState> {
 
 /* ------------------------------- Professions ------------------------------ */
 class ProfessionBloc extends Bloc<DataEvent, DataState> {
-  final ProfessionsRepository _professionsRepository;
+  
 
-  ProfessionBloc(this._professionsRepository) : super(ProfessionInitial()) {    
+  ProfessionBloc() : super(ProfessionInitial()) {    
     on<ProfessionsEvent>((event, emit) async {
       emit(ProfessionLoading());
       try {
-        final professions = await _professionsRepository.fetchProfessions();
+        final professions = await retrievedProfessionsData();
         emit(ProfessionLoaded(professions));
       } catch (e) {
         emit(ProfessionError(e.toString()));
@@ -87,13 +87,12 @@ class ProfessionBloc extends Bloc<DataEvent, DataState> {
 
 /* ---------------------------------- Motif --------------------------------- */
 class MotifBloc extends Bloc<DataEvent, DataState> {
-  final MotifsRepository _motifsRepository;
 
-  MotifBloc(this._motifsRepository) : super(MotifInitial()) {
+  MotifBloc() : super(MotifInitial()) {
     on<MotifsEvent>((event, emit) async {
       emit(MotifLoading());
       try {
-        final professions = await _motifsRepository.fetchMotifs();
+        final professions = await retrievedMotifsData();
         emit(MotifLoaded(professions));
       } catch (e) {
         emit(MotifError(e.toString()));

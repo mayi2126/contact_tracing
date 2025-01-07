@@ -138,7 +138,13 @@ class _DashboardPageState extends State<DashboardPage> {
                               ),
                             ),
                             child: IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                insertMotifsFromApi();
+                                insertVillagesFromApi();
+                                inserProfessionsFromApi();
+
+                                // syncVisites();
+                              },
                               icon: const Icon(
                                 Icons.sync_sharp,
                                 size: 20,

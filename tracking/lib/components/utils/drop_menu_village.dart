@@ -9,7 +9,7 @@ class DropMenuVillage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          VillageBloc(VillageRepository())..add(VillageEvent()),
+          VillageBloc()..add(VillageEvent()),
       child: BlocBuilder<VillageBloc, DataState>(
         builder: (context, state) {
 
