@@ -139,10 +139,10 @@ class _DashboardPageState extends State<DashboardPage> {
                             ),
                             child: IconButton(
                               onPressed: () {
-                                insertMotifsFromApi();
-                                insertVillagesFromApi();
-                                inserProfessionsFromApi();
-
+                                // insertMotifsFromApi();
+                                // insertVillagesFromApi();
+                                // inserProfessionsFromApi();
+                          fetchAndPrintInfos();
                                 // syncVisites();
                               },
                               icon: const Icon(

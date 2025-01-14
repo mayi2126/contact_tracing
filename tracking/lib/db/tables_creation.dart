@@ -88,3 +88,48 @@ CREATE TABLE IF NOT EXISTS professions(
   ''');
 }
 
+
+Future<void> createTables(Database db) async {
+    // Crée la table Eklou
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS infos (
+        id INTEGER PRIMARY KEY,
+        idquartier INTEGER,
+        daterecensement TEXT,
+        localisationgpsrec TEXT,
+        userEnreg INTEGER DEFAULT 0
+      )
+    ''');
+
+    // Crée la table Menage
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS menages (
+        id INTEGER PRIMARY KEY,
+        nomchefmenagerec TEXT,
+        prenomchefmenagerec TEXT,
+        userEnreg INTEGER DEFAULT 0,
+        info_id INTEGER,
+        FOREIGN KEY (info_id) REFERENCES infos(id)
+      )
+    ''');
+
+    // Crée la table Recencement
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS membres (
+        id INTEGER PRIMARY KEY,
+        membredatenaissrec TEXT,
+        userEnreg INTEGER DEFAULT 0,
+        membrenomrec TEXT,
+        membreprenomrec TEXT,
+        membreagerec INTEGER,
+        sexezerovingtquatremoisrec TEXT,
+        contactrec TEXT,
+        observationrec TEXT,
+        agemois INTEGER,
+        idprofessionref INTEGER,
+        menage_id INTEGER,
+        FOREIGN KEY (menage_id) REFERENCES menages(id)
+      )
+    ''');
+  }
+

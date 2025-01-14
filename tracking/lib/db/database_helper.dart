@@ -24,7 +24,7 @@ class DatabaseHelper {
   Future<Database> _initDatabase() async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, 'tracks.db');
-    await deleteDatabase(path);  // supprimer la base de données existante
+    // await deleteDatabase(path); // supprimer la base de données existante
     print("Chemin de la base de données: $path");
 
     final db = await openDatabase(
@@ -46,11 +46,14 @@ class DatabaseHelper {
     await createTableVillages(db);
     await createTableMotifs(db);
     await createTableProfessions(db);
+    await createTables(db);
+    print('Création des tables terminée');
   }
 
   // Vérifier l'existence des tables
   Future<void> checkTables(Database db) async {
-    List<Map<String, dynamic>> result = await db.rawQuery('SELECT name FROM sqlite_master WHERE type="table"');
+    List<Map<String, dynamic>> result =
+        await db.rawQuery('SELECT name FROM sqlite_master WHERE type="table"');
     print('Tables dans la base de données: $result');
   }
 
