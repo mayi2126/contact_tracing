@@ -1,11 +1,43 @@
 part of '../../../core/cores.dart';
 
-class Items extends StatelessWidget {
+class Items extends StatefulWidget {
   const Items({super.key});
 
   @override
+  State<Items> createState() => _ItemsState();
+}
+
+class _ItemsState extends State<Items> {
+  List<ConnectivityResult> _connectivityResult = [];
+  final Connectivity _connectivity = Connectivity();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _checkConnectivity();
+
+    _connectivity.onConnectivityChanged
+        .listen((List<ConnectivityResult> result) {
+      if (mounted) {
+        setState(() {
+          _connectivityResult = result;
+        });
+      }
+    });
+  }
+
+  Future<void> _checkConnectivity() async {
+    List<ConnectivityResult> result = await _connectivity.checkConnectivity();
+    if (mounted) {
+      setState(() {
+        _connectivityResult = result;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-   
     return BlocProvider(
       create: (context) => RecensementBloc()
         ..add(HandleGetRecensement("2023-01-01", DateTime.now().toString())),
@@ -19,7 +51,9 @@ class Items extends StatelessWidget {
             builder: (context, state) {
               return Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20)),
                   color: Colors.white,
                 ),
                 child: Column(
@@ -27,10 +61,11 @@ class Items extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Padding(
-                      padding:  EdgeInsets.only(left: 8.0,top:10),
-                      child:  Text(
+                      padding: EdgeInsets.only(left: 8.0, top: 10),
+                      child: Text(
                         "Catégories",
-                        style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 17, fontWeight: FontWeight.bold),
                       ),
                     ),
                     10.verticalSpace,
@@ -79,8 +114,7 @@ class Items extends StatelessWidget {
                                 image: "assets/jpg/pre.jpg",
                                 onTap: () {
                                   Navigator.pushNamed(
-                                      context, RoutesName.mainContreRef
-                                  );
+                                      context, RoutesName.mainContreRef);
                                 },
                               ),
                             ),
@@ -102,21 +136,23 @@ class Items extends StatelessWidget {
                                 title: "Visite A Domicile",
                                 image: "assets/jpg/pre.jpg",
                                 onTap: () {
-                                  Navigator.pushNamed(context, RoutesName.visite);
+                                  Navigator.pushNamed(
+                                      context, RoutesName.visite);
                                 },
                               ),
                             ),
                           ),
                           15.horizontalSpace,
-                           Expanded(
+                          Expanded(
                             child: SizedBox(
                               width: 120, // largeur fixe
                               child: CardWidget(
                                 icon: Icons.chat,
                                 title: "Suivi F/E",
                                 image: "assets/jpg/pre.jpg",
-                                onTap: (){
-                                  Navigator.pushNamed(context, RoutesName.mainSuivi);
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, RoutesName.mainSuivi);
                                 },
                               ),
                             ),
@@ -130,7 +166,8 @@ class Items extends StatelessWidget {
                                 title: "Causeries Éducatives",
                                 image: "assets/jpg/cauEdu.jpeg",
                                 onTap: () {
-                                  Navigator.pushNamed(context, RoutesName.causerie);
+                                  Navigator.pushNamed(
+                                      context, RoutesName.causerie);
                                 },
                               ),
                             ),
@@ -141,15 +178,36 @@ class Items extends StatelessWidget {
                     10.verticalSpace,
                     const Padding(
                       padding: EdgeInsets.only(left: 8.0),
-                      child:  Text(
+                      child: Text(
                         "Récencements d'aujourd'hui",
-                        style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 17, fontWeight: FontWeight.bold),
                       ),
                     ),
                     10.verticalSpace,
-                    state is GetRecensementLoading ? const Center(child:  CircularProgressIndicator()) : state is GetRecensementSuccess ?  RecentTrackingWidget(
-                      cards: state.todaysRecensements,
-                    ): const Text("Aucun récencement"),
+                    state is GetRecensementLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : state is GetRecensementSuccess &&
+                                _connectivityResult.first ==
+                                    ConnectivityResult.none
+                            ? OffLineRecWidget(
+                                cards: state.offLineRecensements,
+                              )
+                            : state is GetRecensementSuccess &&
+                                    _connectivityResult.first !=
+                                        ConnectivityResult.none &&
+                                    state.todaysRecensements.isEmpty
+                                ? OffLineRecWidget(
+                                    cards: state.offLineRecensements,
+                                  )
+                                : state is GetRecensementSuccess &&
+                                        _connectivityResult.first !=
+                                            ConnectivityResult.none &&
+                                        state.todaysRecensements.isNotEmpty
+                                    ? RecentTrackingWidget(
+                                        cards: state.todaysRecensements,
+                                      )
+                                    : const Text("Aucun récencement"),
                   ],
                 ),
               );

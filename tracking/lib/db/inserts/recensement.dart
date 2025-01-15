@@ -2,7 +2,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:tracking/db/database_helper.dart';
 
-Future<int> insertIntoMembres( String nom, String prenom, int age, String sexe, String contact, String observation, int agemois, int idProfession,  int userEnreg) async {
+Future<int> insertIntoMembres( String nom, String prenom, int age, String sexe, String contact, String observation, int agemois, int idProfession,  int userEnreg, String dateNaiss) async {
   final db = await DatabaseHelper.instance.database;
   int? menageId = await getLastInsertedId(db, 'menages');
 
@@ -11,6 +11,7 @@ Future<int> insertIntoMembres( String nom, String prenom, int age, String sexe, 
     {
       'membrenomrec': nom,
       'membreprenomrec': prenom,
+      'membredatenaissrec':dateNaiss,
       'membreagerec': age,
       'sexezerovingtquatremoisrec': sexe,
       'contactrec': contact,

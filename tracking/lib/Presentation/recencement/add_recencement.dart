@@ -217,7 +217,7 @@ class _AddRecensementState extends State<AddRecensement> {
               CustomTextFormInput(
                 isReadonly: true,
                 labelText: "",
-                hintText: "12",
+                hintText: "MNG-C-KOUTOBA1",
                 controller: _numeroMenageController,
                 isPassword: true,
               ),

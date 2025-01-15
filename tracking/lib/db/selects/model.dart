@@ -36,6 +36,9 @@ class Membre {
   final String sexe;
   final String contact;
   final String observation;
+  final String dateNaissance;
+  final int ageMois;
+  final int idProfession;
 
   Membre({
     required this.id,
@@ -45,5 +48,8 @@ class Membre {
     required this.sexe,
     required this.contact,
     required this.observation,
+    required this.dateNaissance,
+    required this.ageMois,
+    required this.idProfession,
   });
 }

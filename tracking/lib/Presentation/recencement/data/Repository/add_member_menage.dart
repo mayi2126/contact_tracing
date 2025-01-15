@@ -27,7 +27,8 @@ class AddMemberImpl implements AddMember {
             member.observationrec,
             member.agemois,
             member.idprofessionref,
-            member.userEnreg);
+            member.userEnreg,
+            member.membredatenaissrec.toString());
         if (result >= 1) {
           // print("success");
           return true;

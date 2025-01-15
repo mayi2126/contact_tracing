@@ -47,6 +47,7 @@ class DatabaseHelper {
     await createTableMotifs(db);
     await createTableProfessions(db);
     await createTables(db);
+    await createTableCauseries(db);
     print('Création des tables terminée');
   }
 

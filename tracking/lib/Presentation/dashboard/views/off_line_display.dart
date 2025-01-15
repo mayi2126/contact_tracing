@@ -1,8 +1,8 @@
 part of '../../../core/cores.dart';
 
-class RecentTrackingWidget extends StatelessWidget {
-  const RecentTrackingWidget({super.key, required this.cards});
-  final List<Recensement> cards;
+class OffLineRecWidget extends StatelessWidget {
+  const OffLineRecWidget({super.key, required this.cards});
+  final List<OffLineRecensement> cards;
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +24,9 @@ class RecentTrackingWidget extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             child: Column(
               children: cards.map((rec) {
-                      return TrackingCard(
+                      return OffLineCard(
                         recensement: rec,
-                        onTap: () => Navigator.pushNamed(
-                            context, RoutesName.showRecensement,
-                            arguments: rec),
+                        onTap: () {},
                       );
                     }).toList(),
             ),

@@ -96,7 +96,8 @@ final class GetRecensementLoading extends RecensementState {
 final class GetRecensementSuccess extends RecensementState { 
   List<Recensement> recensements;
   List<Recensement> todaysRecensements;
-  GetRecensementSuccess(this.recensements, this.todaysRecensements);
+  List<OffLineRecensement> offLineRecensements;
+  GetRecensementSuccess(this.recensements, this.todaysRecensements, this.offLineRecensements);
 
   @override
   List<Object> get props => [recensements, todaysRecensements];

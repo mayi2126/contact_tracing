@@ -22,6 +22,7 @@ import 'package:tracking/Presentation/Suivi/data/Models/patient_suivi.dart';
 import 'package:tracking/Presentation/Suivi/data/Models/suivi.dart';
 import 'package:tracking/Presentation/recencement/bloc/recensement_bloc.dart';
 import 'package:tracking/Presentation/recencement/data/Models/member.dart';
+import 'package:tracking/Presentation/recencement/data/Models/offline_recensement.dart';
 import 'package:tracking/Presentation/visite/bloc/visite_bloc.dart';
 import 'package:tracking/Presentation/visite/data/Models/visite.dart';
 import 'package:tracking/Presentation/visite/data/Models/visite_model.dart';
@@ -69,6 +70,7 @@ part '../Presentation/dashboard/main.dart';
 
 part '../Presentation/dashboard/views/items.dart';
 part '../Presentation/dashboard/views/recent_tracking.dart';
+part '../Presentation/dashboard/views/off_line_display.dart';
 
 /* ----------------------------------- UI ----------------------------------- */
 part '../components/ui/card.dart';
@@ -81,6 +83,7 @@ part '../components/utils/card_today.dart';
 part '../components/utils/visite_causerie/show_page.dart';
 part '../components/utils/visite_causerie/show_page_causerie.dart';
 part '../components/ui/card_referencement.dart';
+part '../components/ui/off_line_card.dart';
 
 /* ------------------------------- RECENSEMENT ------------------------------ */
 part '../Presentation/recencement/add_recencement.dart';

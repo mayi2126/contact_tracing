@@ -31,11 +31,31 @@ Future<void> createTableVisites(Database db) async {
       nbrepersonnetoucheeH INTEGER,
       nbreenfantzvtouche INTEGER,
       nbreautrestouche TEXT,
-      libelementdedonnee TEXT
+      libelementdedonnee TEXT,
+      created_at DATE DEFAULT (DATE('now'))
     )
   ''');
 }
-
+Future<void> createTableCauseries(Database db) async {
+  await db.execute(''' 
+    CREATE TABLE IF NOT EXISTS causeries(
+      id INTEGER PRIMARY KEY,
+      Idquartier INTEGER,
+      Idvillage INTEGER,
+      IdelementDonnee INTEGER,
+      lieuAp TEXT,
+      dateAp TEXT,
+      nbrepersonnetoucheeFnq INTEGER,
+      nbrepersonnetoucheeFE INTEGER,
+      nbrepersonnetoucheeFA INTEGER,
+      nbrepersonnetoucheeH INTEGER,
+      nbreenfantzvtouche INTEGER,
+      nbreautrestouche TEXT,
+      libelementdedonnee TEXT,
+      created_at DATE DEFAULT (DATE('now'))
+    )
+  ''');
+}
 
 Future<void> createTableElementsDonnees(Database db) async {
   await db.execute('''
@@ -97,7 +117,8 @@ Future<void> createTables(Database db) async {
         idquartier INTEGER,
         daterecensement TEXT,
         localisationgpsrec TEXT,
-        userEnreg INTEGER DEFAULT 0
+        userEnreg INTEGER DEFAULT 0,
+        created_at DATE DEFAULT (DATE('now'))
       )
     ''');
 

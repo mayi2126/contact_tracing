@@ -255,7 +255,7 @@ class _AddMemberPageState extends State<AddMemberPage> {
                                       CustomTextFormInput(
                                         isReadonly: true,
                                         labelText: "",
-                                        hintText: "12",
+                                        hintText: "MNG-C-KOUTOBA1",
                                         controller: _numeroMenageController,
                                       ),
                                       10.verticalSpaceFromWidth,
@@ -450,6 +450,7 @@ class _AddMemberPageState extends State<AddMemberPage> {
                                         labelText: "",
                                         hintText: "Observation",
                                         controller: _observationController,
+                                        minLine: 2,
                                       ),
                                     ],
                                   ),
