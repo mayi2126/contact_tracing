@@ -5,7 +5,7 @@ import 'package:tracking/API/constants_urls.dart';
 import 'package:tracking/Presentation/Auth/data/Models/user_token.dart';
 import 'package:tracking/Presentation/visite/data/Models/visite.dart';
 import 'package:tracking/components/utils/load_user.dart';
-import 'package:tracking/db/inserts/visite.dart';
+import 'package:tracking/db/inserts/visite_causerie.dart';
 
 abstract class VisiteRepository {
   Future<void> addVisiteDomicile(Visite visite);
@@ -18,8 +18,8 @@ class VisiteRepositoryImpl extends VisiteRepository {
     try {
       if (connectivityResult.first == ConnectivityResult.none) {
         int result = await insertVisite(visite);
-        print(result);
-        if (result == 1) {
+       
+        if (result >= 1) {
           return true;
         } else {
           return false;

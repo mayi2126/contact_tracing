@@ -153,6 +153,7 @@ class _InnerRefState extends State<InnerRef> {
 
     showModalBottomSheet<void>(
       context: myContext,
+      isDismissible: false,
       scrollControlDisabledMaxHeightRatio: _isSwitched ? 0.5 : 0.8,
       sheetAnimationStyle: AnimationStyle(
         duration: const Duration(seconds: 1),
@@ -162,322 +163,223 @@ class _InnerRefState extends State<InnerRef> {
         return StatefulBuilder(
           builder: (myContext, StateSetter setState) {
             return SizedBox.expand(
-              child: Padding(
-                padding: const EdgeInsets.all(15),
-                child: SingleChildScrollView(
-                  child: !_isSwitched
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            const Text(
-                                "1. Avez-vous accouché il y à moins de 6 mois et allaitez-vous complètement?"),
-                            5.verticalSpace,
-                            Row(
-                              children: [
-                                Radio(
-                                  activeColor: Palette.primary,
-                                  value: 'Oui',
-                                  groupValue: _selectedOption0,
-                                  onChanged: (String? value) {
-                                    setState(() {
-                                      _selectedOption0 = value;
-                                    });
-                                    if (value == "Oui") {
-                                      setState(() {
-                                        _isSwitched = true;
-                                      });
-                                    }
-                                  },
-                                ),
-                                const Text('Oui'),
-                                Radio(
-                                  activeColor: Palette.primary,
-                                  value: 'Non',
-                                  groupValue: _selectedOption0,
-                                  onChanged: (String? value) {
-                                    setState(() {
-                                      _selectedOption0 = value;
-                                    });
-                                  },
-                                ),
-                                const Text('Non'),
-                              ],
-                            ),
-                            Divider(endIndent: 50, indent: 50),
-                            const Text(
-                                "2. Et vos règles ont-elles été absentes depuis la naissance de votre enfant?"),
-                            5.verticalSpace,
-                            Row(
-                              children: [
-                                Radio(
-                                  activeColor: Palette.primary,
-                                  value: 'Oui',
-                                  groupValue: _selectedOption1,
-                                  onChanged: (String? value) {
-                                    setState(() {
-                                      _selectedOption1 = value;
-                                    });
-                                    if (value == "Oui") {
-                                      setState(() {
-                                        _isSwitched = true;
-                                      });
-                                    }
-                                  },
-                                ),
-                                const Text('Oui'),
-                                Radio(
-                                  activeColor: Palette.primary,
-                                  value: 'Non',
-                                  groupValue: _selectedOption1,
-                                  onChanged: (String? value) {
-                                    setState(() {
-                                      _selectedOption1 = value;
-                                    });
-                                  },
-                                ),
-                                const Text('Non'),
-                              ],
-                            ),
-                            Divider(endIndent: 50, indent: 50),
-                            const Text(
-                                "3. Vous êtes-vous abstenue des rapports sexuels depuis vos dernières règles?"),
-                            5.verticalSpace,
-                            Row(
-                              children: [
-                                Radio(
-                                  activeColor: Palette.primary,
-                                  value: 'Oui',
-                                  groupValue: _selectedOption2,
-                                  onChanged: (String? value) {
-                                    setState(() {
-                                      _selectedOption2 = value;
-                                    });
-                                    if (value == "Oui") {
-                                      setState(() {
-                                        _isSwitched = true;
-                                      });
-                                    }
-                                  },
-                                ),
-                                const Text('Oui'),
-                                Radio(
-                                  activeColor: Palette.primary,
-                                  value: 'Non',
-                                  groupValue: _selectedOption2,
-                                  onChanged: (String? value) {
-                                    setState(() {
-                                      _selectedOption2 = value;
-                                    });
-                                  },
-                                ),
-                                const Text('Non'),
-                              ],
-                            ),
-                            Divider(endIndent: 50, indent: 50),
-                            const Text(
-                                "4. Avez-vous accouché dans les sept dernières semaines ?"),
-                            5.verticalSpace,
-                            Row(
-                              children: [
-                                Radio(
-                                  activeColor: Palette.primary,
-                                  value: 'Oui',
-                                  groupValue: _selectedOption3,
-                                  onChanged: (String? value) {
-                                    setState(() {
-                                      _selectedOption3 = value;
-                                    });
-                                    if (value == "Oui") {
-                                      setState(() {
-                                        _isSwitched = true;
-                                      });
-                                    }
-                                  },
-                                ),
-                                const Text('Oui'),
-                                Radio(
-                                  activeColor: Palette.primary,
-                                  value: 'Non',
-                                  groupValue: _selectedOption3,
-                                  onChanged: (String? value) {
-                                    setState(() {
-                                      _selectedOption3 = value;
-                                    });
-                                  },
-                                ),
-                                const Text('Non'),
-                              ],
-                            ),
-                            Divider(endIndent: 50, indent: 50),
-                            const Text(
-                                "5. Est-ce que vos règles ont commencées dans les sept dernières semaines sept ?"),
-                            5.verticalSpace,
-                            Row(
-                              children: [
-                                Radio(
-                                  activeColor: Palette.primary,
-                                  value: 'Oui',
-                                  groupValue: _selectedOption4,
-                                  onChanged: (String? value) {
-                                    setState(() {
-                                      _selectedOption4 = value;
-                                    });
-                                    if (value == "Oui") {
-                                      setState(() {
-                                        _isSwitched = true;
-                                      });
-                                    }
-                                  },
-                                ),
-                                const Text('Oui'),
-                                Radio(
-                                  activeColor: Palette.primary,
-                                  value: 'Non',
-                                  groupValue: _selectedOption4,
-                                  onChanged: (String? value) {
-                                    setState(() {
-                                      _selectedOption4 = value;
-                                    });
-                                  },
-                                ),
-                                const Text('Non'),
-                              ],
-                            ),
-                            Divider(endIndent: 50, indent: 50),
-                            const Text(
-                                "6. Avez-vous fait une fausse couche ou un avortement dans les sept dernières semaines sept ?"),
-                            5.verticalSpace,
-                            Row(
-                              children: [
-                                Radio(
-                                  activeColor: Palette.primary,
-                                  value: 'Oui',
-                                  groupValue: _selectedOption5,
-                                  onChanged: (String? value) {
-                                    setState(() {
-                                      _selectedOption5 = value;
-                                    });
-                                    if (value == "Oui") {
-                                      setState(() {
-                                        _isSwitched = true;
-                                      });
-                                    }
-                                  },
-                                ),
-                                const Text('Oui'),
-                                Radio(
-                                  activeColor: Palette.primary,
-                                  value: 'Non',
-                                  groupValue: _selectedOption5,
-                                  onChanged: (String? value) {
-                                    setState(() {
-                                      _selectedOption5 = value;
-                                    });
-                                  },
-                                ),
-                                const Text('Non'),
-                              ],
-                            ),
-                            Divider(endIndent: 50, indent: 50),
-                            const Text(
-                              "7.  Utilisez-vous une méthode contraceptive fiable de façon correcte et systématique ?",
-                            ),
-                            5.verticalSpace,
-                            Row(
-                              children: [
-                                Radio(
-                                  activeColor: Palette.primary,
-                                  value: 'Oui',
-                                  groupValue: _selectedOption6,
-                                  onChanged: (String? value) {
-                                    setState(() {
-                                      _selectedOption6 = value;
-                                    });
-                                    if (value == "Oui") {
-                                      setState(() {
-                                        _isSwitched = true;
-                                      });
-                                    }
-                                  },
-                                ),
-                                const Text('Oui'),
-                                Radio(
-                                  activeColor: Palette.primary,
-                                  value: 'Non',
-                                  groupValue: _selectedOption6,
-                                  onChanged: (String? value) {
-                                    setState(() {
-                                      _selectedOption6 = value;
-                                    });
-                                  },
-                                ),
-                                const Text('Non'),
-                              ],
-                            ),
-                            // Si l'état _isSwitched est activé, afficher le menu déroulant
-                          ],
-                        )
-                      : Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Créer un contre referencement',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                  color: Palette.primary),
-                            ),
-                            70.verticalSpace,
-                            const Text("Choisir un motif"),
-                            DropMenuMotif(onSelected: (String? value) {
-                              setState(() {
-                                _motifValue = value!;
-                                print("Motif sélectionné: $_motifValue");
-                              });
-                            }),
-                            10.verticalSpace,
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  TextButton(
-                                    child: const Text(
-                                      'Annuler',
-                                      style: TextStyle(
-                                          color: Palette.primary,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    onPressed: () {
-                                      _isSwitched = false;
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                  TextButton(
-                                      child: const Text(
-                                        'Créer',
-                                        style: TextStyle(
-                                            color: Palette.primary,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      onPressed: () {
-                                            _isSwitched = false;
-
-                                        BlocProvider.of<RefBloc>(context).add(
-                                            HandleMakeReferencementEvent(
-                                                id: 3, idMotif: _motifValue!));
-                                      }),
-                                ])
-                          ],
-                        ),
-                ),
+              child: Stack(
+                children: [
+                  // Contenu scrollable
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 40, left: 15, right: 15),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          !_isSwitched
+                              ? _buildRadioQuestions(setState)
+                              : _buildCreateReferencement(setState, myContext),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // Bouton de fermeture fixe
+                  Positioned(
+                    top: 1,
+                    right: 5,
+                    child: IconButton(
+                      icon: const Icon(Icons.close, color: Palette.danger),
+                      onPressed: () {
+                        Navigator.of(myContext).pop();
+                      },
+                    ),
+                  ),
+                ],
               ),
             );
           },
         );
       },
+    );
+  }
+
+  // Fonction pour créer les questions avec boutons radio
+  Widget _buildRadioQuestions(StateSetter setState) {
+    return Column(
+      children: [
+        _buildRadioItem(
+          question:
+              "1. Avez-vous accouché il y à moins de 6 mois et allaitez-vous complètement?",
+          groupValue: _selectedOption0,
+          onChanged: (value) {
+            setState(() {
+              _selectedOption0 = value;
+              if (value == "Oui") _isSwitched = true;
+            });
+          },
+        ),
+        _buildRadioItem(
+          question:
+              "2. Et vos règles ont-elles été absentes depuis la naissance de votre enfant?",
+          groupValue: _selectedOption1,
+          onChanged: (value) {
+            setState(() {
+              _selectedOption1 = value;
+              if (value == "Oui") _isSwitched = true;
+            });
+          },
+        ),
+        _buildRadioItem(
+          question:
+              "3. Vous êtes-vous abstenue des rapports sexuels depuis vos dernières règles?",
+          groupValue: _selectedOption2,
+          onChanged: (value) {
+            setState(() {
+              _selectedOption2 = value;
+              if (value == "Oui") _isSwitched = true;
+            });
+          },
+        ),
+        _buildRadioItem(
+          question: "4. Avez-vous accouché dans les sept dernières semaines ?",
+          groupValue: _selectedOption3,
+          onChanged: (value) {
+            setState(() {
+              _selectedOption3 = value;
+              if (value == "Oui") _isSwitched = true;
+            });
+          },
+        ),
+        _buildRadioItem(
+          question:
+              "5. Est-ce que vos règles ont commencées dans les sept dernières semaines ?",
+          groupValue: _selectedOption4,
+          onChanged: (value) {
+            setState(() {
+              _selectedOption4 = value;
+              if (value == "Oui") _isSwitched = true;
+            });
+          },
+        ),
+        _buildRadioItem(
+          question:
+              "6. Avez-vous fait une fausse couche ou un avortement dans les sept dernières semaines ?",
+          groupValue: _selectedOption5,
+          onChanged: (value) {
+            setState(() {
+              _selectedOption5 = value;
+              if (value == "Oui") _isSwitched = true;
+            });
+          },
+        ),
+        _buildRadioItem(
+          question:
+              "7. Utilisez-vous une méthode contraceptive fiable de façon correcte et systématique ?",
+          groupValue: _selectedOption6,
+          onChanged: (value) {
+            setState(() {
+              _selectedOption6 = value;
+              if (value == "Oui") _isSwitched = true;
+            });
+          },
+        ),
+      ],
+    );
+  }
+
+// Fonction pour construire une question avec des boutons radio
+  Widget _buildRadioItem(
+      {required String question,
+      required String? groupValue,
+      required Function(String?) onChanged}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(question),
+        const SizedBox(height: 5),
+        Row(
+          children: [
+            _buildRadioButton(
+                value: 'Oui', groupValue: groupValue, onChanged: onChanged),
+            const Text('Oui'),
+            _buildRadioButton(
+                value: 'Non', groupValue: groupValue, onChanged: onChanged),
+            const Text('Non'),
+          ],
+        ),
+        const Divider(endIndent: 50, indent: 50),
+      ],
+    );
+  }
+
+// Fonction pour un bouton radio
+  Widget _buildRadioButton(
+      {required String value,
+      required String? groupValue,
+      required Function(String?) onChanged}) {
+    return Radio<String>(
+      activeColor: Palette.primary,
+      value: value,
+      groupValue: groupValue,
+      onChanged: onChanged,
+    );
+  }
+
+// Fonction pour créer la section de création de référentiel
+  Widget _buildCreateReferencement(StateSetter setState,BuildContext myContext) {
+    return Column(
+      children: [
+        const Text(
+          'Créer un contre référencement',
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+              color: Palette.primary),
+        ),
+        const SizedBox(height: 70),
+        const Text("Choisir un motif"),
+        DropMenuMotif(onSelected: (value) {
+          setState(() {
+            _motifValue = value!;
+            print("Motif sélectionné: $_motifValue");
+          });
+        }),
+        const SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            TextButton(
+              child: const Text(
+                'Annuler',
+                style: TextStyle(
+                    color: Palette.primary,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold),
+              ),
+              onPressed: () {
+                setState(() {
+                  _isSwitched = false;
+                });
+                Navigator.of(myContext).pop();
+              },
+            ),
+            TextButton(
+              child: const Text(
+                'Créer',
+                style: TextStyle(
+                    color: Palette.primary,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold),
+              ),
+              onPressed: () {
+                setState(() {
+                  _isSwitched = false;
+                });
+                BlocProvider.of<RefBloc>(context).add(
+                    HandleMakeReferencementEvent(id: 3, idMotif: _motifValue!));
+              },
+            ),
+          ],
+        ),
+      ],
     );
   }
 

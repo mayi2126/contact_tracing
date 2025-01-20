@@ -37,7 +37,9 @@ class DropMenuProfession extends StatelessWidget {
               ),
             ),
             // initialSelection: "1",
-            initialSelection: professions.isNotEmpty ? professions.first['id'].toString() : null,
+            // initialSelection: professions.isNotEmpty ? professions.first['id'].toString() : null,
+            hintText: "Choisir une profession",
+
             width: getWidth(333),
 
             trailingIcon: const Icon(Icons.keyboard_arrow_down_sharp),

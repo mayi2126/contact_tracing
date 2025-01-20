@@ -50,6 +50,23 @@ Future<List<VisiteModel>> retrievedVisiteData() async {
   return visites;
 }
 
+/* -------------------------------- Causerie -------------------------------- */
+
+Future<List<VisiteModel>> retrievedCauserieData() async {
+  final db = await DatabaseHelper.instance.database;
+
+  // Récupérer toutes les lignes insérées
+  List<Map<String, dynamic>> result = await db.query('causeries', where: 'created_at = ?',
+  whereArgs: [DateFormat('yyyy-MM-dd').format(DateTime.now())]);
+
+  print(result);
+
+  List<VisiteModel> causeries =
+      result.map((json) => VisiteModel.fromMap(json)).toList();
+
+  return causeries;
+}
+
 /* ------------------------------- Professions ------------------------------ */
 
 Future<List<Map<String, dynamic>>> retrievedProfessionsData() async {

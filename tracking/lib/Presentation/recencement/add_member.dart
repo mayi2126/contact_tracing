@@ -23,10 +23,10 @@ class _AddMemberPageState extends State<AddMemberPage> {
 
   List<String> listSexe = <String>[
     'Masculin',
-    'Féminin',
+    'Feminin',
   ];
  
-  String _sexeValue = "";
+  String _sexeValue = "Feminin";
   String _professionValue = "";
 
   Future<void> _selectDate(BuildContext context) async {
@@ -394,7 +394,7 @@ class _AddMemberPageState extends State<AddMemberPage> {
                                                 BorderRadius.circular(10),
                                           ),
                                         ),
-                                        initialSelection: "Masculin",
+                                        initialSelection: "Feminin",
                                         trailingIcon: const Icon(
                                             Icons.keyboard_arrow_down_sharp),
                                         selectedTrailingIcon: const Icon(

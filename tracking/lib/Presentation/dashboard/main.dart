@@ -68,12 +68,7 @@ class _DashboardPageState extends State<DashboardPage>
 
   static const List<Widget> _widgetOptions = <Widget>[
     Items(),
-    Center(
-      child: Text(
-        'Index 1: Autres',
-        // style: optionStyle,
-      ),
-    ),
+   
     ProfilePage()
   ];
 

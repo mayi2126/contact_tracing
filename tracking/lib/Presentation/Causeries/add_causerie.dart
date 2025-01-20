@@ -15,6 +15,7 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
   String _villageValue = "";
   String _quartierValue = "";
   String _themeValue = "";
+  String _label = "";
   final TextEditingController _formationSanitaire = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _localisationController = TextEditingController();
@@ -28,9 +29,9 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
   final TextEditingController __nbrePersonnesTHommesController =
       TextEditingController(text: '0');
   final TextEditingController __nbrePersonnesTEnceintesController =
-      TextEditingController();
+      TextEditingController(text: '0');
 
-  final TextEditingController __autresController = TextEditingController(text:'0');
+  final TextEditingController __autresController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
@@ -134,6 +135,7 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
       print(_quartierValue);
 
       Causerie causerie = Causerie(
+        libelementdedonnee: _label,
         idFsAp: 0,
         dateAp: _dateController.text,
         lieuAp: _localisationController.text,
@@ -146,7 +148,7 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
             int.parse(__nbrePersonnesTEnceintesController.text),
         nbreautrestouche: __autresController.text,
         idvillage: int.parse(_villageValue),
-        idquartier: int.parse(_quartierValue),
+        idquartier: int.parse("5"),
         idelementDonnee: int.parse(_themeValue),
         idAscAp: 0,
         userEnreg: 0,
@@ -293,8 +295,9 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
                                 DropMenuMotif(
                                     onSelected: (String? value) {
                                       setState(() {
-                                        _themeValue = value!;
-                                        print(_themeValue);
+                                        List<String> parts = value!.split(':');
+                                        _themeValue = parts[0];
+                                        _label = parts[1];
                                       });
                                     },
                                     // type: 'CAUSERIE EDUCATIVE',
