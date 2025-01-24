@@ -66,6 +66,16 @@ Future<List<VisiteModel>> retrievedCauserieData() async {
   return causeries;
 }
 
+/* -------------------- Fetch quartiers from the village -------------------- */
+Future<List<Map<String, dynamic>>> retrievedQuartiersData(int idVillage) async {
+  final db = await DatabaseHelper.instance.database;
+  List<Map<String, dynamic>> result = await db.query('quartiers', where: 'id_village = ?', whereArgs: [idVillage]);
+
+  return result;
+}
+
+
+
 /* ------------------------------- Professions ------------------------------ */
 
 Future<List<Map<String, dynamic>>> retrievedProfessionsData() async {

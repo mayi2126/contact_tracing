@@ -44,6 +44,7 @@ class DatabaseHelper {
     print('Création des tables...');
     await createTableVisites(db);
     await createTableVillages(db);
+    await createTableQuartiers(db);
     await createTableMotifs(db);
     await createTableProfessions(db);
     await createTables(db);

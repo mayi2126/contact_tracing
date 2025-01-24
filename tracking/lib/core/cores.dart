@@ -28,6 +28,7 @@ import 'package:tracking/Presentation/visite/data/Models/visite.dart';
 import 'package:tracking/Presentation/visite/data/Models/visite_model.dart';
 import 'package:tracking/db/inserts/motifs.dart';
 import 'package:tracking/db/inserts/professions.dart';
+import 'package:tracking/db/inserts/quartier.dart';
 import 'package:tracking/db/inserts/village_insert.dart';
 import 'package:tracking/components/ui/string_date.dart';
 import 'package:tracking/components/utils/load_user.dart';

@@ -167,6 +167,7 @@ class _DashboardPageState extends State<DashboardPage>
                                       await insertMotifsFromApi();
                                       await insertVillagesFromApi();
                                       await inserProfessionsFromApi();
+                                      await insertQuartiers();
                                       // await fetchAndPrintInfos();
                                       
                                       _controller.reset();

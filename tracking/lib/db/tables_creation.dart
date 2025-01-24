@@ -75,9 +75,10 @@ Future<void> createTableQuartiers(Database db) async {
     CREATE TABLE IF NOT EXISTS quartiers(
       id INTEGER PRIMARY KEY,
       nomquartier TEXT,
-      idfsquartier INTEGER,
-      created_at TEXT,
-      updated_at TEXT
+      id_village INTEGER,
+      created_at DATE DEFAULT (DATE('now')),
+      updated_at DATE DEFAULT (DATE('now')),
+      FOREIGN KEY (id_village) REFERENCES villages(id)
     )
   ''');
 }

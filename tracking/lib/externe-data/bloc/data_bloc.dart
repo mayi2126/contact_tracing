@@ -18,9 +18,9 @@ class DataBloc extends Bloc<DataEvent, DataState> {
       
       emit(VillageQuartierLoading());
       try {
-        final QuartierRepository quartierRepository = QuartierRepository();
+        // final QuartierRepository quartierRepository = QuartierRepository();
         final villagesQuartiers =
-            await quartierRepository.fetchVillageQuartier(event.id);
+            await retrievedQuartiersData(event.id);
         emit(VillageQuartierLoaded(villagesQuartiers));
       } catch (e) {
         emit(VillageQuartierError(e.toString()));
