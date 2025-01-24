@@ -31,11 +31,7 @@ import 'package:tracking/db/inserts/professions.dart';
 import 'package:tracking/db/inserts/village_insert.dart';
 import 'package:tracking/components/ui/string_date.dart';
 import 'package:tracking/components/utils/load_user.dart';
-import 'package:tracking/db/selects/selects.dart';
-import 'package:tracking/db/sync_api.dart';
 import 'package:tracking/externe-data/bloc/data_bloc.dart';
-import 'package:tracking/externe-data/repo/motif_repo.dart';
-import 'package:tracking/externe-data/repo/professions_repo.dart';
 import 'package:tracking/externe-data/repo/theme_repo.dart';
 
 import 'package:tracking/Presentation/recencement/data/Models/info_genrec.dart';
@@ -44,7 +40,6 @@ import 'package:tracking/Presentation/recencement/data/Models/recensement.dart';
 import 'package:tracking/Presentation/Referencement/data/Models/referencement.dart';
 
 
-import 'package:tracking/externe-data/repo/village_repo.dart';
 import 'package:tracking/app/config/app_config.dart';
 import 'package:tracking/app/routes/routes_name.dart';
 import 'package:tracking/design_system/pallete.dart';

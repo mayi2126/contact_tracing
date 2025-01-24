@@ -8,7 +8,7 @@ class CardCauserie extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: visites.isNotEmpty ?  visites.map((visite) => CardC(visite: visite)).toList() :  [Center(child: Text('Aucune causerie trouvée',style: TextStyle(color: Palette.foreign),))],
+      children: visites.isNotEmpty ?  visites.map((visite) => CardC(visite: visite)).toList() :  [const Center(child: Text('Aucune causerie trouvée',style: TextStyle(color: Palette.foreign),))],
     );
   }
 }

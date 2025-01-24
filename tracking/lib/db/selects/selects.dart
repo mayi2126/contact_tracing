@@ -1,6 +1,5 @@
 import 'package:tracking/Presentation/recencement/data/Models/info_genrec.dart';
 import 'package:tracking/Presentation/recencement/data/Models/offline_recensement.dart';
-import 'package:tracking/Presentation/recencement/data/Models/recensement.dart';
 import 'package:tracking/Presentation/recencement/data/Repository/add_member_menage.dart';
 import 'package:tracking/Presentation/recencement/data/Repository/add_menage.dart';
 import 'package:tracking/Presentation/recencement/data/Repository/add_recensement.dart';

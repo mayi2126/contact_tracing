@@ -45,7 +45,7 @@ class TrackingCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 Container(
                   height: 30,
                   width: 60,

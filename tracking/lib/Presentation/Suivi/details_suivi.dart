@@ -44,7 +44,7 @@ class DetailsSuivi extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                             color: Palette.primary,
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.person,
                             color: Palette.white,
                             size: 40,

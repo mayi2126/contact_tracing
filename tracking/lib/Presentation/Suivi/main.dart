@@ -32,7 +32,7 @@ class _InnerMainSuiviState extends State<InnerMainSuivi> {
   String? _recherchesignedanger = "";
   String? _lieuaccouchementfs = "Non";
   String? _issusaccouchement = "";
-  String? _sirdvrespectenon = "";
+  final String? _sirdvrespectenon = "";
 
   final List<String> dangers = ["Fièvre (Corps chaud)", "Maux de tête"];
   final List<String> accouchements = [
@@ -975,14 +975,14 @@ class CardPatientSuivi extends StatelessWidget {
                 children: [
                   Text(
                     patient.fullName,
-                    style: TextStyle(fontSize: 20),
+                    style: const TextStyle(fontSize: 20),
                   ),
                   8.horizontalSpace,
                   const Text("|"),
                   8.horizontalSpace,
                   Text(
                     patient.statutref,
-                    style: TextStyle(fontSize: 16, color: Palette.textSuccess),
+                    style: const TextStyle(fontSize: 16, color: Palette.textSuccess),
                   ),
                   const Spacer(),
                   IconButton(
@@ -1172,7 +1172,7 @@ class CardSuivi extends StatelessWidget {
                 ),
                 const Spacer(),
                 patient.grossesseconfirme == null
-                    ? SizedBox()
+                    ? const SizedBox()
                     : patient.grossesseconfirme == "Oui"
                         ? const Icon(
                             Icons.check_circle_outline_outlined,
@@ -1259,7 +1259,7 @@ class CardSuivi extends StatelessWidget {
                           Text(
                             "${patient.nomvillage}",
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
                             ),
@@ -1318,7 +1318,7 @@ class CardSuivi extends StatelessWidget {
                     PopupMenuItem<SampleItem>(
                       onTap: onPressed,
                       value: SampleItem.addSuivi,
-                      child: Text('Créer un suivi'),
+                      child: const Text('Créer un suivi'),
                     ),
                     // const PopupMenuItem<SampleItem>(
                     //   value: SampleItem.itemTwo,

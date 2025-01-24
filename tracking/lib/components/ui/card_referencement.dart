@@ -21,7 +21,7 @@ class ReferencementCard extends StatelessWidget {
                 color: Colors.grey.withOpacity(0.5),
                 spreadRadius: 2,
                 blurRadius: 7,
-                offset: Offset(2, 3), // changes position of shadow
+                offset: const Offset(2, 3), // changes position of shadow
               )
             ]),
         child: Padding(
@@ -55,7 +55,7 @@ class ReferencementCard extends StatelessWidget {
                     Align(
                       alignment: Alignment.topRight,
                       child: Container(
-                        padding: EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
                         width: 30,
                         height: 30,
                         decoration: BoxDecoration(
@@ -65,7 +65,7 @@ class ReferencementCard extends StatelessWidget {
                         child: Center(
                             child: Text(
                           referencement.membreagerec.toString(),
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         )),
                       ),
                     )
@@ -75,7 +75,7 @@ class ReferencementCard extends StatelessWidget {
               5.verticalSpace,
               Text(
                 referencement.fullName ?? "",
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               2.verticalSpace,
               GestureDetector(
@@ -86,7 +86,7 @@ class ReferencementCard extends StatelessWidget {
                       title: RichText(
                         text: TextSpan(
                           children: [
-                            TextSpan(
+                            const TextSpan(
                               text: "Détails de ",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -95,7 +95,7 @@ class ReferencementCard extends StatelessWidget {
                             ),
                             TextSpan(
                               text: referencement.fullName ?? "",
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Palette.primary,
                                   fontSize: 15),
@@ -120,7 +120,7 @@ class ReferencementCard extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 14,
                                       color: Palette.foreign))
-                              : SizedBox(),
+                              : const SizedBox(),
                           referencement.recommandation != null
                               ? Align(
                                   alignment: Alignment.centerRight,
@@ -132,7 +132,7 @@ class ReferencementCard extends StatelessWidget {
                                     ),
                                   ),
                                 )
-                              : SizedBox(),
+                              : const SizedBox(),
                           10.verticalSpace,
                           referencement.agegrossesse != null
                               ? const Text("Age du grossesse ",
@@ -141,7 +141,7 @@ class ReferencementCard extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 14,
                                       color: Palette.foreign))
-                              : SizedBox(),
+                              : const SizedBox(),
                           referencement.agegrossesse != null
                               ? Align(
                                   alignment: Alignment.centerRight,
@@ -153,7 +153,7 @@ class ReferencementCard extends StatelessWidget {
                                     ),
                                   ),
                                 )
-                              : SizedBox(),
+                              : const SizedBox(),
                           10.verticalSpace,
                           referencement.dateref != null
                               ? const Text("Date du referencement ",
@@ -162,7 +162,7 @@ class ReferencementCard extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 14,
                                       color: Palette.foreign))
-                              : SizedBox(),
+                              : const SizedBox(),
                           referencement.dateref != null
                               ? Align(
                                   alignment: Alignment.centerRight,
@@ -173,7 +173,7 @@ class ReferencementCard extends StatelessWidget {
                                     ),
                                   ),
                                 )
-                              : SizedBox(),
+                              : const SizedBox(),
                           10.verticalSpace,
                           referencement.libmotif != null
                               ? const Text("Motif ",
@@ -181,7 +181,7 @@ class ReferencementCard extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 14,
                                       color: Palette.foreign))
-                              : SizedBox(),
+                              : const SizedBox(),
                           referencement.libmotif != null
                               ? Align(
                                   alignment: Alignment.centerRight,
@@ -193,7 +193,7 @@ class ReferencementCard extends StatelessWidget {
                                     ),
                                   ),
                                 )
-                              : SizedBox(),
+                              : const SizedBox(),
                           10.verticalSpace,
                           const Text("Quartier",
                               style: TextStyle(
@@ -269,7 +269,7 @@ class ReferencementCard extends StatelessWidget {
                     2.horizontalSpace,
                     Text(
                       referencement.nomvillage ?? "",
-                      style: TextStyle(color: Palette.foreign, fontSize: 12),
+                      style: const TextStyle(color: Palette.foreign, fontSize: 12),
                     ),
                   ],
                 ),

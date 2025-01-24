@@ -1,8 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:tracking/db/selects/selects.dart';
-import 'package:tracking/externe-data/repo/motif_repo.dart';
-import 'package:tracking/externe-data/repo/professions_repo.dart';
 import 'package:tracking/externe-data/repo/quartier_repo.dart';
 import 'package:tracking/externe-data/repo/theme_repo.dart';
 

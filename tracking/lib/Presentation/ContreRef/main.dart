@@ -273,7 +273,7 @@ class _InnerContreRefState extends State<InnerContreRef> {
               return Stack(
                 children: [
                   Container(
-                    padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+                    padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(20),

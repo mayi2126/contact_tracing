@@ -50,7 +50,7 @@ class _ItemsState extends State<Items> {
           child: BlocBuilder<RecensementBloc, RecensementState>(
             builder: (context, state) {
               return Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20)),
