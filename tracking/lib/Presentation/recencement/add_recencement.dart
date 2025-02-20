@@ -344,7 +344,7 @@ class _AddRecensementState extends State<AddRecensement> {
                   });
                   context
                       .read<DataBloc>()
-                      .add(FetchVillageQuartier(int.parse('12')));
+                      .add(FetchVillageQuartier(int.parse(_villageValue)));
                 },
               ),
               10.verticalSpace,

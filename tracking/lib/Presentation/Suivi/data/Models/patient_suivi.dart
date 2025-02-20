@@ -1,34 +1,34 @@
 import 'dart:convert';
 
 class PatientSuivi {
-    String statutref;
-    String rdvrespecte;
+    dynamic statutref;
+    dynamic rdvrespecte;
     dynamic sirdvrespectenon;
     dynamic recommandation;
-    String cpnavantdouzsa;
-    String grossesseconfirme;
-    String agegrossesse;
+    dynamic cpnavantdouzsa;
+    dynamic grossesseconfirme;
+    dynamic agegrossesse;
     dynamic sicpnavantdouzsaoui;
-    String dispomedicament;
+    dynamic dispomedicament;
     dynamic sibonnepriseoui;
     dynamic sidispomedicamentoui;
     dynamic sibonneprisenon;
-    String palumiidisponible;
-    String paludormirsousmii;
-    String palutpiun;
-    String palutpideux;
-    String palutpitrois;
-    String palutpiquatre;
-    String statuvaccorrect;
-    String analysemedrealise;
-    String recherchesignedanger;
-    String issusaccouchement;
-    String lieuaccouchementfs;
+    dynamic palumiidisponible;
+    dynamic paludormirsousmii;
+    dynamic palutpiun;
+    dynamic palutpideux;
+    dynamic palutpitrois;
+    dynamic palutpiquatre;
+    dynamic statuvaccorrect;
+    dynamic analysemedrealise;
+    dynamic recherchesignedanger;
+    dynamic issusaccouchement;
+    dynamic lieuaccouchementfs;
     dynamic sidispomedicamentnon;
-    String fullName;
-    String nomquartier;
-    String nomvillage;
-    String libcpecm;
+    dynamic fullName;
+    dynamic nomquartier;
+    dynamic nomvillage;
+    dynamic libcpecm;
 
     PatientSuivi({
         required this.statutref,
@@ -62,34 +62,34 @@ class PatientSuivi {
     });
 
     PatientSuivi copyWith({
-        String? statutref,
-        String? rdvrespecte,
+        dynamic statutref,
+        dynamic rdvrespecte,
         dynamic sirdvrespectenon,
         dynamic recommandation,
-        String? cpnavantdouzsa,
-        String? grossesseconfirme,
-        String? agegrossesse,
+        dynamic cpnavantdouzsa,
+        dynamic grossesseconfirme,
+        dynamic agegrossesse,
         dynamic sicpnavantdouzsaoui,
-        String? dispomedicament,
+        dynamic dispomedicament,
         dynamic sibonnepriseoui,
         dynamic sidispomedicamentoui,
         dynamic sibonneprisenon,
-        String? palumiidisponible,
-        String? paludormirsousmii,
-        String? palutpiun,
-        String? palutpideux,
-        String? palutpitrois,
-        String? palutpiquatre,
-        String? statuvaccorrect,
-        String? analysemedrealise,
-        String? recherchesignedanger,
-        String? issusaccouchement,
-        String? lieuaccouchementfs,
+        dynamic palumiidisponible,
+        dynamic paludormirsousmii,
+        dynamic palutpiun,
+        dynamic palutpideux,
+        dynamic palutpitrois,
+        dynamic palutpiquatre,
+        dynamic statuvaccorrect,
+        dynamic analysemedrealise,
+        dynamic recherchesignedanger,
+        dynamic issusaccouchement,
+        dynamic lieuaccouchementfs,
         dynamic sidispomedicamentnon,
-        String? fullName,
-        String? nomquartier,
-        String? nomvillage,
-        String? libcpecm,
+        dynamic fullName,
+        dynamic nomquartier,
+        dynamic nomvillage,
+        dynamic libcpecm,
     }) => 
         PatientSuivi(
             statutref: statutref ?? this.statutref,

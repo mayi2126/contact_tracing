@@ -212,7 +212,7 @@ class _InnerRefState extends State<InnerRef> {
           onChanged: (value) {
             setState(() {
               _selectedOption0 = value;
-              if (_selectedOption6 == "Oui"&& _selectedOption0 == "Oui" && _selectedOption1 == "Oui" && _selectedOption2 == "Oui" && _selectedOption3 == "Oui" && _selectedOption4 == "Oui" && _selectedOption5 == "Oui") _isSwitched = true;
+              if (value == 'Oui') _isSwitched = true;
             });
           },
         ),
@@ -223,7 +223,7 @@ class _InnerRefState extends State<InnerRef> {
           onChanged: (value) {
             setState(() {
               _selectedOption1 = value;
-              if (_selectedOption6 == "Oui"&& _selectedOption0 == "Oui" && _selectedOption1 == "Oui" && _selectedOption2 == "Oui" && _selectedOption3 == "Oui" && _selectedOption4 == "Oui" && _selectedOption5 == "Oui") _isSwitched = true;
+              if (value == 'Oui') _isSwitched = true;
             });
           },
         ),
@@ -234,7 +234,7 @@ class _InnerRefState extends State<InnerRef> {
           onChanged: (value) {
             setState(() {
               _selectedOption2 = value;
-              if (_selectedOption6 == "Oui"&& _selectedOption0 == "Oui" && _selectedOption1 == "Oui" && _selectedOption2 == "Oui" && _selectedOption3 == "Oui" && _selectedOption4 == "Oui" && _selectedOption5 == "Oui") _isSwitched = true;
+              if (value == 'Oui') _isSwitched = true;
             });
           },
         ),
@@ -244,7 +244,7 @@ class _InnerRefState extends State<InnerRef> {
           onChanged: (value) {
             setState(() {
               _selectedOption3 = value;
-              if (_selectedOption6 == "Oui"&& _selectedOption0 == "Oui" && _selectedOption1 == "Oui" && _selectedOption2 == "Oui" && _selectedOption3 == "Oui" && _selectedOption4 == "Oui" && _selectedOption5 == "Oui") _isSwitched = true;
+              if (value == 'Oui') _isSwitched = true;
             });
           },
         ),
@@ -255,7 +255,7 @@ class _InnerRefState extends State<InnerRef> {
           onChanged: (value) {
             setState(() {
               _selectedOption4 = value;
-              if (_selectedOption6 == "Oui"&& _selectedOption0 == "Oui" && _selectedOption1 == "Oui" && _selectedOption2 == "Oui" && _selectedOption3 == "Oui" && _selectedOption4 == "Oui" && _selectedOption5 == "Oui") _isSwitched = true;
+              if (value == 'Oui') _isSwitched = true;
             });
           },
         ),
@@ -266,7 +266,7 @@ class _InnerRefState extends State<InnerRef> {
           onChanged: (value) {
             setState(() {
               _selectedOption5 = value;
-              if (_selectedOption6 == "Oui"&& _selectedOption0 == "Oui" && _selectedOption1 == "Oui" && _selectedOption2 == "Oui" && _selectedOption3 == "Oui" && _selectedOption4 == "Oui" && _selectedOption5 == "Oui") _isSwitched = true;
+              if (value == 'Oui') _isSwitched = true;
             });
           },
         ),
@@ -277,7 +277,7 @@ class _InnerRefState extends State<InnerRef> {
           onChanged: (value) {
             setState(() {
               _selectedOption6 = value;
-              if (_selectedOption6 == "Oui"&& _selectedOption0 == "Oui" && _selectedOption1 == "Oui" && _selectedOption2 == "Oui" && _selectedOption3 == "Oui" && _selectedOption4 == "Oui" && _selectedOption5 == "Oui") _isSwitched = true; 
+              if (value == 'Oui') _isSwitched = true; 
             });
           },
         ),
@@ -328,7 +328,7 @@ class _InnerRefState extends State<InnerRef> {
     return Column(
       children: [
         const Text(
-          'Créer un contre référencement',
+          'Créer un référencement',
           style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 15,

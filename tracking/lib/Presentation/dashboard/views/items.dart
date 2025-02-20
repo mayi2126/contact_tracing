@@ -8,6 +8,8 @@ class Items extends StatefulWidget {
 }
 
 class _ItemsState extends State<Items> {
+    final TextEditingController _searchController = TextEditingController();
+
   List<ConnectivityResult> _connectivityResult = [];
   final Connectivity _connectivity = Connectivity();
 
@@ -52,23 +54,44 @@ class _ItemsState extends State<Items> {
               return Container(
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20)),
+                    topLeft: Radius.circular(20),
+                    // topRight: Radius.circular(20)
+                  ),
                   color: Colors.white,
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Padding(
+                     const Padding(
                       padding: EdgeInsets.only(left: 8.0, top: 10),
-                      child: Text(
-                        "Catégories",
-                        style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.bold),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Categories",
+                            style: TextStyle(
+                                fontSize: 17, fontWeight: FontWeight.bold,color: Palette.foreign,fontFamily: "Poppins"),
+                          ),
+                          Icon(Icons.info_outline, color: Palette.primary,size: 15,),
+                        ],
                       ),
                     ),
-                    10.verticalSpace,
+                    // 10.verticalSpace,
+                    // Padding(
+                    //   padding: const EdgeInsets.fromLTRB(16.0,16.0,16.0,0),
+                    //   child: Container(
+                    //     width: double.infinity,
+                    //     height: 100,
+                    //     decoration: const BoxDecoration(
+                    //       borderRadius: BorderRadius.only(
+                    //         topLeft: Radius.circular(20),
+                    //         bottomRight: Radius.circular(20)
+                    //       ),
+                    //       color: Palette.primary,
+                    //     ),
+                        
+                    //   )
+                    // ),
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Row(
@@ -81,7 +104,7 @@ class _ItemsState extends State<Items> {
                               child: CardWidget(
                                 icon: Icons.recent_actors,
                                 title: "Recensements",
-                                image: "assets/jpg/pregnant.jpg",
+                                image: "assets/jpg/pre.jpg",
                                 onTap: () {
                                   Navigator.pushNamed(
                                       context, RoutesName.mainRecensement);
@@ -96,7 +119,7 @@ class _ItemsState extends State<Items> {
                               child: CardWidget(
                                 icon: Icons.local_activity_outlined,
                                 title: "Référencement",
-                                image: "assets/jpg/pp.jpg",
+                                image: "assets/jpg/referer.jpg",
                                 onTap: () {
                                   Navigator.pushNamed(
                                       context, RoutesName.mainReferencement);
@@ -104,25 +127,25 @@ class _ItemsState extends State<Items> {
                               ),
                             ),
                           ),
-                          15.horizontalSpace,
-                          Expanded(
-                            child: SizedBox(
-                              width: 120, // largeur fixe
-                              child: CardWidget(
-                                icon: Icons.people_sharp,
-                                title: "Contres Référés",
-                                image: "assets/jpg/pre.jpg",
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                      context, RoutesName.mainContreRef);
-                                },
-                              ),
-                            ),
-                          ),
+                          // 15.horizontalSpace,
+                          // Expanded(
+                          //   child: SizedBox(
+                          //     width: 120, // largeur fixe
+                          //     child: CardWidget(
+                          //       icon: Icons.people_sharp,
+                          //       title: "Contres Référés",
+                          //       image: "assets/jpg/pre.jpg",
+                          //       onTap: () {
+                          //         Navigator.pushNamed(
+                          //             context, RoutesName.mainContreRef);
+                          //       },
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
-                    10.verticalSpace,
+                    // 5.verticalSpace,
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Row(
@@ -134,7 +157,7 @@ class _ItemsState extends State<Items> {
                               child: CardWidget(
                                 icon: Icons.health_and_safety_outlined,
                                 title: "Visite A Domicile",
-                                image: "assets/jpg/pre.jpg",
+                                image: "assets/jpg/visite.jpg",
                                 onTap: () {
                                   Navigator.pushNamed(
                                       context, RoutesName.visite);
@@ -149,7 +172,7 @@ class _ItemsState extends State<Items> {
                               child: CardWidget(
                                 icon: Icons.chat,
                                 title: "Suivi F/E",
-                                image: "assets/jpg/pre.jpg",
+                                image: "assets/jpg/suivife.jpg",
                                 onTap: () {
                                   Navigator.pushNamed(
                                       context, RoutesName.mainSuivi);
@@ -163,8 +186,8 @@ class _ItemsState extends State<Items> {
                               width: 120, // largeur fixe
                               child: CardWidget(
                                 icon: Icons.handshake,
-                                title: "Causeries Éducatives",
-                                image: "assets/jpg/cauEdu.jpeg",
+                                title: "Causerie Éducative",
+                                image: "assets/jpg/causerie.jpg",
                                 onTap: () {
                                   Navigator.pushNamed(
                                       context, RoutesName.causerie);
@@ -181,7 +204,7 @@ class _ItemsState extends State<Items> {
                       child: Text(
                         "Récencements d'aujourd'hui",
                         style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.bold),
+                            fontSize: 17, fontWeight: FontWeight.bold,fontFamily: "Poppins",color: Palette.foreign),
                       ),
                     ),
                     10.verticalSpace,

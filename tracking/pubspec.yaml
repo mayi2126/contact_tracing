@@ -39,6 +39,7 @@ dependencies:
   geolocator: ^13.0.2 
   sqflite: ^2.4.1
   connectivity_plus: ^6.1.1
+  card_swiper: ^3.0.1
 
 dev_dependencies:
   flutter_test:

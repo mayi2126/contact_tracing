@@ -43,7 +43,7 @@ class RetrievePatientsSuivisRepositoryImpl
       final List<dynamic> data =
           responseJson['data']; // Accède à la clé 'data' du JSON
 
- print(data);
+//  print(data);
       List<PatientSuivi> patientsSuivis =
           data.map((json) => PatientSuivi.fromMap(json)).toList();
 

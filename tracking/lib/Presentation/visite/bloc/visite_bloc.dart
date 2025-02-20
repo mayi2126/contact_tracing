@@ -7,6 +7,7 @@ import 'package:tracking/Presentation/visite/data/Models/visite_model.dart';
 import 'package:tracking/Presentation/visite/data/Repository/retrieve_vististe.dart';
 import 'package:tracking/Presentation/visite/data/Repository/update_visite.dart';
 import 'package:tracking/Presentation/visite/data/Repository/visite_repo.dart';
+import 'package:tracking/components/utils/date_filter.dart';
 import 'package:tracking/db/selects/selects.dart';
 
 part 'visite_event.dart';
@@ -46,6 +47,7 @@ class VisiteBloc extends Bloc<VisiteEvent, VisiteState> {
       try {
         final List<VisiteModel> result = await retrieveVisiteRepository
             .fetchVisitesById(event.dateMin, event.dateMax);
+            // final List<VisiteModel> todayVisites = filterResultsByToday(result);
 
         if (result.isNotEmpty) {
           final List<VisiteModel> todayVisites = await retrievedVisiteData();

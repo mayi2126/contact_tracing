@@ -1,17 +1,20 @@
 part of '../../core/cores.dart';
 
-class MainRecensement extends StatefulWidget {
-  const MainRecensement({super.key});
+class InnerRecencement extends StatefulWidget {
+  const InnerRecencement({super.key});
 
   @override
-  State<MainRecensement> createState() => _MainRecensementState();
+  State<InnerRecencement> createState() => _InnerRecencementState();
 }
 
-class _MainRecensementState extends State<MainRecensement> {
+class _InnerRecencementState extends State<InnerRecencement> {
   final TextEditingController _searchController = TextEditingController();
 
   List<Recensement> _filteredRecensements = [];
   List<Recensement> _filteredRecensementsAll = [];
+  List<ConnectivityResult> _connectivityResult = [];
+  final Connectivity _connectivity = Connectivity();
+  bool isInternetAvailable = true;
 
   @override
   void dispose() {
@@ -24,6 +27,32 @@ class _MainRecensementState extends State<MainRecensement> {
   void initState() {
     super.initState();
     _searchController.addListener(_filterReferencements);
+    _checkConnectivity();
+    _connectivity.onConnectivityChanged
+        .listen((List<ConnectivityResult> result) {
+      if (mounted) {
+        setState(() {
+          _connectivityResult = result;
+
+          // if (_connectivityResult.first != ConnectivityResult.none) {
+          //   BlocProvider.of<RecensementBloc>(context).add(
+          //       HandleGetRecensement("2023-01-01", DateTime.now().toString()));
+          // }
+        });
+      }
+    });
+  }
+
+  Future<void> _checkConnectivity() async {
+    List<ConnectivityResult> result = await _connectivity.checkConnectivity();
+    if (result.first == ConnectivityResult.none) {
+      // Si pas de connexion internet, afficher un message d'erreur
+      if (mounted) {
+      setState(() {
+        isInternetAvailable = false;
+      });
+      }
+    }
   }
 
   void _filterReferencements() {
@@ -44,12 +73,9 @@ class _MainRecensementState extends State<MainRecensement> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => RecensementBloc()
-        ..add(HandleGetRecensement("2023-01-01", DateTime.now().toString())),
-      child: Scaffold(
-        backgroundColor: Palette.primary,
-        appBar: AppBar(
+    return Scaffold(
+      backgroundColor: Palette.primary,
+      appBar: AppBar(
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios_outlined,
@@ -105,68 +131,95 @@ class _MainRecensementState extends State<MainRecensement> {
           ),
         ),
       ),
-        body: BlocListener<RecensementBloc, RecensementState>(
-          listener: (context, state) {
-            if (state is GetRecensementSuccess){
+      body: BlocListener<RecensementBloc, RecensementState>(
+        listener: (context, state) {
+          if (state is GetRecensementSuccess) {
+            _filteredRecensementsAll = state.recensements;
+            _filteredRecensements = state.recensements;
+          }
+        },
+        child: BlocBuilder<RecensementBloc, RecensementState>(
+          builder: (context, state) {
+            return Container(
+              height: double.infinity,
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20)),
+                color: Colors.white,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "La liste des recensements ",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    15.verticalSpace,
+                    // state is GetRecensementLoading() ? const Center(
+                    //   child: CircularProgressIndicator(),
+                    // ): state is GetRecensementSuccess() ?
 
-              _filteredRecensementsAll = state.recensements;
-              _filteredRecensements = state.recensements;
-            }
-          },
-          child: BlocBuilder<RecensementBloc, RecensementState>(
-            builder: (context, state) {
-              return Container(
-                 height: double.infinity,
-        width: double.infinity,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
-                  color: Colors.white,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "La liste des recensements ",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      15.verticalSpace,
-                      // state is GetRecensementLoading() ? const Center(
-                      //   child: CircularProgressIndicator(),
-                      // ): state is GetRecensementSuccess() ?
-                
-                      // RecentTrackingWidget(cards: state.recensements,),
-                
-                      state is GetRecensementSuccess
-                          ? RecentTrackingWidget(cards: _filteredRecensements)
-                          : const Center(
-                              child: CircularProgressIndicator(),
+                    // RecentTrackingWidget(cards: state.recensements,),
+                    !isInternetAvailable ? const Padding(
+                      padding:  EdgeInsets.only(top: 20, bottom: 20),
+                      child:  Center(
+                          child: CircleAvatar(
+                            backgroundColor: Palette.bgGrey,
+                            radius: 30,
+                            child: Icon(
+                              Icons.wifi_off,
+                              color: Palette.foreign,
+                              size: 30,
                             ),
-                      state is GetRecensementError
-                          ? Center(
-                              child: Text(state.message),
-                            )
-                          : const SizedBox(),
-                    ],
-                  ),
+                          ),
+                        ),
+                    ): const SizedBox(),
+
+                    state is GetRecensementSuccess
+                        ? RecentTrackingWidget(cards: _filteredRecensements)
+                        : const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                    state is GetRecensementError
+                        ? Center(
+                            child: Text(state.message),
+                          )
+                        : const SizedBox(),
+                  ],
                 ),
-              );
-            },
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, RoutesName.addRecensement);
+              ),
+            );
           },
-          backgroundColor: Palette.primary,
-          shape: const CircleBorder(),
-          child: const Icon(
-            Icons.add,
-            color: Palette.white,
-          ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, RoutesName.addRecensement);
+        },
+        backgroundColor: Palette.primary,
+        shape: const CircleBorder(),
+        child: const Icon(
+          Icons.add,
+          color: Palette.white,
+        ),
+      ),
+    );
+  }
+}
+
+class MainRecensement extends StatelessWidget {
+  const MainRecensement({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => RecensementBloc()
+        ..add(HandleGetRecensement("2023-01-01", DateTime.now().toString())),
+      child: const InnerRecencement(),
     );
   }
 }

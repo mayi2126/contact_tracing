@@ -48,6 +48,7 @@ class SuiviBloc extends Bloc<SuiviEvent, SuiviState> {
       emit(GetPatientsSuiviSuccess(result));
     }
     catch (e) {
+      print(e.toString());
       emit(GetPatientsSuiviError(e.toString()));
     }
 

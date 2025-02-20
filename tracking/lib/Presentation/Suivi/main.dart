@@ -1110,7 +1110,7 @@ class CardPatientSuivi extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      patient.issusaccouchement,
+                      "${patient.issusaccouchement}",
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(

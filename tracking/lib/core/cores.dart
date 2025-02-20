@@ -2,6 +2,7 @@ library core;
 
 import 'dart:async';
 import 'dart:convert';
+import 'package:card_swiper/card_swiper.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:intl/intl.dart';
 

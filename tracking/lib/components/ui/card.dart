@@ -36,8 +36,8 @@ class _CardWidgetState extends State<CardWidget> {
             BoxShadow(
               color: Colors.grey.withOpacity(0.2),
               spreadRadius: 4,
-              blurRadius: 5,
-              offset: const Offset(8, 8),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
           )]
         ),
         child: Column(
@@ -56,11 +56,10 @@ class _CardWidgetState extends State<CardWidget> {
               ),
             ),
             5.verticalSpace,
-            Padding(
-              padding: const EdgeInsets.only(left: 2),
+            Center(
               child: Text(
                 widget.title,
-                textAlign: TextAlign.left,
+                textAlign: TextAlign.center,
                 style: const TextStyle(
                     fontSize: 10, fontWeight: FontWeight.bold),
               ),
