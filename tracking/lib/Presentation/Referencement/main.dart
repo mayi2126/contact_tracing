@@ -550,7 +550,7 @@ class _InnerRefState extends State<InnerRef> {
                                                       2, // Espacement vertical entre les éléments
                                                   // Définir un ratio d'aspect qui donne la hauteur désirée
                                                   childAspectRatio:
-                                                      1, // La largeur est 2x la hauteur
+                                                      0.9, // La largeur est 2x la hauteur
                                                 ),
                                                 delegate:
                                                     SliverChildListDelegate(

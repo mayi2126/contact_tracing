@@ -439,6 +439,8 @@ class _AddMemberPageState extends State<AddMemberPage> {
                                         labelText: "",
                                         hintText: "+228 98969856",
                                         controller: _contactController,
+                                        validator: Validatorless.phone("Entrer un numero de telephone valide"),
+                                        // validator: Validatorless.regex(RegExp(r'^(2\d{7}|7[0-9]\d{6})$'), "Entrer un numero de telephone valide"),
                                       ),
                                       10.verticalSpaceFromWidth,
                                       const Text(

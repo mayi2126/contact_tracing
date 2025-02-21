@@ -30,15 +30,13 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
   final TextEditingController __nbrePersonnesTEnceintesController =
       TextEditingController(text: "0");
 
-  final TextEditingController __autresController =
-      TextEditingController();
+  final TextEditingController __autresController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
 
   int _index = 0;
   User? user; // Variable pour stocker les infos utilisateur
-
 
   final RestorableDateTime _selectedDate =
       RestorableDateTime(DateTime(2021, 7, 25));
@@ -53,7 +51,6 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
     },
   );
 
-
   Future<void> _loadUserData() async {
     final prefs = await SharedPreferences.getInstance();
     String? userJson = prefs.getString('user_info');
@@ -62,14 +59,11 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
       setState(() {
         user = User.fromJson(
             jsonDecode(userJson)); // Stocker les infos dans la variable
-          
       });
-
     }
   }
 
-
-   @override
+  @override
   void initState() {
     super.initState();
     _loadUserData(); // Charger les infos utilisateur à l'initialisation
@@ -187,19 +181,14 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
   }
 
   Widget _dropDownQuartier(String id) {
-
-   
-
-    
-      return DropMenuQuartier(
-        onSelected: (String? value) {
-          setState(() {
-            _quartierValue = value!;
-            print("Quartier sélectionné: $_quartierValue");
-          });
-        },
-      );
-   
+    return DropMenuQuartier(
+      onSelected: (String? value) {
+        setState(() {
+          _quartierValue = value!;
+          print("Quartier sélectionné: $_quartierValue");
+        });
+      },
+    );
   }
 
   @override
@@ -207,14 +196,11 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            context.read<DataBloc>().add(QuartierReset());
-            Navigator.pop(context);
-
-
-          }
-        ),
+            icon: const Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              context.read<DataBloc>().add(QuartierReset());
+              Navigator.pop(context);
+            }),
         backgroundColor: Palette.primary,
         iconTheme: const IconThemeData(color: Palette.white),
         title: const Text(
@@ -292,27 +278,26 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
-
                                   DropMenuVillage(
                                     onSelected: (String? value) {
                                       setState(() {
                                         _villageValue = value!;
                                         print(_villageValue);
                                       });
-                                          context.read<DataBloc>().add(FetchVillageQuartier(int.parse(_villageValue)));
-
+                                      context.read<DataBloc>().add(
+                                          FetchVillageQuartier(
+                                              int.parse(_villageValue)));
                                     },
                                   ),
-
                                   10.verticalSpace,
-                                  _villageValue != '' ? const Text(
-                                    "Quartier",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ):const SizedBox.shrink(),
-
+                                  _villageValue != ''
+                                      ? const Text(
+                                          "Quartier",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        )
+                                      : const SizedBox.shrink(),
                                   _dropDownQuartier(_villageValue),
-
                                   10.verticalSpace,
                                   const Text(
                                     "Date",
@@ -325,6 +310,8 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                     controller: _dateController,
                                     keybordType: TextInputType.number,
                                     icon: Icons.date_range,
+                                    validator: Validatorless.required(
+                                        "Date est requise"),
                                     onTap: () {
                                       _restorableDatePickerRouteFuture
                                           .present();
@@ -341,7 +328,8 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                     hintText: "",
                                     controller: _localisationController,
                                     keybordType: TextInputType.text,
-                                    onTap: () {},
+                                    validator: Validatorless.required(
+                                        "Lieu est requis"),
                                   ),
                                   10.verticalSpace,
                                   const Text(
@@ -349,23 +337,18 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
-                                  
-
                                   DropMenuMotif(
                                     onSelected: (String? value) {
                                       setState(() {
-                                       
                                         List<String> parts = value!.split(':');
                                         _themeValue = parts[0];
                                         _label = parts[1];
-
 
                                         print(_themeValue);
                                       });
                                     },
                                     // type: 'ACTIVITÉS PRÉVENTIVES ',
                                   ),
-
                                   20.verticalSpace,
                                   Center(
                                     child: CircleAvatar(
@@ -377,9 +360,12 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                           color: Palette.white,
                                         ),
                                         onPressed: () {
-                                          setState(() {
-                                            _index++;
-                                          });
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            setState(() {
+                                              _index++;
+                                            });
+                                          }
                                         },
                                       ),
                                     ),
@@ -408,6 +394,12 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                       controller: _nbrePersonnesTController,
                                       keybordType: TextInputType.number,
                                       onTap: () {},
+                                      validator: Validatorless.multiple([
+                                        Validatorless.required(
+                                            "Nombre de personnes touchées obligatoire"),
+                                        Validatorless.number(
+                                            "Doit etre un nombre")
+                                      ]),
                                     ),
                                     10.verticalSpace,
                                     const Text(
@@ -422,6 +414,12 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                           __nbrePersonnesTEnceintesController,
                                       keybordType: TextInputType.number,
                                       onTap: () {},
+                                      validator: Validatorless.multiple([
+                                        Validatorless.required(
+                                            "Nombre de femmes enceintes obligatoire"),
+                                        Validatorless.number(
+                                            "Doit etre un nombre")
+                                      ]),
                                     ),
                                     10.verticalSpace,
                                     const Text(
@@ -436,6 +434,12 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                           __nbrePersonnesTAllaitantesController,
                                       keybordType: TextInputType.number,
                                       onTap: () {},
+                                      validator: Validatorless.multiple([
+                                        Validatorless.required(
+                                            "Nombre de femmes allaitantes obligatoire"),
+                                        Validatorless.number(
+                                            "Doit etre un nombre")
+                                      ]),
                                     ),
                                     10.verticalSpace,
                                     const Text(
@@ -450,6 +454,12 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                           __nbrePersonnesTHommesController,
                                       keybordType: TextInputType.number,
                                       onTap: () {},
+                                      validator: Validatorless.multiple([
+                                        Validatorless.required(
+                                            "Nombre d'hommes touchés est requis"),
+                                        Validatorless.number(
+                                            "Doit etre un nombre")
+                                      ]),
                                     ),
                                     10.verticalSpace,
                                     const Text(
@@ -464,6 +474,12 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                           __nbrePersonnesTEnfantsController,
                                       keybordType: TextInputType.number,
                                       onTap: () {},
+                                      validator: Validatorless.multiple([
+                                        Validatorless.required(
+                                            "Nombre d'enfants est requis"),
+                                        Validatorless.number(
+                                            "Doit etre un nombre")
+                                      ]),
                                     ),
                                     10.verticalSpace,
                                     const Text(
@@ -515,7 +531,10 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                               // });
 
                                               // Navigator.pop(context);
-                                              _onSubmit(context);
+                                              if (_formKey2.currentState!
+                                                  .validate()) {
+                                                _onSubmit(context);
+                                              }
                                             },
                                           ),
                                         )

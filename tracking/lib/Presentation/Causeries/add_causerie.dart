@@ -266,11 +266,14 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 CustomTextFormInput(
+                                  isReadonly: true,
                                   labelText: "",
                                   hintText: "mm/jj/aaaa",
                                   controller: _dateController,
                                   keybordType: TextInputType.number,
                                   icon: Icons.date_range,
+                                    validator: Validatorless.required("Date est requise"),
+
                                   onTap: () {
                                     _restorableDatePickerRouteFuture.present();
                                   },
@@ -285,6 +288,7 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
                                   hintText: "",
                                   controller: _localisationController,
                                   keybordType: TextInputType.text,
+                                   validator: Validatorless.required("Lieu est requis"),
                                   onTap: () {},
                                 ),
                                 10.verticalSpace,
@@ -313,9 +317,12 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
                                           color: Palette.white,
                                         ),
                                         onPressed: () {
-                                          setState(() {
+                                          if (_formKey.currentState!.validate()) {
+                                             setState(() {
                                             _index++;
                                           });
+                                          }
+                                         
                                         },
                                       ),
                                     ),
@@ -342,6 +349,10 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
                                     hintText: "0",
                                     controller: _nbrePersonnesTController,
                                     keybordType: TextInputType.number,
+                                    validator: Validatorless.multiple([
+                                      Validatorless.required("Nombre de personnes touchées obligatoire"),
+                                      Validatorless.number("Doit etre un nombre")
+                                      ]),
                                     onTap: () {},
                                   ),
                                   10.verticalSpace,
@@ -355,6 +366,11 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
                                     controller: __nbrePersonnesTEnceintesController,
                                     keybordType: TextInputType.number,
                                     onTap: () {},
+                                   validator: Validatorless.multiple([
+                                     Validatorless.required("Nombre de femmes enceintes obligatoire"),
+                                     Validatorless.number("Doit etre un nombre")
+                                   ]),
+
                                   ),
                                   10.verticalSpace,
                                   const Text(
@@ -366,6 +382,10 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
                                     hintText: "0",
                                     controller: __nbrePersonnesTAllaitantesController,
                                     keybordType: TextInputType.number,
+                                    validator: Validatorless.multiple([
+                                      Validatorless.required("Nombre de femmes allaitantes obligatoire"),
+                                      Validatorless.number("Doit etre un nombre")
+                                    ]),
                                     onTap: () {},
                                   ),
                                   10.verticalSpace,
@@ -377,6 +397,10 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
                                     labelText: "",
                                     hintText: "0",
                                     controller: __nbrePersonnesTHommesController,
+                                     validator: Validatorless.multiple([
+                                      Validatorless.required("Nombre d'hommes touchés est requis"),
+                                      Validatorless.number("Doit etre un nombre")
+                                    ]),
                                     keybordType: TextInputType.number,
                                     onTap: () {},
                                   ),
@@ -390,6 +414,10 @@ class _AddCauserieState extends State<AddCauserie> with RestorationMixin {
                                     hintText: "0",
                                     controller: __nbrePersonnesTEnfantsController,
                                     keybordType: TextInputType.number,
+                                    validator: Validatorless.multiple([
+                                      Validatorless.required("Nombre d'enfants est requis"),
+                                      Validatorless.number("Doit etre un nombre")
+                                    ]),
                                     onTap: () {},
                                   ),
                                   10.verticalSpace,

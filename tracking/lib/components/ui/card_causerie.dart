@@ -21,7 +21,7 @@ class CardC extends StatelessWidget {
         padding: const EdgeInsets.only(left: 10),
         child: Container(
           padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          height: getHeight(130),
+          height: getHeight(160),
           width: getWidth(200),
           decoration: BoxDecoration(
             // color: Palette.white,

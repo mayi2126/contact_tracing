@@ -12,6 +12,7 @@ class ReferencementCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
+        // height: getHeight(200),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             //  color: Colors.red,

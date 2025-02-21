@@ -17,6 +17,8 @@ class _AddRecensementState extends State<AddRecensement> {
   final TextEditingController _numeroMenageController = TextEditingController();
   final TextEditingController _nomController = TextEditingController();
   final TextEditingController _prenomsController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    final GlobalKey<FormState> _formKey_ = GlobalKey<FormState>();
 
   bool permissionGranted = false;
   bool gpsEnabled = false;
@@ -27,8 +29,7 @@ class _AddRecensementState extends State<AddRecensement> {
   List<l.LocationData> locations = [];
   DateTime? selectedDate;
 
-      User? user; // Variable pour stocker les infos utilisateur
-
+  User? user; // Variable pour stocker les infos utilisateur
 
   @override
   void dispose() {
@@ -41,7 +42,7 @@ class _AddRecensementState extends State<AddRecensement> {
     _prenomsController.dispose();
   }
 
-    Future<void> _loadUserData() async {
+  Future<void> _loadUserData() async {
     final prefs = await SharedPreferences.getInstance();
     String? userJson = prefs.getString('user_info');
 
@@ -49,14 +50,11 @@ class _AddRecensementState extends State<AddRecensement> {
       setState(() {
         user = User.fromJson(
             jsonDecode(userJson)); // Stocker les infos dans la variable
-          
       });
-
     }
   }
 
-
-   @override
+  @override
   void initState() {
     super.initState();
     _loadUserData(); // Charger les infos utilisateur à l'initialisation
@@ -175,11 +173,9 @@ class _AddRecensementState extends State<AddRecensement> {
           prenomchefmenagerec: _prenomsController.text,
           userEnreg: 0); // Replace with your actual CheMenage
 
-        print(chefMenage.nomchefmenagerec);
+      print(chefMenage.nomchefmenagerec);
 
-      BlocProvider.of<RecensementBloc>(context)
-          .add(AddChefMenage(chefMenage));
-
+      BlocProvider.of<RecensementBloc>(context).add(AddChefMenage(chefMenage));
     } catch (e) {
       print(e);
     }
@@ -204,64 +200,71 @@ class _AddRecensementState extends State<AddRecensement> {
             style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             // textAlign: TextAlign.center,
           ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              10.verticalSpaceFromWidth,
-              const Text(
-                "Numéro de ménage",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              //TODO:add number of menage
-              CustomTextFormInput(
-                isReadonly: true,
-                labelText: "",
-                hintText: "MNG-C-KOUTOBA1",
-                controller: _numeroMenageController,
-                isPassword: true,
-              ),
-              10.verticalSpaceFromWidth,
-              const Text(
-                "Nom du Chef",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              CustomTextFormInput(
-                labelText: "",
-                hintText: "Entrer le nom du chef",
-                controller: _nomController,
-                // isPassword: true,
-              ),
-              10.verticalSpaceFromWidth,
-              const Text(
-                "Prénoms du Chef",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              CustomTextFormInput(
-                labelText: "",
-                hintText: "Entrer le(s) prénoms du chef",
-                controller: _prenomsController,
-                // isPassword: true,
-              ),
-              10.verticalSpaceFromWidth,
-              PrimaryButton(
-                btnText: primaryBtnText,
-                width: double.infinity,
-                textColor: Palette.white,
-                isFilledBtn: true,
-                onTapFunction: onTapPrimary,
-                btnBgColor: Palette.primary,
-              ),
-              10.verticalSpaceFromWidth,
-              PrimaryButton(
-                btnText: secondaryBtnText,
-                width: double.infinity,
-                isFilledBtn: true,
-                onTapFunction: onTapSecondary,
-                textColor: Palette.primary,
-                btnBgColor: Palette.white,
-              ),
-            ],
+          content: Form(
+            key: _formKey_,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                10.verticalSpaceFromWidth,
+                const Text(
+                  "Numéro de ménage",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                //TODO:add number of menage
+                CustomTextFormInput(
+                  isReadonly: true,
+                  labelText: "",
+                  hintText: "MNG-C-KOUTOBA1",
+                  controller: _numeroMenageController,
+                  isPassword: true,
+                ),
+                10.verticalSpaceFromWidth,
+                const Text(
+                  "Nom du Chef",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                CustomTextFormInput(
+                  labelText: "",
+                  hintText: "Entrer le nom du chef",
+                  controller: _nomController,
+                  validator:
+                        Validatorless.required("Nom est requis"),
+                  // isPassword: true,
+                ),
+                10.verticalSpaceFromWidth,
+                const Text(
+                  "Prénoms du Chef",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                CustomTextFormInput(
+                  labelText: "",
+                  hintText: "Entrer le(s) prénoms du chef",
+                  controller: _prenomsController,
+                   validator:
+                        Validatorless.required("Prénoms Nom est requis"),
+                  // isPassword: true,
+                ),
+                10.verticalSpaceFromWidth,
+                PrimaryButton(
+                  btnText: primaryBtnText,
+                  width: double.infinity,
+                  textColor: Palette.white,
+                  isFilledBtn: true,
+                  onTapFunction: onTapPrimary,
+                  btnBgColor: Palette.primary,
+                ),
+                10.verticalSpaceFromWidth,
+                PrimaryButton(
+                  btnText: secondaryBtnText,
+                  width: double.infinity,
+                  isFilledBtn: true,
+                  onTapFunction: onTapSecondary,
+                  textColor: Palette.primary,
+                  btnBgColor: Palette.white,
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -316,120 +319,137 @@ class _AddRecensementState extends State<AddRecensement> {
         },
         child: Container(
           padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Formation Sanitaire",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              //TODOS:  add formation sanitaire
-              CustomTextFormInput(
-                isReadonly: true,
-                labelText: "",
-                hintText: user != null ? user!.name : "",
-                controller: _formationSanitaire,
-                // isPassword: true,
-              ),
-              10.verticalSpace,
-              const Text(
-                "Village",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              DropMenuVillage(
-                onSelected: (String? value) {
-                  setState(() {
-                    _villageValue = value!;
-                    print(_villageValue);
-                  });
-                  context
-                      .read<DataBloc>()
-                      .add(FetchVillageQuartier(int.parse(_villageValue)));
-                },
-              ),
-              10.verticalSpace,
-              _villageValue == ""
-                  ? const SizedBox.shrink()
-                  : const Text(
-                      "Quartier",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Formation Sanitaire",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                //TODOS:  add formation sanitaire
+                CustomTextFormInput(
+                  isReadonly: true,
+                  labelText: "",
+                  hintText: user != null ? user!.name : "",
+                  controller: _formationSanitaire,
+                  // isPassword: true,
+                ),
+                10.verticalSpace,
+                const Text(
+                  "Village",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                DropMenuVillage(
+                  onSelected: (String? value) {
+                    setState(() {
+                      _villageValue = value!;
+                      print(_villageValue);
+                    });
+                    context
+                        .read<DataBloc>()
+                        .add(FetchVillageQuartier(int.parse(_villageValue)));
+                  },
+                ),
+                10.verticalSpace,
+                _villageValue == ""
+                    ? const SizedBox.shrink()
+                    : const Text(
+                        "Quartier",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                DropMenuQuartier(
+                  onSelected: (String? value) {
+                    setState(() {
+                      _quartierValue = value!;
+                      print("Quartier sélectionné: $_quartierValue");
+                    });
+                  },
+                ),
+                10.verticalSpace,
+                const Text(
+                  "Date",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                CustomTextFormInput(
+                  isReadonly: true,
+                  labelText: "",
+                  hintText: "mm/jj/aaaa",
+                  controller: _dateController,
+                  keybordType: TextInputType.number,
+                  icon: Icons.date_range,
+                  validator: Validatorless.required("Date est requis"),
+                  onTap: () {
+                    _selectDate(context);
+                  },
+                ),
+                10.verticalSpace,
+                const Text(
+                  "Localisation GPS",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                CustomTextFormInput(
+                  isReadonly: true,
+                  labelText: "",
+                  hintText: trackingEnabled == false
+                      ? "Utiliser votre position GPS pour le localiser"
+                      : "6,8976789, 3,456789",
+                  controller: _localisationController,
+                  keybordType: TextInputType.number,
+                  icon: Icons.location_on,
+                  validator:
+                      Validatorless.required("Coordonnées GPS est requis"),
+                  onTap: () {
+                    requestLocationPermission();
+                    startTracking();
+                  },
+                ),
+                10.verticalSpace,
+                Row(
+                  children: [
+                    Expanded(
+                      child: PrimaryButton(
+                        btnBgColor: Palette.primary,
+                        textColor: Palette.white,
+                        btnText: "Enregistrer",
+                        isFilledBtn: false,
+                        onTapFunction: () {
+                          if(_formKey.currentState!.validate()){
+                            
+                          _onSubmitInfoGenRec(context);
+                          }
+                        },
+                      ),
                     ),
-              DropMenuQuartier(
-                onSelected: (String? value) {
-                  setState(() {
-                    _quartierValue = value!;
-                    print("Quartier sélectionné: $_quartierValue");
-                  });
-                },
-              ),
-              10.verticalSpace,
-              const Text(
-                "Date",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              CustomTextFormInput(
-                labelText: "",
-                hintText: "mm/jj/aaaa",
-                controller: _dateController,
-                keybordType: TextInputType.number,
-                icon: Icons.date_range,
-                onTap: () {
-                  _selectDate(context);
-                },
-              ),
-              10.verticalSpace,
-              const Text(
-                "Localisation GPS",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              CustomTextFormInput(
-                labelText: "",
-                hintText: trackingEnabled == false
-                    ? "Utiliser votre position GPS pour le localiser"
-                    : "6,8976789, 3,456789",
-                controller: _localisationController,
-                keybordType: TextInputType.number,
-                icon: Icons.location_on,
-                onTap: () {
-                  requestLocationPermission();
-                  startTracking();
-                },
-              ),
-              10.verticalSpace,
-              Row(
-                children: [
-                  Expanded(
-                    child: PrimaryButton(
-                      btnBgColor: Palette.primary,
-                      textColor: Palette.white,
-                      btnText: "Enregistrer",
-                      isFilledBtn: false,
-                      onTapFunction: () {
-                        _onSubmitInfoGenRec(context);
-                      },
-                    ),
-                  ),
-                  5.horizontalSpace,
-                  Expanded(
-                    child: PrimaryButton(
-                      btnBgColor: Palette.primary,
-                      textColor: Palette.white,
-                      btnText: "Ajouter un Chef",
-                      isFilledBtn: false,
-                      onTapFunction: () {
-                        dialogBuilder(context, () {
-                          _onSubmitChefMenage(context);
-                        }, () {
-                          Navigator.pop(context);
-                          Navigator.pushNamed(context, RoutesName.addMember);
-                        }, "Ajouter un Chef Ménage", "", "Enregistrer",
-                            "Ajouter un membre de la famille");
-                      },
-                    ),
-                  )
-                ],
-              ),
-            ],
+                    5.horizontalSpace,
+                    Expanded(
+                      child: PrimaryButton(
+                        btnBgColor: Palette.primary,
+                        textColor: Palette.white,
+                        btnText: "Ajouter un Chef",
+                        isFilledBtn: false,
+                        onTapFunction: () {
+                          // if(_formKey.currentState!.validate()){
+                            
+                          dialogBuilder(context, () {
+                            if(_formKey_.currentState!.validate()){
+                              
+                            _onSubmitChefMenage(context);
+                            }
+                          }, () {
+                            Navigator.pop(context);
+                            Navigator.pushNamed(context, RoutesName.addMember);
+                          }, "Ajouter un Chef Ménage", "", "Enregistrer",
+                              "Ajouter un membre de la famille");
+                          }
+                        // },
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
