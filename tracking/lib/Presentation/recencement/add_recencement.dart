@@ -7,7 +7,8 @@ class AddRecensement extends StatefulWidget {
   State<AddRecensement> createState() => _AddRecensementState();
 }
 
-class _AddRecensementState extends State<AddRecensement> {
+class _AddRecensementState extends State<AddRecensement>
+    with SingleTickerProviderStateMixin {
   @override
   String _villageValue = "";
   String _quartierValue = "";
@@ -18,7 +19,7 @@ class _AddRecensementState extends State<AddRecensement> {
   final TextEditingController _nomController = TextEditingController();
   final TextEditingController _prenomsController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-    final GlobalKey<FormState> _formKey_ = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey_ = GlobalKey<FormState>();
 
   bool permissionGranted = false;
   bool gpsEnabled = false;
@@ -28,6 +29,12 @@ class _AddRecensementState extends State<AddRecensement> {
 
   List<l.LocationData> locations = [];
   DateTime? selectedDate;
+
+  late AnimationController _controller;
+  bool isRotate = false;
+
+  List<ConnectivityResult> _connectivityResult = [];
+  final Connectivity _connectivity = Connectivity();
 
   User? user; // Variable pour stocker les infos utilisateur
 
@@ -58,6 +65,25 @@ class _AddRecensementState extends State<AddRecensement> {
   void initState() {
     super.initState();
     _loadUserData(); // Charger les infos utilisateur à l'initialisation
+
+    _controller = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    ); // R
+    _checkConnectivity();
+    _connectivity.onConnectivityChanged
+        .listen((List<ConnectivityResult> result) {
+      setState(() {
+        _connectivityResult = result;
+      });
+    });
+  }
+
+  Future<void> _checkConnectivity() async {
+    List<ConnectivityResult> result = await _connectivity.checkConnectivity();
+    setState(() {
+      _connectivityResult = result;
+    });
   }
 
   void checkStatus() async {
@@ -228,8 +254,7 @@ class _AddRecensementState extends State<AddRecensement> {
                   labelText: "",
                   hintText: "Entrer le nom du chef",
                   controller: _nomController,
-                  validator:
-                        Validatorless.required("Nom est requis"),
+                  validator: Validatorless.required("Nom est requis"),
                   // isPassword: true,
                 ),
                 10.verticalSpaceFromWidth,
@@ -241,8 +266,7 @@ class _AddRecensementState extends State<AddRecensement> {
                   labelText: "",
                   hintText: "Entrer le(s) prénoms du chef",
                   controller: _prenomsController,
-                   validator:
-                        Validatorless.required("Prénoms Nom est requis"),
+                  validator: Validatorless.required("Prénoms Nom est requis"),
                   // isPassword: true,
                 ),
                 10.verticalSpaceFromWidth,
@@ -275,6 +299,32 @@ class _AddRecensementState extends State<AddRecensement> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          actions: [
+          _connectivityResult.isNotEmpty &&
+                  _connectivityResult.first == ConnectivityResult.none
+              ? const SizedBox()
+              : IconButton(
+                  onPressed: () async {
+                    _controller.repeat();
+                    await insertMotifsFromApi();
+                    await insertVillagesFromApi();
+                    await insertQuartiers();
+
+                    _controller.reset();
+                    // syncVisites();
+                  },
+                  icon: RotationTransition(
+                    turns: _controller,
+                    child: const Icon(
+                      Icons.sync_sharp,
+                      size: 20,
+                      color:
+                          Colors.white, // Changez la couleur selon votre thème
+                    ),
+                  ),
+                )
+        ],
+        
         leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios),
             onPressed: () {
@@ -415,9 +465,8 @@ class _AddRecensementState extends State<AddRecensement> {
                         btnText: "Enregistrer",
                         isFilledBtn: false,
                         onTapFunction: () {
-                          if(_formKey.currentState!.validate()){
-                            
-                          _onSubmitInfoGenRec(context);
+                          if (_formKey.currentState!.validate()) {
+                            _onSubmitInfoGenRec(context);
                           }
                         },
                       ),
@@ -425,26 +474,26 @@ class _AddRecensementState extends State<AddRecensement> {
                     5.horizontalSpace,
                     Expanded(
                       child: PrimaryButton(
-                        btnBgColor: Palette.primary,
-                        textColor: Palette.white,
-                        btnText: "Ajouter un Chef",
-                        isFilledBtn: false,
-                        onTapFunction: () {
-                          // if(_formKey.currentState!.validate()){
-                            
-                          dialogBuilder(context, () {
-                            if(_formKey_.currentState!.validate()){
-                              
-                            _onSubmitChefMenage(context);
-                            }
-                          }, () {
-                            Navigator.pop(context);
-                            Navigator.pushNamed(context, RoutesName.addMember);
-                          }, "Ajouter un Chef Ménage", "", "Enregistrer",
-                              "Ajouter un membre de la famille");
+                          btnBgColor: Palette.primary,
+                          textColor: Palette.white,
+                          btnText: "Ajouter un Chef",
+                          isFilledBtn: false,
+                          onTapFunction: () {
+                            // if(_formKey.currentState!.validate()){
+
+                            dialogBuilder(context, () {
+                              if (_formKey_.currentState!.validate()) {
+                                _onSubmitChefMenage(context);
+                              }
+                            }, () {
+                              Navigator.pop(context);
+                              Navigator.pushNamed(
+                                  context, RoutesName.addMember);
+                            }, "Ajouter un Chef Ménage", "", "Enregistrer",
+                                "Ajouter un membre de la famille");
                           }
-                        // },
-                      ),
+                          // },
+                          ),
                     )
                   ],
                 ),

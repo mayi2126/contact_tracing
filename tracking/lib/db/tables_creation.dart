@@ -108,6 +108,15 @@ CREATE TABLE IF NOT EXISTS professions(
     )
   ''');
 }
+Future<void> createTableElements(Database db) async {
+await db.execute('''
+CREATE TABLE IF NOT EXISTS elements(
+      id INTEGER PRIMARY KEY,
+      libelementdedonnee TEXT,
+      type TEXT NULL
+    )
+  ''');
+}
 
 
 Future<void> createTables(Database db) async {

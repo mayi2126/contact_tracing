@@ -99,4 +99,20 @@ class MotifBloc extends Bloc<DataEvent, DataState> {
   }
 }
 
+/* --------------------------- Element de Donnees --------------------------- */
+class ElementDeDonneesBloc extends Bloc<DataEvent, DataState> {
+
+  ElementDeDonneesBloc() : super(ElementDeDonneInitial()) {
+    on<ElementsEvent>((event, emit) async {
+      emit(ElementDeDonneLoading());
+      try {
+        final elements = await retrievedElementsData();
+        emit(ElementDeDonneLoaded(elements));
+      } catch (e) {
+        emit(ElementDeDonneError(e.toString()));
+      }
+    });
+  }
+}
+
 

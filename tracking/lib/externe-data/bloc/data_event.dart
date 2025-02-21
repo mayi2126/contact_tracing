@@ -31,3 +31,6 @@ class ProfessionsEvent extends DataEvent {
 
 class MotifsEvent extends DataEvent {
 }
+
+
+class ElementsEvent extends DataEvent {}

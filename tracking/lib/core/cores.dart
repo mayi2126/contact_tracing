@@ -27,6 +27,7 @@ import 'package:tracking/Presentation/recencement/data/Models/offline_recensemen
 import 'package:tracking/Presentation/visite/bloc/visite_bloc.dart';
 import 'package:tracking/Presentation/visite/data/Models/visite.dart';
 import 'package:tracking/Presentation/visite/data/Models/visite_model.dart';
+import 'package:tracking/db/inserts/element.dart';
 import 'package:tracking/db/inserts/motifs.dart';
 import 'package:tracking/db/inserts/professions.dart';
 import 'package:tracking/db/inserts/quartier.dart';
@@ -108,6 +109,7 @@ part '../components/utils/drop_menu_village.dart';
 part '../components/utils/drop_menu_theme.dart';
 part '../components/utils/drop_menu_profession.dart';
 part '../components/utils/drop_menu_motif.dart';
+part '../components/utils/drop_menu_elements.dart';
 
 
 /* ------------------------------ REFERENCEMENT ----------------------------- */

@@ -1256,12 +1256,15 @@ class CardSuivi extends StatelessWidget {
                             size: 20,
                           ),
                           5.horizontalSpace,
-                          Text(
-                            "${patient.nomvillage}",
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
+                          SizedBox(
+                            width: 40,
+                            child: Text(
+                              "${patient.nomvillage}",
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
                             ),
                           ),
                         ],

@@ -19,7 +19,7 @@ class _LoginPageBody extends StatefulWidget {
 class _LoginPageBodyState extends State<_LoginPageBody> {
   final _emailController = TextEditingController(text: 'ascagbandi@gmail.com');
   final _passwordController = TextEditingController(text: '12345678');
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   var desabledButton = false;
 
   @override
@@ -111,21 +111,21 @@ class _LoginPageBodyState extends State<_LoginPageBody> {
                                   ? () {}
                                   : () {
                                       //TODOS: Validation des champs
-                                      if (true) {
+                                      if (_formKey.currentState!.validate()) {
                                         // BlocProvider.of<LoginBloc>(context).add(
                                         //   LoginDataSending(
                                         //     _emailController.text,
                                         //     _passwordController.text,
                                         //   ),
                                         // );
-
+                  
                                         context.read<LoginBloc>().add(
                                               LoginDataSending(
                                                 _emailController.text,
                                                 _passwordController.text,
                                               ),
                                             );
-
+                  
                                         // Optionnel : gérer la navigation après une connexion réussie
                                       }
                                     },

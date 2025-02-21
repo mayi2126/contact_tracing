@@ -49,6 +49,7 @@ class DatabaseHelper {
     await createTableProfessions(db);
     await createTables(db);
     await createTableCauseries(db);
+    await createTableElements(db);
     print('Création des tables terminée');
   }
 

@@ -20,6 +20,7 @@ const String addSuiviPath = "/storeSuiviFe";
 /* ----------------------------- GET RESSOURCES ----------------------------- */
 const String getVillage = "/villagesrechByfs";
 const String getQuartier = "/quartierrechByvillage";
+const String getElementDeDonne = "/elementdedonneeList";
 const String getThemes = "/themes";
 const String getProfessions = "/professions";
 const String getMotifs = "/motifList";

@@ -188,6 +188,9 @@ class _InnerRefState extends State<InnerRef> {
                     child: IconButton(
                       icon: const Icon(Icons.close, color: Palette.danger),
                       onPressed: () {
+                        setState(() {
+                  _isSwitched = false;
+                });
                         Navigator.of(myContext).pop();
                       },
                     ),
@@ -339,7 +342,7 @@ class _InnerRefState extends State<InnerRef> {
         DropMenuMotif(onSelected: (value) {
           setState(() {
             _motifValue = value!;
-            print("Motif sélectionné: $_motifValue");
+           
           });
         }),
         const SizedBox(height: 10),

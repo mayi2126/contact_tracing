@@ -22,6 +22,16 @@ Future<List<Map<String, dynamic>>> retrievedVillagesData() async {
   return result;
 }
 
+/* --------------------------------- Element -------------------------------- */
+Future<List<Map<String, dynamic>>> retrievedElementsData() async {
+  final db = await DatabaseHelper.instance.database;
+
+  // Récupérer toutes les lignes insérées
+  List<Map<String, dynamic>> result = await db.query('elements');
+
+  return result;
+}
+
 /* --------------------------------- Motifs --------------------------------- */
 
 Future<List<Map<String, dynamic>>> retrievedMotifsData() async {
