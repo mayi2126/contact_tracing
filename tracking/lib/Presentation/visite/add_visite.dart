@@ -7,35 +7,42 @@ class AddVisitePage extends StatefulWidget {
   State<AddVisitePage> createState() => _AddVisitePageState();
 }
 
-class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
+class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin, SingleTickerProviderStateMixin {
   @override
   String? restorationId = "causerie";
 
   String _villageValue = "";
   String _quartierValue = "";
+  String _label = "";
   String _themeValue = "";
   final TextEditingController _formationSanitaire = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _localisationController = TextEditingController();
   final TextEditingController _nbrePersonnesTController =
-      TextEditingController();
+      TextEditingController(text: "0");
   final TextEditingController __nbrePersonnesTAllaitantesController =
-      TextEditingController();
+      TextEditingController(text: "0");
   final TextEditingController __nbrePersonnesTEnfantsController =
-      TextEditingController();
+      TextEditingController(text: "0");
 
   final TextEditingController __nbrePersonnesTHommesController =
-      TextEditingController();
+      TextEditingController(text: "0");
   final TextEditingController __nbrePersonnesTEnceintesController =
-      TextEditingController();
+      TextEditingController(text: "0");
 
-  final TextEditingController __autresController = TextEditingController(text:'0');
+  final TextEditingController __autresController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
 
-  int _index = 0;
+   late AnimationController _controller;
+  bool isRotate = false;
 
+  List<ConnectivityResult> _connectivityResult = [];
+  final Connectivity _connectivity = Connectivity();
+
+  int _index = 0;
+  User? user; // Variable pour stocker les infos utilisateur
 
   final RestorableDateTime _selectedDate =
       RestorableDateTime(DateTime(2021, 7, 25));
@@ -49,6 +56,59 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
       );
     },
   );
+
+  Future<void> _loadUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? userJson = prefs.getString('user_info');
+
+    if (userJson != null) {
+      setState(() {
+        user = User.fromJson(
+            jsonDecode(userJson)); // Stocker les infos dans la variable
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData(); 
+    
+     _controller = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    ); // R
+    _checkConnectivity();
+    _connectivity.onConnectivityChanged
+        .listen((List<ConnectivityResult> result) {
+      setState(() {
+        _connectivityResult = result;
+      });
+    });
+  }
+
+  Future<void> _checkConnectivity() async {
+    List<ConnectivityResult> result = await _connectivity.checkConnectivity();
+    setState(() {
+      _connectivityResult = result;
+    });
+  }
+
+  @override
+  void dispose() {
+    _selectedDate.dispose();
+    _restorableDatePickerRouteFuture.dispose();
+    super.dispose();
+    _nbrePersonnesTController.dispose();
+    __autresController.dispose();
+    __nbrePersonnesTEnceintesController.dispose();
+    __nbrePersonnesTHommesController.dispose();
+    __nbrePersonnesTEnfantsController.dispose();
+    __nbrePersonnesTAllaitantesController.dispose();
+    _formationSanitaire.dispose();
+    _dateController.dispose();
+    _localisationController.dispose();
+  }
 
   @pragma('vm:entry-point')
   static Route<DateTime> _datePickerRoute(
@@ -107,40 +167,91 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
       //   userEnreg: 10, // ID fictif de l'utilisateur
       // );()
 
-      print(_villageValue);
-      print(_quartierValue);
+      try {
+        Visite visite = Visite(
+          libelementdedonnee: _label,
+          idFsAp: 0,
+          dateAp: _dateController.text,
+          lieuAp: _localisationController.text,
+          nbrepersonnetoucheeFnq: int.parse(_nbrePersonnesTController.text),
+          nbrepersonnetoucheeFa:
+              int.parse(__nbrePersonnesTAllaitantesController.text),
+          nbreenfantzvtouche: int.parse(__nbrePersonnesTEnfantsController.text),
+          nbrepersonnetoucheeH:
+              int.parse(__nbrePersonnesTHommesController.text),
+          nbrepersonnetoucheeFe:
+              int.parse(__nbrePersonnesTEnceintesController.text),
+          nbreautrestouche: __autresController.text,
+          idvillage: int.parse(_villageValue),
+          idquartier: int.parse("12"),
+          idelementDonnee: int.parse(_themeValue),
+          idAscAp: 0,
+          userEnreg: 0,
+        );
 
-      Visite visite = Visite(
-        idFsAp: 0,
-        dateAp: _dateController.text,
-        lieuAp: _localisationController.text,
-        nbrepersonnetoucheeFnq: int.parse(_nbrePersonnesTController.text),
-        nbrepersonnetoucheeFa:
-            int.parse(__nbrePersonnesTAllaitantesController.text),
-        nbreenfantzvtouche: int.parse(__nbrePersonnesTEnfantsController.text),
-        nbrepersonnetoucheeH: int.parse(__nbrePersonnesTHommesController.text),
-        nbrepersonnetoucheeFe:
-            int.parse(__nbrePersonnesTEnceintesController.text),
-        nbreautrestouche: int.parse(__autresController.text),
-        idvillage: int.parse(_villageValue),
-        idquartier: int.parse(_quartierValue),
-        idelementDonnee: int.parse(_themeValue),
-        idAscAp: 0,
-        userEnreg: 0,
-      );
-
-      context.read<VisiteBloc>().add(AddVisiteDomicile(visite));
+        context.read<VisiteBloc>().add(AddVisiteDomicile(visite));
+      } catch (e) {
+        PanaraInfoDialog.showAnimatedGrow(
+          context,
+          // title: "Hello",
+          message: e.toString(),
+          buttonText: "Okay",
+          onTapDismiss: () {
+            Navigator.pop(context);
+          },
+          panaraDialogType: PanaraDialogType.error,
+        );
+      }
     }
   }
 
+  Widget _dropDownQuartier(String id) {
+    return DropMenuQuartier(
+      onSelected: (String? value) {
+        setState(() {
+          _quartierValue = value!;
+          print("Quartier sélectionné: $_quartierValue");
+        });
+      },
+    );
+  }
 
- 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       appBar: AppBar(
+          actions: [
+          _connectivityResult.isNotEmpty &&
+                  _connectivityResult.first == ConnectivityResult.none
+              ? const SizedBox()
+              : IconButton(
+                  onPressed: () async {
+                    _controller.repeat();
+                    await insertVillagesFromApi();
+                    await insertQuartiers();
+                    await insertElementsFromApi();
+
+                    _controller.reset();
+                    // syncVisites();
+                  },
+                  icon: RotationTransition(
+                    turns: _controller,
+                    child: const Icon(
+                      Icons.sync_sharp,
+                      size: 20,
+                      color:
+                          Colors.white, // Changez la couleur selon votre thème
+                    ),
+                  ),
+                )
+        ],
+        
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              context.read<DataBloc>().add(QuartierReset());
+              Navigator.pop(context);
+            }),
         backgroundColor: Palette.primary,
         iconTheme: const IconThemeData(color: Palette.white),
         title: const Text(
@@ -159,7 +270,16 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
           }
           if (state is VisiteError) {
             Navigator.pop(context);
-            showDialogCustom(context, state.message);
+            PanaraInfoDialog.showAnimatedGrow(
+              context,
+              // title: "Hello",
+              message: "Erreur lors de l'ajout de la visite",
+              buttonText: "Okay",
+              onTapDismiss: () {
+                Navigator.pop(context);
+              },
+              panaraDialogType: PanaraDialogType.error,
+            );
           }
         },
         child: BlocBuilder<VisiteBloc, VisiteState>(
@@ -185,7 +305,7 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                   10.verticalSpace,
                   _index == 0
                       ? Expanded(
-                        child: Form(
+                          child: Form(
                             key: _formKey,
                             child: SingleChildScrollView(
                               child: Column(
@@ -193,49 +313,47 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                 children: [
                                   const Text(
                                     "Formation Sanitaire",
-                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                   CustomTextFormInput(
                                     isReadonly: true,
                                     labelText: "",
-                                    hintText: "FS-19",
+                                    hintText: user != null ? user!.name : "",
                                     controller: _formationSanitaire,
                                     isPassword: false,
                                   ),
                                   10.verticalSpace,
                                   const Text(
                                     "Village",
-                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
                                   ),
-                              
                                   DropMenuVillage(
                                     onSelected: (String? value) {
                                       setState(() {
                                         _villageValue = value!;
                                         print(_villageValue);
                                       });
+                                      context.read<DataBloc>().add(
+                                          FetchVillageQuartier(
+                                              int.parse(_villageValue)));
                                     },
                                   ),
-                              
                                   10.verticalSpace,
-                                  const Text(
-                                    "Quartier",
-                                    style: TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  DropMenuQuartier(
-                                    onSelected: (String? value) {
-                                      setState(() {
-                                        _quartierValue = value!;
-                                        print(
-                                            "Quartier sélectionné: $_quartierValue");
-                                      });
-                                    },
-                                  ),
-                              
+                                  _villageValue != ''
+                                      ? const Text(
+                                          "Quartier",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        )
+                                      : const SizedBox.shrink(),
+                                  _dropDownQuartier(_villageValue),
                                   10.verticalSpace,
                                   const Text(
                                     "Date",
-                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                   CustomTextFormInput(
                                     labelText: "",
@@ -243,77 +361,44 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                     controller: _dateController,
                                     keybordType: TextInputType.number,
                                     icon: Icons.date_range,
+                                    validator: Validatorless.required(
+                                        "Date est requise"),
                                     onTap: () {
-                                      _restorableDatePickerRouteFuture.present();
+                                      _restorableDatePickerRouteFuture
+                                          .present();
                                     },
                                   ),
                                   10.verticalSpace,
                                   const Text(
                                     "Lieu",
-                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                   CustomTextFormInput(
                                     labelText: "",
                                     hintText: "",
                                     controller: _localisationController,
                                     keybordType: TextInputType.text,
-                                    onTap: () {},
+                                    validator: Validatorless.required(
+                                        "Lieu est requis"),
                                   ),
                                   10.verticalSpace,
                                   const Text(
-                                    "Thème",
-                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                    "Motif",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
                                   ),
-                                  // DropdownMenu<String>(
-                                  //   inputDecorationTheme: InputDecorationTheme(
-                                  //     filled: true,
-                                  //     fillColor: Palette.bgGrey,
-                                  //     focusedBorder: const OutlineInputBorder(
-                                  //       borderRadius:
-                                  //           BorderRadius.all(Radius.circular(10)),
-                                  //       borderSide: BorderSide(
-                                  //         color: Palette.primary,
-                                  //         width: 2,
-                                  //       ),
-                                  //     ),
-                                  //     enabledBorder: OutlineInputBorder(
-                                  //       borderSide: const BorderSide(
-                                  //         color: Palette.stroke,
-                                  //         width: 2,
-                                  //       ),
-                                  //       borderRadius: BorderRadius.circular(10),
-                                  //     ),
-                                  //   ),
-                                  //   initialSelection: "famille",
-                                  //   trailingIcon:
-                                  //       Icon(Icons.keyboard_arrow_down_sharp),
-                                  //   selectedTrailingIcon:
-                                  //       Icon(Icons.keyboard_arrow_up_sharp),
-                                  //   onSelected: (String? value) {
-                                  //     setState(() {
-                                  //       _themeValue = value!;
-                                  //     });
-                                  //   },
-                                  //   //TODOS: remove static width
-                                  //   width: getWidth(333),
-                                  //   dropdownMenuEntries: listTheme
-                                  //       .map<DropdownMenuEntry<String>>(
-                                  //           (String value) {
-                                  //     return DropdownMenuEntry<String>(
-                                  //         value: value, label: value);
-                                  //   }).toList(),
-                                  // ),
-                              
-                                  DropMenuTheme(
+                                  DropMenuElement(
                                     onSelected: (String? value) {
                                       setState(() {
+                                       
                                         _themeValue = value!;
+
                                         print(_themeValue);
                                       });
                                     },
-                                    type: 'ACTIVITÉS PRÉVENTIVES ',
+                                    // type: 'ACTIVITÉS PRÉVENTIVES ',
                                   ),
-                              
                                   20.verticalSpace,
                                   Center(
                                     child: CircleAvatar(
@@ -325,9 +410,12 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                           color: Palette.white,
                                         ),
                                         onPressed: () {
-                                          setState(() {
-                                            _index++;
-                                          });
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            setState(() {
+                                              _index++;
+                                            });
+                                          }
                                         },
                                       ),
                                     ),
@@ -336,9 +424,9 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                               ),
                             ),
                           ),
-                      )
+                        )
                       : Expanded(
-                        child: Form(
+                          child: Form(
                             key: _formKey2,
                             child: SingleChildScrollView(
                               child: Column(
@@ -347,7 +435,8 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                     // 10.verticalSpace,
                                     const Text(
                                       "Nombre de personnes touchées (9 - 49 ans)",
-                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     ),
                                     CustomTextFormInput(
                                       labelText: "",
@@ -355,11 +444,18 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                       controller: _nbrePersonnesTController,
                                       keybordType: TextInputType.number,
                                       onTap: () {},
+                                      validator: Validatorless.multiple([
+                                        Validatorless.required(
+                                            "Nombre de personnes touchées obligatoire"),
+                                        Validatorless.number(
+                                            "Doit etre un nombre")
+                                      ]),
                                     ),
                                     10.verticalSpace,
                                     const Text(
                                       "Nombre de personnes touchées (Femmes enceintes",
-                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     ),
                                     CustomTextFormInput(
                                       labelText: "",
@@ -368,11 +464,18 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                           __nbrePersonnesTEnceintesController,
                                       keybordType: TextInputType.number,
                                       onTap: () {},
+                                      validator: Validatorless.multiple([
+                                        Validatorless.required(
+                                            "Nombre de femmes enceintes obligatoire"),
+                                        Validatorless.number(
+                                            "Doit etre un nombre")
+                                      ]),
                                     ),
                                     10.verticalSpace,
                                     const Text(
                                       "Nombre de personnes touchées (Femmes allaitantes)",
-                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     ),
                                     CustomTextFormInput(
                                       labelText: "",
@@ -381,39 +484,62 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                           __nbrePersonnesTAllaitantesController,
                                       keybordType: TextInputType.number,
                                       onTap: () {},
+                                      validator: Validatorless.multiple([
+                                        Validatorless.required(
+                                            "Nombre de femmes allaitantes obligatoire"),
+                                        Validatorless.number(
+                                            "Doit etre un nombre")
+                                      ]),
                                     ),
                                     10.verticalSpace,
                                     const Text(
                                       "Nombre de personnes touchées (Hommes)",
-                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     ),
                                     CustomTextFormInput(
                                       labelText: "",
                                       hintText: "0",
-                                      controller: __nbrePersonnesTHommesController,
+                                      controller:
+                                          __nbrePersonnesTHommesController,
                                       keybordType: TextInputType.number,
                                       onTap: () {},
+                                      validator: Validatorless.multiple([
+                                        Validatorless.required(
+                                            "Nombre d'hommes touchés est requis"),
+                                        Validatorless.number(
+                                            "Doit etre un nombre")
+                                      ]),
                                     ),
                                     10.verticalSpace,
                                     const Text(
                                       "Nombre d'enfants de 0 a 24 mois visité",
-                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     ),
                                     CustomTextFormInput(
                                       labelText: "",
                                       hintText: "0",
-                                      controller: __nbrePersonnesTEnfantsController,
+                                      controller:
+                                          __nbrePersonnesTEnfantsController,
                                       keybordType: TextInputType.number,
                                       onTap: () {},
+                                      validator: Validatorless.multiple([
+                                        Validatorless.required(
+                                            "Nombre d'enfants est requis"),
+                                        Validatorless.number(
+                                            "Doit etre un nombre")
+                                      ]),
                                     ),
                                     10.verticalSpace,
                                     const Text(
                                       "Autres",
-                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     ),
                                     CustomTextFormInput(
                                       labelText: "",
-                                      hintText: "0",
+                                      hintText: "Autres",
                                       controller: __autresController,
                                       keybordType: TextInputType.number,
                                       onTap: () {},
@@ -451,11 +577,14 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                             onTapFunction: () {
                                               // Future.delayed(
                                               //     const Duration(seconds: 1), () {
-                              
+
                                               // });
-                              
+
                                               // Navigator.pop(context);
-                                              _onSubmit(context);
+                                              if (_formKey2.currentState!
+                                                  .validate()) {
+                                                _onSubmit(context);
+                                              }
                                             },
                                           ),
                                         )
@@ -464,7 +593,7 @@ class _AddVisitePageState extends State<AddVisitePage> with RestorationMixin {
                                   ]),
                             ),
                           ),
-                      ),
+                        ),
                   10.verticalSpace,
                 ],
               ),

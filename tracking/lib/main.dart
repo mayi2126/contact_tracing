@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,13 +11,25 @@ import 'package:tracking/Presentation/visite/bloc/visite_bloc.dart';
 import 'package:tracking/app/config/app_config.dart';
 import 'package:tracking/app/routes/router.dart';
 import 'package:tracking/app/routes/routes_name.dart';
+import 'package:tracking/db/inserts/element.dart';
+import 'package:tracking/db/inserts/motifs.dart';
+import 'package:tracking/db/inserts/professions.dart';
+import 'package:tracking/db/inserts/quartier.dart';
 import 'package:tracking/design_system/pallete.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tracking/externe-data/bloc/data_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); // Assurez-vous que les bindings sont initialisés
-  // await initializeDateFormatting('fr_FR', null);  // Initialisation de la locale 'fr_FR'
+  final Connectivity connectivity = Connectivity();
+  List<ConnectivityResult> result = await connectivity.checkConnectivity();
+  if (result.first != ConnectivityResult.none) {
+    await insertMotifsFromApi();
+    await inserProfessionsFromApi();
+    await insertQuartiers();
+    await insertElementsFromApi();
+  }
 
   runApp(MyApp());
 }
@@ -41,12 +54,13 @@ class MyApp extends StatelessWidget {
             ..add(AuthCheckStatus()),
         ),
         BlocProvider(
-          create: (context) =>
-              VisiteBloc(), 
+          create: (context) => VisiteBloc(),
         ),
         BlocProvider(
-          create: (context) =>
-              CauserieBloc(), 
+          create: (context) => CauserieBloc(),
+        ),
+        BlocProvider(
+          create: (context) => DataBloc(),
         ),
       ],
       child: ScreenUtilInit(
@@ -95,6 +109,9 @@ class MyApp extends StatelessWidget {
               //   displaySmall: TextStyle(color: Palette.white),
               //   // Autres styles de texte (#FFFF87)
               // ),
+              progressIndicatorTheme: const ProgressIndicatorThemeData(
+                color: Palette.primary, // Set your preferred color here
+              ),
               focusColor: Palette.white,
               appBarTheme: const AppBarTheme(
                 backgroundColor:

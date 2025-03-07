@@ -10,7 +10,7 @@ class LoginPage extends StatelessWidget {
 }
 
 class _LoginPageBody extends StatefulWidget {
-  const _LoginPageBody({super.key});
+  const _LoginPageBody();
 
   @override
   State<_LoginPageBody> createState() => _LoginPageBodyState();
@@ -19,7 +19,7 @@ class _LoginPageBody extends StatefulWidget {
 class _LoginPageBodyState extends State<_LoginPageBody> {
   final _emailController = TextEditingController(text: 'ascagbandi@gmail.com');
   final _passwordController = TextEditingController(text: '12345678');
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   var desabledButton = false;
 
   @override
@@ -57,7 +57,10 @@ class _LoginPageBodyState extends State<_LoginPageBody> {
                       SizedBox(
                         height: 200,
                         width: 200,
-                        child: SvgPicture.asset("assets/svg/access1.svg",fit: BoxFit.fill,),
+                        child: SvgPicture.asset(
+                          "assets/svg/access1.svg",
+                          fit: BoxFit.fill,
+                        ),
                       ),
                       const SizedBox(height: 35),
                       const Text(
@@ -78,6 +81,10 @@ class _LoginPageBodyState extends State<_LoginPageBody> {
                               hintText: "exemple@gmail.com",
                               controller: _emailController,
                               isPassword: false, // Change to false for email
+                              validator: Validatorless.multiple([
+                                Validatorless.required('Email est requis'),
+                                Validatorless.email('Email invalide'),
+                              ]),
                             ),
                             const SizedBox(height: 16),
                             CustomTextFormInput(
@@ -85,6 +92,13 @@ class _LoginPageBodyState extends State<_LoginPageBody> {
                               hintText: "*****",
                               controller: _passwordController,
                               isPassword: true,
+                              validator: Validatorless.multiple([
+                                Validatorless.required('Mot de passe est requis'),
+                                Validatorless.min(6,
+                                    'Mot de passe doit avoir au moins 6 caractères'),
+                                Validatorless.max(20,
+                                    'Mot de passe doit avoir au plus 20 caractères'),
+                              ]),
                             ),
                             25.verticalSpace,
                             PrimaryButton(
@@ -97,21 +111,21 @@ class _LoginPageBodyState extends State<_LoginPageBody> {
                                   ? () {}
                                   : () {
                                       //TODOS: Validation des champs
-                                      if (true) {
+                                      if (_formKey.currentState!.validate()) {
                                         // BlocProvider.of<LoginBloc>(context).add(
                                         //   LoginDataSending(
                                         //     _emailController.text,
                                         //     _passwordController.text,
                                         //   ),
                                         // );
-
+                  
                                         context.read<LoginBloc>().add(
                                               LoginDataSending(
                                                 _emailController.text,
                                                 _passwordController.text,
                                               ),
                                             );
-
+                  
                                         // Optionnel : gérer la navigation après une connexion réussie
                                       }
                                     },

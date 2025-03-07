@@ -5,7 +5,13 @@ sealed class DataEvent {}
 
 
 
-class FetchVillageQuartier extends DataEvent {}
+class FetchVillageQuartier extends DataEvent {
+
+  final int id;
+  FetchVillageQuartier(this.id);
+}
+
+class QuartierReset extends DataEvent {}
 
 
 
@@ -22,3 +28,9 @@ class ThemesEvent extends DataEvent {
 class ProfessionsEvent extends DataEvent {
 
 }
+
+class MotifsEvent extends DataEvent {
+}
+
+
+class ElementsEvent extends DataEvent {}

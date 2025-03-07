@@ -1,0 +1,33 @@
+[
+    {
+      "nomquartier": "Quartier A",
+      "id_village": 68,
+      "created_at": "2025-01-24",
+      "updated_at": "2025-01-24"
+    },
+    {
+      "nomquartier": "Quartier B",
+      "id_village": 69,
+      "created_at": "2025-01-24",
+      "updated_at": "2025-01-24"
+    },
+    {
+      "nomquartier": "Quartier C",
+      "id_village": 327,
+      "created_at": "2025-01-24",
+      "updated_at": "2025-01-24"
+    },
+    {
+      "nomquartier": "Quartier D",
+      "id_village": 68,
+      "created_at": "2025-01-24",
+      "updated_at": "2025-01-24"
+    },
+    {
+      "nomquartier": "Quartier E",
+      "id_village": 69,
+      "created_at": "2025-01-24",
+      "updated_at": "2025-01-24"
+    }
+  ]
+  

@@ -48,6 +48,17 @@ class _ShowPageState extends State<ShowPage> {
         TextEditingController(text: widget.arguments.lieuAp.toString());
 
     selectedDate = DateTime.parse(widget.arguments.dateAp.toString());
+
+    String? idvillage = widget.arguments.idvillage;
+    if (idvillage != null) {
+      
+    context.read<DataBloc>().add(FetchVillageQuartier(int.parse(widget.arguments.idvillage.toString())));
+    }
+    else{
+      context.read<DataBloc>().add(FetchVillageQuartier(6));
+    }
+
+
   }
 
   @override
@@ -88,6 +99,45 @@ class _ShowPageState extends State<ShowPage> {
     // Si une date a été choisie, la mettre à jour
   }
 
+  void _onSubmit(BuildContext context) {
+    try {
+      Visite visite = Visite(
+        idFsAp: 0,
+        dateAp: selectedDate.toString(),
+        lieuAp: _lieuApController.text,
+        nbrepersonnetoucheeFnq:
+            int.parse(_nbrepersonnetoucheeFnqController.text),
+        nbrepersonnetoucheeFa: int.parse(_nbrepersonnetoucheeFAController.text),
+        nbreenfantzvtouche: int.parse(_nbreenfantsController.text),
+        nbrepersonnetoucheeH: int.parse(_nbrepersonnetoucheeHController.text),
+        nbrepersonnetoucheeFe: int.parse(_nbrepersonnetoucheeFEController.text),
+        nbreautrestouche: _nbreautresController.text,
+        idvillage: int.parse(_villageValue),
+        idquartier: int.parse(_quartierValue),
+        idelementDonnee: int.parse(_themeValue),
+        idAscAp: 0,
+        userEnreg: 0,
+      );
+
+      PanaraConfirmDialog.showAnimatedGrow(
+                  context,
+                  title: "Action irréversible",
+                  message: "Etes-vous sur de modifier cette visite ?",
+                  confirmButtonText: "Oui",
+                  cancelButtonText: "Non",
+                  onTapCancel: () {
+                    Navigator.pop(context);
+                  },
+                  onTapConfirm: () {
+                    Navigator.pop(context);
+                     context.read<VisiteBloc>().add(UpdateVisite(visite, widget.arguments.id));
+                  },
+                  panaraDialogType: PanaraDialogType.warning,
+                );
+
+    } catch (e) {}
+  }
+
   @override
   Widget build(BuildContext context) {
     // Formater la date choisie pour l'affichage
@@ -95,225 +145,256 @@ class _ShowPageState extends State<ShowPage> {
         ? 'Aucune date choisie'
         : DateFormat('d MMMM yyyy', 'fr').format(selectedDate!);
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              height: 250,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/png/visite-removebg.png'),
-                  fit: BoxFit.fitHeight,
+    return BlocListener<VisiteBloc, VisiteState>(
+      listener: (context, state) {
+        if (state is VisiteUpdateLoading) {
+          showDialogCustom(context, "Modification en cours...");
+        }
+
+        if (state is VisiteUpdated) {
+          Navigator.pop(context);
+
+          PanaraInfoDialog.showAnimatedGrow(
+            context,
+            // title: "Hello",
+            buttonTextColor: Palette.white,
+            color: Palette.white,
+            message: "La visite a bien été modifiée.",
+            buttonText: "OK",
+           onTapDismiss: () => Navigator.pop(context),
+            panaraDialogType: PanaraDialogType.normal,
+          );
+        }
+        if (state is VisiteUpdateError) {
+          Navigator.pop(context);
+          SnackBar snackBar = SnackBar(content: Text(state.message));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+      },
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                height: 250,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/png/visite-removebg.png'),
+                    fit: BoxFit.fitHeight,
+                  ),
+                  color: Palette.primary,
                 ),
-                color: Palette.primary,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 30, 10, 5),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    IconButton(
-                      iconSize: 20,
-                      splashRadius: 25,
-                      style: IconButton.styleFrom(
-                        shape: const CircleBorder(),
-                        backgroundColor: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 30, 10, 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      IconButton(
+                        iconSize: 20,
+                        splashRadius: 25,
+                        style: IconButton.styleFrom(
+                          shape: const CircleBorder(),
+                          backgroundColor: Colors.white,
+                        ),
+                        // color: Palette.white,
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color: Palette.primary,
+                        ),
+                        onPressed: () {
+                          context.read<DataBloc>().add(QuartierReset());
+                          Navigator.pop(context);
+                        },
                       ),
-                      // color: Palette.white,
-                      icon: const Icon(
-                        Icons.arrow_back,
-                        color: Palette.primary,
+                      const Align(
+                        alignment: Alignment(0.6, 1),
+                        child: Icon(Icons.location_on_outlined,
+                            color: Palette.white, size: 30),
                       ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    const Align(
-                      alignment: Alignment(0.6, 1),
-                      child: CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Palette.white,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
 
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            top: 220,
-            child: Container(
-              height: 200,
-              decoration: const BoxDecoration(
-                color: Palette.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              top: 220,
+              child: Container(
+                height: 200,
+                decoration: const BoxDecoration(
+                  color: Palette.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
                 ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ListView(
-                  physics: const BouncingScrollPhysics(),
-                  children: <Widget>[
-                    TextField(
-                      controller: _lieuApController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        labelText: 'Lieu',
-                      ),
-                    ),
-                    TextField(
-                      controller: _nbreautresController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        labelText: 'Autres personnes touchées',
-                      ),
-                    ),
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 20,left: 20,bottom: 20),
+                  child: ListView(
+                    physics: const BouncingScrollPhysics(),
+                                        padding: const EdgeInsets.all(0),
 
-                    TextField(
-                      controller: _nbreenfantsController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        labelText: 'Nombre d\'enfants touchés',
-                      ),
-                    ),
-                    TextField(
-                      controller: _nbrepersonnetoucheeFnqController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        labelText: 'Nombre de personnes touchées FNQ',
-                      ),
-                    ),
-                    TextField(
-                      controller: _nbrepersonnetoucheeFEController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        labelText: 'Nombre de personnes touchées FE',
-                      ),
-                    ),
-                    TextField(
-                      controller: _nbrepersonnetoucheeFAController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        labelText: 'Nombre de personnes touchées FA',
-                      ),
-                    ),
-                    TextField(
-                      controller: _nbrepersonnetoucheeHController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        labelText: 'Nombre de personnes touchées H',
-                      ),
-                    ),
-                    const Text("Thème de la causerie"),
-                    DropMenuTheme(
-                      onSelected: (String? value) {
-                        setState(() {
-                          _themeValue = value!;
-                          print(_themeValue);
-                        });
-                      },
-                      type: 'ACTIVITÉS PRÉVENTIVES ',
-                      id: widget.arguments.idelementDonnee,
-                    ),
-                    8.verticalSpace,
-                    const Text(
-                      "Village",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    DropMenuVillage(
-                      onSelected: (String? value) {
-                        setState(() {
-                          _villageValue = value!;
-                          print(_villageValue);
-                        });
-                      },
-                      nom: widget.arguments.nomvillage,
-                    ),
-                    10.verticalSpace,
-                    const Text(
-                      "Quartier",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    DropMenuQuartier(
-                      onSelected: (String? value) {
-                        setState(() {
-                          _quartierValue = value!;
-                          print("Quartier sélectionné: $_quartierValue");
-                        });
-                      },
-                      id: widget.arguments.idquartier,
-                    ),
+                    children: <Widget>[
 
-                    8.verticalSpace,
-                    // Affichage de la date choisie
-
-                    // Bouton pour ouvrir le sélecteur de date
-                    const Text(
-                      "Date de la visite",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    TextField(
-                        readOnly: true,
-                        decoration: InputDecoration(
-                          labelText: formattedDate,
+                           5.verticalSpace,
+                      Align(
+                        alignment: Alignment.topCenter,
+                        child: Container(
+                          width: 50,
+                          height: 3,
+                          color: Palette.foreign,
+                        ),
+                      ),
+                      5.verticalSpace,
+                      TextField(
+                        controller: _lieuApController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
-                          suffixIcon: IconButton(
-                              onPressed: () => _selectDate(context),
-                              icon: const Icon(Icons.calendar_month)),
-                        )),
+                          labelText: 'Lieu',
+                        ),
+                      ),
+                      TextField(
+                        controller: _nbreautresController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          labelText: 'Autres personnes touchées',
+                        ),
+                      ),
 
-                    const SizedBox(height: 20),
-                    //  AnimatedButton(
-                    //       text: 'Warning Dialog',
-                    //       color: Colors.orange,
-                    //       pressEvent: () {
-                    //         AwesomeDialog(
-                    //           context: context,
-                    //           dialogType: DialogType.warning,
-                    //           headerAnimationLoop: false,
-                    //           animType: AnimType.topSlide,
-                    //           showCloseIcon: true,
-                    //           closeIcon:
-                    //               const Icon(Icons.close_fullscreen_outlined),
-                    //           title: 'Warning',
-                    //           desc:
-                    //               'Dialog description here..................................................',
-                    //           btnCancelOnPress: () {},
-                    //           onDismissCallback: (type) {
-                    //             debugPrint(
-                    //                 'Dialog Dismiss from callback $type');
-                    //           },
-                    //           btnOkOnPress: () {},
-                    //         ).show();
-                    //   
-                       // },
-                      //  ),
-                      
-                  ],
+                      TextField(
+                        controller: _nbreenfantsController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          labelText: 'Nombre d\'enfants touchés',
+                        ),
+                      ),
+                      TextField(
+                        controller: _nbrepersonnetoucheeFnqController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          labelText: 'Nombre de personnes touchées FNQ',
+                        ),
+                      ),
+                      TextField(
+                        controller: _nbrepersonnetoucheeFEController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          labelText: 'Nombre de personnes touchées FE',
+                        ),
+                      ),
+                      TextField(
+                        controller: _nbrepersonnetoucheeFAController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          labelText: 'Nombre de personnes touchées FA',
+                        ),
+                      ),
+                      TextField(
+                        controller: _nbrepersonnetoucheeHController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          labelText: 'Nombre de personnes touchées H',
+                        ),
+                      ),
+                      const Text("Thème de la causerie"),
+                      DropMenuTheme(
+                        onSelected: (String? value) {
+                          setState(() {
+                            _themeValue = value!;
+                            print(_themeValue);
+                          });
+                        },
+                        type: 'ACTIVITÉS PRÉVENTIVES ',
+                        id: widget.arguments.idelementDonnee,
+                      ),
+                      8.verticalSpace,
+                      const Text(
+                        "Village",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      DropMenuVillage(
+                        onSelected: (String? value) {
+                          setState(() {
+                            _villageValue = value!;
+                            print(_villageValue);
+                          });
+                         context.read<DataBloc>().add(FetchVillageQuartier(int.parse(_villageValue)));
+
+                        },
+                        nom: widget.arguments.nomvillage,
+                      ),
+                      10.verticalSpace,
+                      const Text(
+                        "Quartier",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      DropMenuQuartier(
+                        onSelected: (String? value) {
+                          setState(() {
+                            _quartierValue = value!;
+                            print("Quartier sélectionné: $_quartierValue");
+                          });
+                        },
+                        id: widget.arguments.idquartier,
+                      ),
+
+                      8.verticalSpace,
+                      // Affichage de la date choisie
+
+                      // Bouton pour ouvrir le sélecteur de date
+                      const Text(
+                        "Date de la visite",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      TextField(
+                          readOnly: true,
+                          decoration: InputDecoration(
+                            labelText: formattedDate,
+                            border: InputBorder.none,
+                            suffixIcon: IconButton(
+                                onPressed: () => _selectDate(context),
+                                icon: const Icon(Icons.calendar_month)),
+                          )),
+
+                      const SizedBox(height: 20),
+                      PrimaryButton(
+                        width: 2,
+                        btnBgColor: Palette.primary,
+                        textColor: Palette.white,
+                        btnText: "Enregistrer les modifications",
+                        isFilledBtn: false,
+                        onTapFunction: () {
+                          // Future.delayed(
+                          //     const Duration(seconds: 1), () {
+
+                          // });
+
+                          // Navigator.pop(context);
+                          _onSubmit(context);
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
 
-          // Positioned
-        ],
+            // Positioned
+          ],
+        ),
       ),
     );
   }

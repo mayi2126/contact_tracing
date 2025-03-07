@@ -45,6 +45,7 @@ class RetrieveVisiteRepositoryImpl implements RetrieveVisiteRepository {
     List<VisiteModel> visites = data.map((json) => VisiteModel.fromMap(json)).toList();
 
 
+
       // Retourner la liste des VisiteModel à partir de la réponse
       return visites;
 

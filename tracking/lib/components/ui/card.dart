@@ -18,7 +18,6 @@ class CardWidget extends StatefulWidget {
 }
 
 class _CardWidgetState extends State<CardWidget> {
-  final Color _containerColor = Palette.card;
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +30,14 @@ class _CardWidgetState extends State<CardWidget> {
             .infinity, // Assurez-vous que la largeur est bien "double.infinity" dans Expanded
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
+          
           color: Palette.white,
           boxShadow:  [
             BoxShadow(
               color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 2,
-              blurRadius: 5,
-              offset: const Offset(3, 8),
+              spreadRadius: 4,
+              blurRadius: 8,
+              offset: const Offset(0, 2),
           )]
         ),
         child: Column(
@@ -56,11 +56,10 @@ class _CardWidgetState extends State<CardWidget> {
               ),
             ),
             5.verticalSpace,
-            Padding(
-              padding: const EdgeInsets.only(left: 2),
+            Center(
               child: Text(
                 widget.title,
-                textAlign: TextAlign.left,
+                textAlign: TextAlign.center,
                 style: const TextStyle(
                     fontSize: 10, fontWeight: FontWeight.bold),
               ),

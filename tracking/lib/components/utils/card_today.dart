@@ -6,7 +6,7 @@ class CardToday extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(causeries);
+    // print(causeries);
     return Column(
       children: causeries
           .map(
@@ -31,7 +31,7 @@ class CardToday extends StatelessWidget {
                       decoration: BoxDecoration(
                           border: Border.all(color: Palette.primary),
                           borderRadius: BorderRadius.circular(20)),
-                      child:  Text(causerie.libelementdedonnee,
+                      child:  Text(" ${causerie.libelementdedonnee}",
                           style: const TextStyle(color: Palette.primary),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1),

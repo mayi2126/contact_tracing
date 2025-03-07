@@ -13,7 +13,8 @@ class CustomTextFormInput extends StatelessWidget {
       this.minLine = 1,
       this.counterText,
       this.icon, this.onTap,
-      this.isReadonly = false});
+      this.isReadonly = false, 
+      this.onChange});
 
   final TextEditingController controller;
   final String hintText;
@@ -27,10 +28,12 @@ class CustomTextFormInput extends StatelessWidget {
   final IconData? icon;
   final void Function()? onTap;
   final bool isReadonly;
+  final void Function(String)? onChange;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChange,
       readOnly: isReadonly,
       maxLines: minLine,
       keyboardType: keybordType,

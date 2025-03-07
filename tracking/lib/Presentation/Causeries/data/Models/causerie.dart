@@ -14,8 +14,10 @@ class Causerie {
     int nbrepersonnetoucheeFa;
     int nbrepersonnetoucheeH;
     int nbreenfantzvtouche;
-    int nbreautrestouche;
+    String nbreautrestouche;
     int userEnreg;
+    String? libelementdedonnee;
+    int? id;
 
     Causerie({
         required this.idFsAp,
@@ -32,6 +34,8 @@ class Causerie {
         required this.nbreenfantzvtouche,
         required this.nbreautrestouche,
         required this.userEnreg,
+        this.libelementdedonnee,
+        this.id
     });
 
     Causerie copyWith({
@@ -47,8 +51,10 @@ class Causerie {
         int? nbrepersonnetoucheeFa,
         int? nbrepersonnetoucheeH,
         int? nbreenfantzvtouche,
-        int? nbreautrestouche,
+        String? nbreautrestouche,
         int? userEnreg,
+        String? libelementdedonnee,
+
     }) => 
         Causerie(
             idFsAp: idFsAp ?? this.idFsAp,
@@ -65,6 +71,7 @@ class Causerie {
             nbreenfantzvtouche: nbreenfantzvtouche ?? this.nbreenfantzvtouche,
             nbreautrestouche: nbreautrestouche ?? this.nbreautrestouche,
             userEnreg: userEnreg ?? this.userEnreg,
+            libelementdedonnee: libelementdedonnee ?? this.libelementdedonnee,
         );
 
     factory Causerie.fromJson(String str) => Causerie.fromMap(json.decode(str));
@@ -86,12 +93,13 @@ class Causerie {
         nbreenfantzvtouche: json["nbreenfantzvtouche"],
         nbreautrestouche: json["nbreautrestouche"],
         userEnreg: json["userEnreg"],
+        libelementdedonnee: json["libelementdedonnee"],
     );
 
     Map<String, dynamic> toMap() => {
-        "idFsAp": idFsAp,
+        // "idFsAp": idFsAp,
         "Idquartier": idquartier,
-        "idAscAp": idAscAp,
+        // "idAscAp": idAscAp,
         "Idvillage": idvillage,
         "dateAp": dateAp,
         "lieuAp": lieuAp,
@@ -102,6 +110,7 @@ class Causerie {
         "nbrepersonnetoucheeH": nbrepersonnetoucheeH,
         "nbreenfantzvtouche": nbreenfantzvtouche,
         "nbreautrestouche": nbreautrestouche,
-        "userEnreg": userEnreg,
+        // "userEnreg": userEnreg,
+        "libelementdedonnee": libelementdedonnee,
     };
 }
